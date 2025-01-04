@@ -1,5 +1,5 @@
 .footer {
-  width: 100vw;
-  height: 50px;
+  grid-row: 3 / 4;
+  grid-column: 1 / 4;
   border: 1px green solid;
 }

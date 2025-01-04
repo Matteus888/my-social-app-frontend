@@ -1,5 +1,5 @@
 .header {
-  width: 100vw;
-  height: 50px;
+  grid-row: 1 / 2;
+  grid-column: 1 / 4;
   border: 1px blue solid;
 }

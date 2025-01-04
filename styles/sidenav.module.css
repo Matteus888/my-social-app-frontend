@@ -1,0 +1,9 @@
+.sidenav {
+  grid-row: 2 / 3;
+  grid-column: 1 / 2;
+  border: 1px black solid;
+
+  .sidenavList {
+    list-style-type: none;
+  }
+}
