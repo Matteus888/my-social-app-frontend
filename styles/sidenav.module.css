@@ -1,6 +1,9 @@
 .sidenav {
-  grid-row: 2 / 3;
-  grid-column: 1 / 2;
+  position: fixed;
+  top: 50;
+  left: 0;
+  width: 250;
+  height: 400;
   border: 1px black solid;
 
   .sidenavList {

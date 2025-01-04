@@ -1,9 +1,36 @@
 .contacts {
-  grid-row: 2 / 3;
-  grid-column: 3 / 4;
+  position: fixed;
+  top: 50;
+  right: 0;
+  width: 250;
+  height: calc(100vh - 50px);
+  /* padding-right: 15; ne fonctionne pas */
+  overflow-y: hidden;
+  /* transition: all 1s ease; ne fonctionne pas*/
   border: 1px pink solid;
 
   .contactsList {
     list-style-type: none;
   }
+}
+
+.contacts:hover {
+  overflow-y: auto;
+}
+
+.contacts::-webkit-scrollbar {
+  width: 5px;
+}
+
+.contacts::-webkit-scrollbar-track {
+  border-radius: 10px;
+}
+
+.contacts::-webkit-scrollbar-thumb {
+  background: #b8b9bb;
+  border-radius: 10px;
+}
+
+.contacts::-webkit-scrollbar-thumb:hover {
+  background: #acadb1;
 }
