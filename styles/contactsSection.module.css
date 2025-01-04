@@ -2,11 +2,9 @@
   position: fixed;
   top: 50;
   right: 0;
-  width: 250;
+  width: 300;
   height: calc(100vh - 50px);
-  /* padding-right: 15; ne fonctionne pas */
   overflow-y: hidden;
-  /* transition: all 1s ease; ne fonctionne pas*/
   border: 1px pink solid;
 
   .contactsList {

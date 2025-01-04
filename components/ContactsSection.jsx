@@ -1,6 +1,6 @@
-import styles from "../styles/contacts.module.css";
+import styles from "../styles/contactsSection.module.css";
 
-export default function Contacts() {
+export default function ContactsSection() {
   return (
     <aside className={styles.contacts}>
       <h2>Contacts</h2>

@@ -2,8 +2,8 @@
   position: fixed;
   top: 50;
   left: 0;
-  width: 250;
-  height: 400;
+  width: 300;
+  height: 500;
   border: 1px black solid;
 
   .sidenavList {
