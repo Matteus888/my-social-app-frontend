@@ -3,5 +3,7 @@
   bottom: 0;
   left: 0;
   width: 300;
-  border: 1px green solid;
+  padding: 0 0 20 20;
+  font-size: 14;
+  font-weight: 600;
 }
