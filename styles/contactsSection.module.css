@@ -5,29 +5,32 @@
   width: 300;
   height: calc(100vh - 50px);
   overflow-y: hidden;
+  /* border: 1px solid blue; */
 
-  .contactsList {
-    list-style-type: none;
+  &:hover {
+    overflow-y: auto;
   }
-}
 
-.contacts:hover {
-  overflow-y: auto;
-}
+  &::-webkit-scrollbar {
+    width: 5px;
+  }
 
-.contacts::-webkit-scrollbar {
-  width: 5px;
-}
+  &::-webkit-scrollbar-track {
+    border-radius: 10px;
+  }
 
-.contacts::-webkit-scrollbar-track {
-  border-radius: 10px;
-}
+  &::-webkit-scrollbar-thumb {
+    background: var(--lightgrey2);
+    border-radius: 10px;
+  }
 
-.contacts::-webkit-scrollbar-thumb {
-  background: var(--lightgrey2);
-  border-radius: 10px;
-}
+  &::-webkit-scrollbar-thumb:hover {
+    background: var(--lightgrey1);
+  }
 
-.contacts::-webkit-scrollbar-thumb:hover {
-  background: var(--lightgrey1);
+  .title {
+    margin-top: 10;
+    margin-left: 10;
+    font-size: 20;
+  }
 }
