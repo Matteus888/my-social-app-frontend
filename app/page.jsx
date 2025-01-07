@@ -1,8 +1,16 @@
 import styles from "../styles/home.module.css";
+import Header from "@/components/Header";
+import Footer from "@/components/Footer";
+import SideNav from "@/components/SideNav";
+import ContactsSection from "@/components/ContactsSection";
 
 export default function Home() {
   return (
     <div className={styles.page}>
+      <Header />
+      <SideNav />
+      <ContactsSection />
+      <Footer />
       <h1>Welcome to My Social App</h1>
       <p>
         Lorem ipsum dolor, sit amet consectetur adipisicing elit. Nobis quos consequuntur, earum amet quo sed ab odio, dolore culpa
