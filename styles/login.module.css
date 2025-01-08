@@ -19,7 +19,7 @@
       flex-direction: column;
       align-items: center;
       width: 400;
-      height: 410;
+      height: 420;
       margin-top: 20;
       margin-bottom: 12;
       background-color: white;
@@ -28,6 +28,7 @@
       box-shadow: 0 1px 8px var(--lightgrey3);
 
       .loginTitle {
+        text-align: center;
         font-size: 18;
         font-weight: 600;
         margin: 20 0;
@@ -37,7 +38,7 @@
         display: flex;
         justify-content: center;
         align-items: center;
-        width: 92%;
+        width: 350;
         height: 35;
         background-color: var(--lightyellow);
         border: 1px solid var(--gold);
@@ -46,7 +47,7 @@
       }
 
       .input {
-        width: 92%;
+        width: 350;
         height: 45;
         margin-top: 12;
         padding: 0 18;
@@ -71,7 +72,7 @@
         display: flex;
         justify-content: space-between;
         align-items: center;
-        width: 92%;
+        width: 350;
         height: 45;
         margin-top: 12;
         padding: 0 18;
@@ -100,8 +101,13 @@
 
       }
 
+      .errorText {
+        color: red;
+        font-size: 12;
+      }
+
       .btnConnect {
-        width: 92%;
+        width: 350;
         height: 45;
         margin-top: 12;
         color: white;
