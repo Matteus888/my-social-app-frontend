@@ -7,6 +7,7 @@
   --blue1: #3577e6;
   --gold: #d0c57b;
   --lightyellow: #fff9d7;
+  --green1: #42b72a;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -29,7 +30,7 @@ body {
 body {
   color: var(--foreground);
   background: var(--background);
-  font-family: var(--font-quicksand), Helvetica, sans-serif;
+  font-family: var(--font-quicksand), Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
