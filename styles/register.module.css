@@ -1,0 +1,151 @@
+.page {
+  display: flex;
+  justify-content: center;
+  width: 100vw;
+
+  .main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 40;
+    width: 600;
+
+    .title {
+      padding-bottom: 10;
+    }
+
+    .registerContainer {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 450;
+      height: 570;
+      margin-top: 20;
+      margin-bottom: 12;
+      background-color: white;
+      border: 1px solid var(--lightgrey3);
+      border-radius: 5px;
+      box-shadow: 0 1px 8px var(--lightgrey3);
+
+      .registerTitle {
+        margin-top: 12;
+      }
+
+      .slogan {
+        margin-top: 2;
+      }
+
+      .line {
+        width: 100%;
+        height: 1;
+        margin-top: 12;
+        background-color: var(--lightgrey3);
+      }
+
+      .formContainer {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 410;
+
+        .nameContainer {
+          display: flex;
+          justify-content: space-between;
+          width: 100%;
+          margin-top: 18;
+
+          .input {
+            width: 200;
+            height: 40;
+            padding: 0 14;
+            border: 1px solid var(--lightgrey3);
+            border-radius: 4px;
+            font-size: 16;
+            font-weight: 500;
+            font-family: var(--font-quicksand),
+              Arial,
+              sans-serif;
+
+            &:focus {
+              border-color: black;
+
+              &::placeholder {
+                opacity: 0.6;
+              }
+            }
+          }
+        }
+
+        .birthDateContainer {
+          display: flex;
+          flex-direction: column;
+          width: 100%;
+          margin-top: 14;
+
+          .birthLabelContainer {
+            display: flex;
+
+            .birthLabel {
+              font-size: 12;
+              margin-right: 6;
+            }
+          }
+
+          .selectsContainer {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+            margin-top: 4;
+
+            .select {
+              width: 125;
+              height: 35;
+              border: 1px solid var(--lightgrey3);
+              border-radius: 4px;
+              font-size: 14;
+              font-family: var(--font-quicksand),
+                Arial,
+                sans-serif;
+            }
+          }
+        }
+
+        .genderContainer {
+          display: flex;
+          flex-direction: column;
+          width: 100%;
+          margin-top: 14;
+
+          .genderLabelContainer {
+            display: flex;
+
+            .genderLabel {
+              font-size: 12;
+              margin-right: 6;
+            }
+          }
+
+          .checkboxesContainer {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+            margin-top: 4;
+
+            .checkboxLabel {
+              display: flex;
+              justify-content: space-between;
+              align-items: center;
+              width: 95;
+              height: 35;
+              padding: 0 5;
+              border: 1px solid var(--lightgrey3);
+              border-radius: 4px;
+              font-size: 14;
+            }
+          }
+        }
+      }
+    }
+
+  }
+}
