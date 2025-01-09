@@ -72,7 +72,7 @@
   }
 }
 
-.input__container {
+.password__container {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -108,7 +108,7 @@
   font-size: 12;
 }
 
-.btn__login {
+.login__btn {
   width: 350;
   height: 45;
   margin-top: 12;
@@ -150,7 +150,7 @@
   font-weight: 600;
 }
 
-.btn__register {
+.register__link {
   width: 65%;
   height: 45;
   margin: 12 0;

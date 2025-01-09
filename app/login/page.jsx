@@ -96,7 +96,7 @@ export default function Login() {
               value={emailValue}
               onChange={(e) => setEmailValue(e.target.value)}
             />
-            <div className={styles.input__container}>
+            <div className={styles.password__container}>
               <input
                 className={styles.password__input}
                 ref={passwordRef}
@@ -116,7 +116,7 @@ export default function Login() {
             <p className={styles.error__text} role="alert">
               {error ? errorMessage : <span style={{ visibility: "hidden" }}>Invisible</span>}
             </p>
-            <button type="submit" className={styles.btn__login} onClick={handleSubmit}>
+            <button type="submit" className={styles.login__btn} onClick={handleSubmit}>
               Connect
             </button>
           </form>
@@ -127,7 +127,7 @@ export default function Login() {
             <p className={styles.line__text}>OR</p>
             <div className={styles.line}></div>
           </div>
-          <Link href="/register" name="Register" className={styles.btn__register}>
+          <Link href="/register" name="Register" className={styles.register__link}>
             Create new account
           </Link>
         </div>

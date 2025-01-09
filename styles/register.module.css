@@ -22,7 +22,7 @@
   flex-direction: column;
   align-items: center;
   width: 450;
-  height: 570;
+  height: 560;
   margin-top: 20;
   margin-bottom: 12;
   background-color: white;
@@ -139,4 +139,91 @@
   border: 1px solid var(--lightgrey3);
   border-radius: 4px;
   font-size: 14;
+  font-weight: 450;
+}
+
+.email__input {
+  width: 100%;
+  height: 40;
+  margin-top: 14;
+  padding: 0 14;
+  border: 1px solid var(--lightgrey3);
+  border-radius: 4px;
+  font-size: 16;
+  font-weight: 500;
+  font-family: var(--font-quicksand),
+    Arial,
+    sans-serif;
+
+  &:focus {
+    border-color: black;
+
+    &::placeholder {
+      opacity: 0.6;
+    }
+  }
+}
+
+.password__container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  height: 40;
+  margin-top: 14;
+  padding: 0 14;
+  border: 1px solid var(--lightgrey3);
+  border-radius: 4px;
+}
+
+.password__input {
+  width: 90%;
+  padding: 2 0;
+  border: none;
+  font-size: 16;
+  font-weight: 500;
+  font-family: var(--font-quicksand),
+    Arial,
+    sans-serif;
+
+  &:focus {
+    border-color: black;
+
+    &::placeholder {
+      opacity: 0.6;
+    }
+  }
+}
+
+.error__text {
+  color: red;
+  font-size: 12;
+}
+
+.policy__text {
+  margin-top: 6;
+  font-size: 11;
+}
+
+.register__btn {
+  width: 200;
+  height: 40;
+  margin-top: 14;
+  color: white;
+  background-color: var(--green1);
+  border: none;
+  border-radius: 6px;
+  font-family: var(--font-quicksand),
+    Arial,
+    sans-serif;
+  font-size: 20;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.login__link {
+  margin-top: 12;
+  color: var(--blue1);
+  font-size: 18;
+  font-weight: 600;
 }
