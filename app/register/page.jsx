@@ -25,6 +25,9 @@ export default function Register() {
   const [year, setYear] = useState(currentYear);
   const [error, setError] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
+  const [isDialogDate, setIsDialogDate] = useState(false);
+  const [isDialogGender, setIsDialogGender] = useState(false);
+
   const router = useRouter();
 
   const emailRef = useRef(null);
@@ -144,7 +147,22 @@ export default function Register() {
               <div className={styles.birthdate__container}>
                 <div className={styles.label__container}>
                   <p className={styles.label}>Date of Birth</p>
-                  <FontAwesomeIcon icon={faCircleQuestion} width={12} height={12} style={{ color: "#606770" }} />
+                  <a
+                    href="#"
+                    id="birthdate__help"
+                    title="Click here for more informations"
+                    role="button"
+                    onClick={() => setIsDialogDate(!isDialogDate)}
+                  >
+                    <FontAwesomeIcon icon={faCircleQuestion} width={12} height={12} style={{ color: "#606770" }} />
+                  </a>
+                  {isDialogDate && (
+                    <dialog open className={styles.dialog} onClick={() => setIsDialogDate(!isDialogDate)}>
+                      <p>
+                        Entering your date of birth ensures that your <b>My Social App</b> experience is age-appropriate.
+                      </p>
+                    </dialog>
+                  )}
                 </div>
                 <div className={styles.select__container}>
                   <select className={styles.select} aria-label="Day" value={day} onChange={(e) => setDay(e.target.value)}>
@@ -173,7 +191,20 @@ export default function Register() {
               <div className={styles.gender__container}>
                 <div className={styles.label__container}>
                   <p className={styles.label}>Gender</p>
-                  <FontAwesomeIcon icon={faCircleQuestion} width={12} height={12} style={{ color: "#606770" }} />
+                  <a
+                    href="#"
+                    id="birthdate__help"
+                    title="Click here for more informations"
+                    role="button"
+                    onClick={() => setIsDialogGender(!isDialogGender)}
+                  >
+                    <FontAwesomeIcon icon={faCircleQuestion} width={12} height={12} style={{ color: "#606770" }} />
+                  </a>
+                  {isDialogGender && (
+                    <dialog open className={styles.dialog} onClick={() => setIsDialogGender(!isDialogGender)}>
+                      <p>Select Custom to choose another gender, or if you prefer, irrelevant.</p>
+                    </dialog>
+                  )}
                 </div>
                 <div className={styles.checkbox__container}>
                   <label className={styles.checkbox__label}>
