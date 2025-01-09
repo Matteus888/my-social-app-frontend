@@ -10,10 +10,10 @@
   padding: 0 6 0 8;
   background-color: white;
   box-shadow: 0 2px 4px var(--lightgrey1);
+}
 
-  .options {
-    display: flex;
-    justify-content: space-between;
-    width: 70;
-  }
+.options {
+  display: flex;
+  justify-content: space-between;
+  width: 70;
 }

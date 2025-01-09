@@ -27,10 +27,10 @@
   &::-webkit-scrollbar-thumb:hover {
     background: var(--lightgrey1);
   }
+}
 
-  .title {
-    margin-top: 10;
-    margin-left: 10;
-    font-size: 20;
-  }
+.title {
+  margin-top: 10;
+  margin-left: 10;
+  font-size: 20;
 }

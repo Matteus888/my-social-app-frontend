@@ -5,10 +5,10 @@
   width: 300;
   height: 500;
   border-bottom: 1.5px solid var(--lightgrey2);
+}
 
-  .sidenavList {
-    margin: 20;
-    list-style-type: none;
-    font-size: 24;
-  }
+.sidenav__list {
+  margin: 20;
+  list-style-type: none;
+  font-size: 24;
 }

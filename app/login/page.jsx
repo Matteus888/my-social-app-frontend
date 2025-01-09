@@ -80,25 +80,25 @@ export default function Login() {
   return (
     <div className={styles.page}>
       <div className={styles.main}>
-        <h1 className={styles.title}>My Social App</h1>
+        <h1 className={styles.page__title}>My Social App</h1>
         <InfoCard content="You must login to continue." />
-        <div className={styles.loginContainer}>
+        <div className={styles.login__container}>
           <form action="submit" onSubmit={async (e) => e.preventDefault()}>
-            <p className={styles.loginTitle}>Connect to My Social App</p>
-            <div className={styles.infoAlert}>
+            <p className={styles.login__title}>Connect to My Social App</p>
+            <div className={styles.info__alert}>
               <p>You must login to continue.</p>
             </div>
             <input
-              className={styles.input}
+              className={styles.email__input}
               ref={emailRef}
               type="email"
               placeholder="Enter your email"
               value={emailValue}
               onChange={(e) => setEmailValue(e.target.value)}
             />
-            <div className={styles.inputPwdContainer}>
+            <div className={styles.input__container}>
               <input
-                className={styles.inputPwd}
+                className={styles.password__input}
                 ref={passwordRef}
                 type={passwordVisible ? "text" : "password"}
                 placeholder="Enter your password"
@@ -113,21 +113,21 @@ export default function Login() {
                 />
               )}
             </div>
-            <p className={styles.errorText} role="alert">
+            <p className={styles.error__text} role="alert">
               {error ? errorMessage : <span style={{ visibility: "hidden" }}>Invisible</span>}
             </p>
-            <button type="submit" className={styles.btnConnect} onClick={handleSubmit}>
+            <button type="submit" className={styles.btn__login} onClick={handleSubmit}>
               Connect
             </button>
           </form>
           {/* Forget account à mettre en place */}
-          <p className={styles.forgottenLink}>Forget account details ?</p>
-          <div className={styles.lineContainer}>
+          <p className={styles.forget__link}>Forget account details ?</p>
+          <div className={styles.line__container}>
             <div className={styles.line}></div>
-            <p className={styles.lineText}>OR</p>
+            <p className={styles.line__text}>OR</p>
             <div className={styles.line}></div>
           </div>
-          <Link href="/register" name="Register" className={styles.btnNewAccount}>
+          <Link href="/register" name="Register" className={styles.btn__register}>
             Create new account
           </Link>
         </div>

@@ -6,19 +6,19 @@
   border: 1px solid var(--blue1);
   border-radius: 4;
   background-color: white;
+}
 
-  .infoIcon {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 35;
-    height: 100%;
-    background-color: var(--blue1);
-  }
+.info__icon {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 35;
+  height: 100%;
+  background-color: var(--blue1);
+}
 
-  .infoText {
-    padding-left: 15;
-    font-size: 14;
-    font-weight: 500;
-  }
+.info__text {
+  padding-left: 15;
+  font-size: 14;
+  font-weight: 500;
 }

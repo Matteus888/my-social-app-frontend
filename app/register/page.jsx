@@ -24,23 +24,23 @@ export default function Register() {
   return (
     <div className={styles.page}>
       <div className={styles.main}>
-        <h1 className={styles.title}>My Social App</h1>
-        <div className={styles.registerContainer}>
-          <h2 className={styles.registerTitle}>Create a new account</h2>
+        <h1 className={styles.page__title}>My Social App</h1>
+        <div className={styles.register__container}>
+          <h2 className={styles.register__title}>Create a new account</h2>
           <p className={styles.slogan}>It's quick and esay.</p>
           <div className={styles.line}></div>
           <form action="submit" onSubmit={async (e) => e.preventDefault()}>
-            <div className={styles.formContainer}>
-              <div className={styles.nameContainer}>
-                <input className={styles.input} type="text" placeholder="Firstname" />
-                <input className={styles.input} type="text" placeholder="Lastname" />
+            <div className={styles.form__container}>
+              <div className={styles.name__container}>
+                <input className={styles.name__input} type="text" placeholder="Firstname" />
+                <input className={styles.name__input} type="text" placeholder="Lastname" />
               </div>
-              <div className={styles.birthDateContainer}>
-                <div className={styles.birthLabelContainer}>
-                  <p className={styles.birthLabel}>Date of Birth</p>
+              <div className={styles.birthdate__container}>
+                <div className={styles.label__container}>
+                  <p className={styles.label}>Date of Birth</p>
                   <FontAwesomeIcon icon={faCircleQuestion} width={12} height={12} style={{ color: "#606770" }} />
                 </div>
-                <div className={styles.selectsContainer}>
+                <div className={styles.select__container}>
                   <select className={styles.select} aria-label="Day" value={day} onChange={(e) => setDay(e.target.value)}>
                     {days.map((d) => (
                       <option key={d} value={d}>
@@ -64,25 +64,25 @@ export default function Register() {
                   </select>
                 </div>
               </div>
-              <div className={styles.genderContainer}>
-                <div className={styles.genderLabelContainer}>
-                  <p className={styles.genderLabel}>Gender</p>
+              <div className={styles.gender__container}>
+                <div className={styles.label__container}>
+                  <p className={styles.label}>Gender</p>
                   <FontAwesomeIcon icon={faCircleQuestion} width={12} height={12} style={{ color: "#606770" }} />
                 </div>
-                <div className={styles.checkboxesContainer}>
-                  <label className={styles.checkboxLabel}>
+                <div className={styles.checkbox__container}>
+                  <label className={styles.checkbox__label}>
                     Female
                     <input type="radio" />
                   </label>
-                  <label className={styles.checkboxLabel}>
+                  <label className={styles.checkbox__label}>
                     Male
                     <input type="radio" />
                   </label>
-                  <label className={styles.checkboxLabel}>
+                  <label className={styles.checkbox__label}>
                     Custom
                     <input type="radio" />
                   </label>
-                  <label className={styles.checkboxLabel}>
+                  <label className={styles.checkbox__label}>
                     Irrelevant
                     <input type="radio" />
                   </label>
