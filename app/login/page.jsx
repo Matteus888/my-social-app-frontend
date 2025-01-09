@@ -8,6 +8,8 @@ import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 import { useState, useRef } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import { useDispatch } from "react-redux";
+import { login } from "@/reducers/userReducer";
 
 export default function Login() {
   const [emailValue, setEmailValue] = useState("");
@@ -15,7 +17,10 @@ export default function Login() {
   const [passwordValue, setPasswordValue] = useState("");
   const [error, setError] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
+
   const router = useRouter();
+
+  const dispatch = useDispatch();
 
   const emailRef = useRef(null);
   const passwordRef = useRef(null);
@@ -64,6 +69,7 @@ export default function Login() {
           const data = await response.json();
           if (data.result) {
             console.log("Signin successful", data);
+            dispatch(login({ firstname: data.user.profile.firstname, lastname: data.user.profile.lastname, token: data.user.token }));
             router.push("/");
           }
         } else {

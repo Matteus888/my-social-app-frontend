@@ -1,5 +1,6 @@
 import { Quicksand } from "next/font/google";
 import "../styles/globals.css";
+import ClientProvider from "@/components/ClientProvider";
 
 const quicksand = Quicksand({
   variable: "--font-quicksand",
@@ -17,7 +18,9 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body className={`${quicksand.variable}`}>{children}</body>
+      <body className={`${quicksand.variable}`}>
+        <ClientProvider>{children}</ClientProvider>
+      </body>
     </html>
   );
 }
