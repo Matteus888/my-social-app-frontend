@@ -15,5 +15,36 @@
 .options {
   display: flex;
   justify-content: space-between;
-  width: 70;
+  width: 90;
+  /* border: 1px solid black; */
+}
+
+.imageContainer {
+  position: relative;
+  cursor: pointer;
+  width: 40;
+  height: 40;
+}
+
+.avatar {
+  border-radius: 50%;
+}
+
+.iconContainer {
+  position: absolute;
+  bottom: -4;
+  right: 0;
+  width: 14;
+  height: 14;
+  background-color: var(--lightgrey1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid white;
+  border-radius: 50%;
+}
+
+.icon {
+  font-size: 9px;
+  color: black;
 }

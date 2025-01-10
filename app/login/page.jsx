@@ -69,7 +69,14 @@ export default function Login() {
           const data = await response.json();
           if (data.result) {
             console.log("Signin successful", data);
-            dispatch(login({ firstname: data.user.profile.firstname, lastname: data.user.profile.lastname, token: data.user.token }));
+            dispatch(
+              login({
+                firstname: data.user.profile.firstname,
+                lastname: data.user.profile.lastname,
+                token: data.user.token,
+                avatar: data.user.profile.avatar,
+              })
+            );
             router.push("/");
           }
         } else {
@@ -86,25 +93,25 @@ export default function Login() {
   return (
     <div className={styles.page}>
       <div className={styles.main}>
-        <h1 className={styles.page__title}>My Social App</h1>
+        <h1 className={styles.pageTitle}>My Social App</h1>
         <InfoCard content="You must login to continue." />
-        <div className={styles.login__container}>
+        <div className={styles.loginContainer}>
           <form action="submit" onSubmit={async (e) => e.preventDefault()}>
-            <p className={styles.login__title}>Connect to My Social App</p>
-            <div className={styles.info__alert}>
+            <p className={styles.loginTitle}>Connect to My Social App</p>
+            <div className={styles.infoAlert}>
               <p>You must login to continue.</p>
             </div>
             <input
-              className={styles.email__input}
+              className={styles.emailInput}
               ref={emailRef}
               type="email"
               placeholder="Enter your email"
               value={emailValue}
               onChange={(e) => setEmailValue(e.target.value)}
             />
-            <div className={styles.password__container}>
+            <div className={styles.passwordContainer}>
               <input
-                className={styles.password__input}
+                className={styles.passwordInput}
                 ref={passwordRef}
                 type={passwordVisible ? "text" : "password"}
                 placeholder="Enter your password"
@@ -119,21 +126,21 @@ export default function Login() {
                 />
               )}
             </div>
-            <p className={styles.error__text} role="alert">
+            <p className={styles.errorText} role="alert">
               {error ? errorMessage : <span style={{ visibility: "hidden" }}>Invisible</span>}
             </p>
-            <button type="submit" className={styles.login__btn} onClick={handleSubmit}>
+            <button type="submit" className={styles.loginBtn} onClick={handleSubmit}>
               Connect
             </button>
           </form>
           {/* Forget account à mettre en place */}
-          <p className={styles.forget__link}>Forget account details ?</p>
-          <div className={styles.line__container}>
+          <p className={styles.forgetLink}>Forget account details ?</p>
+          <div className={styles.lineContainer}>
             <div className={styles.line}></div>
-            <p className={styles.line__text}>OR</p>
+            <p className={styles.lineText}>OR</p>
             <div className={styles.line}></div>
           </div>
-          <Link href="/register" name="Register" className={styles.register__link}>
+          <Link href="/register" name="Register" className={styles.registerLink}>
             Create new account
           </Link>
         </div>

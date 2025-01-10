@@ -3,13 +3,16 @@
 import styles from "../styles/header.module.css";
 import Image from "next/image";
 import Link from "next/link";
+import DropdownMenu from "./DropdownMenu";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faUser, faBell } from "@fortawesome/free-regular-svg-icons";
+import { faBell } from "@fortawesome/free-regular-svg-icons";
+import { faChevronDown } from "@fortawesome/free-solid-svg-icons";
 import { useSelector } from "react-redux";
+import { useState } from "react";
 
 export default function Header() {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
   const user = useSelector((state) => state.user.value);
-  console.log(user);
   return (
     <header className={styles.header}>
       <Link href="/" name="Home">
@@ -18,11 +21,16 @@ export default function Header() {
       <h1>My Social App</h1>
 
       <div className={styles.options}>
-        <FontAwesomeIcon icon={faBell} width={30} height={30} style={{ color: "#171717" }} />
-        <Link href="/profile" name="Profile">
-          <FontAwesomeIcon icon={faUser} width={30} height={30} style={{ color: "#171717" }} />
-          {user.firstname}
+        <Link href="#" name="notifications">
+          <FontAwesomeIcon icon={faBell} style={{ color: "#171717", fontSize: "40px" }} />
         </Link>
+        <div className={styles.imageContainer} onClick={() => setIsMenuOpen(!isMenuOpen)}>
+          <Image className={styles.avatar} src={user.avatar} width={40} height={40} alt="User Avatar" />
+          <div className={styles.iconContainer}>
+            <FontAwesomeIcon icon={faChevronDown} className={styles.icon} />
+          </div>
+        </div>
+        {isMenuOpen && <DropdownMenu />}
       </div>
     </header>
   );

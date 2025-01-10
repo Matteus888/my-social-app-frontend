@@ -1,6 +1,7 @@
 "use client";
 
 import styles from "../../styles/register.module.css";
+import defaultProfilePic from "@/data/defaultProfilePic";
 import Footer from "@/components/Footer";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleQuestion, faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
@@ -57,6 +58,7 @@ export default function Register() {
   const birthdateValue = new Date(year, month - 1, day);
 
   const handleSubmit = async () => {
+    // Validation des champs remplis
     const validate = () => {
       const regex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
 
@@ -96,18 +98,38 @@ export default function Register() {
     setError(false);
     setErrorMessage("");
 
+    // Choix d'une photo de profile selon genre
+    const getRandomPhotoPath = (gender) => {
+      const genderPics = defaultProfilePic[gender];
+
+      const randomIndex = Math.floor(Math.random() * genderPics.length);
+      const randomPhotoId = genderPics[randomIndex];
+
+      return `https://res.cloudinary.com/dzqy8gnmh/image/upload/v1736507142/${randomPhotoId}.png`;
+    };
+
+    const avatarPath = getRandomPhotoPath(genderValue);
+    console.log(avatarPath);
+
     try {
       const response = await fetch("http://localhost:3000/users/signup", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ emailValue, passwordValue, firstnameValue, lastnameValue, birthdateValue, genderValue }),
+        body: JSON.stringify({ emailValue, passwordValue, firstnameValue, lastnameValue, birthdateValue, genderValue, avatarPath }),
       });
 
       if (response.ok) {
         const data = await response.json();
         if (data.result) {
           console.log("Signup successful", data);
-          dispatch(login({ firstname: data.user.profile.firstname, lastname: data.user.profile.lastname, token: data.user.token }));
+          dispatch(
+            login({
+              firstname: data.user.profile.firstname,
+              lastname: data.user.profile.lastname,
+              token: data.user.token,
+              avatar: data.user.profile.avatar,
+            })
+          );
           router.push("/");
         }
       } else {
@@ -124,16 +146,16 @@ export default function Register() {
   return (
     <div className={styles.page}>
       <div className={styles.main}>
-        <h1 className={styles.page__title}>My Social App</h1>
-        <div className={styles.register__container}>
-          <h2 className={styles.register__title}>Create a new account</h2>
+        <h1 className={styles.pageTitle}>My Social App</h1>
+        <div className={styles.registerContainer}>
+          <h2 className={styles.registerTitle}>Create a new account</h2>
           <p className={styles.slogan}>It's quick and esay.</p>
           <div className={styles.line}></div>
           <form action="submit" onSubmit={async (e) => e.preventDefault()}>
-            <div className={styles.form__container}>
-              <div className={styles.name__container}>
+            <div className={styles.formContainer}>
+              <div className={styles.nameContainer}>
                 <input
-                  className={styles.name__input}
+                  className={styles.nameInput}
                   ref={firstnameRef}
                   type="text"
                   placeholder="Firstname"
@@ -141,7 +163,7 @@ export default function Register() {
                   onChange={(e) => setFirstnameValue(e.target.value)}
                 />
                 <input
-                  className={styles.name__input}
+                  className={styles.nameInput}
                   ref={lastnameRef}
                   type="text"
                   placeholder="Lastname"
@@ -149,8 +171,8 @@ export default function Register() {
                   onChange={(e) => setLastnameValue(e.target.value)}
                 />
               </div>
-              <div className={styles.birthdate__container}>
-                <div className={styles.label__container}>
+              <div className={styles.birthdateContainer}>
+                <div className={styles.labelContainer}>
                   <p className={styles.label}>Date of Birth</p>
                   <a
                     href="#"
@@ -169,7 +191,7 @@ export default function Register() {
                     </dialog>
                   )}
                 </div>
-                <div className={styles.select__container}>
+                <div className={styles.selectContainer}>
                   <select className={styles.select} aria-label="Day" value={day} onChange={(e) => setDay(e.target.value)}>
                     {days.map((d) => (
                       <option key={d} value={d}>
@@ -193,8 +215,8 @@ export default function Register() {
                   </select>
                 </div>
               </div>
-              <div className={styles.gender__container}>
-                <div className={styles.label__container}>
+              <div className={styles.genderContainer}>
+                <div className={styles.labelContainer}>
                   <p className={styles.label}>Gender</p>
                   <a
                     href="#"
@@ -211,8 +233,8 @@ export default function Register() {
                     </dialog>
                   )}
                 </div>
-                <div className={styles.checkbox__container}>
-                  <label className={styles.checkbox__label}>
+                <div className={styles.checkboxContainer}>
+                  <label className={styles.checkboxLabel}>
                     Female
                     <input
                       type="radio"
@@ -222,7 +244,7 @@ export default function Register() {
                       onChange={(e) => setGenderValue(e.target.value)}
                     />
                   </label>
-                  <label className={styles.checkbox__label}>
+                  <label className={styles.checkboxLabel}>
                     Male
                     <input
                       type="radio"
@@ -232,7 +254,7 @@ export default function Register() {
                       onChange={(e) => setGenderValue(e.target.value)}
                     />
                   </label>
-                  <label className={styles.checkbox__label}>
+                  <label className={styles.checkboxLabel}>
                     Custom
                     <input
                       type="radio"
@@ -242,7 +264,7 @@ export default function Register() {
                       onChange={(e) => setGenderValue(e.target.value)}
                     />
                   </label>
-                  <label className={styles.checkbox__label}>
+                  <label className={styles.checkboxLabel}>
                     Irrelevant
                     <input
                       type="radio"
@@ -255,16 +277,16 @@ export default function Register() {
                 </div>
               </div>
               <input
-                className={styles.email__input}
+                className={styles.emailInput}
                 ref={emailRef}
                 type="email"
                 placeholder="Enter your email"
                 value={emailValue}
                 onChange={(e) => setEmailValue(e.target.value)}
               />
-              <div className={styles.password__container}>
+              <div className={styles.passwordContainer}>
                 <input
-                  className={styles.password__input}
+                  className={styles.passwordInput}
                   ref={passwordRef}
                   type={passwordVisible ? "text" : "password"}
                   placeholder="Enter new password"
@@ -279,18 +301,18 @@ export default function Register() {
                   />
                 )}
               </div>
-              <p className={styles.error__text} role="alert">
+              <p className={styles.errorText} role="alert">
                 {error ? errorMessage : <span style={{ visibility: "hidden" }}>Invisible</span>}
               </p>
-              <p className={styles.policy__text}>
+              <p className={styles.policyText}>
                 By clicking on Register, you agree to our Terms and Conditions. Find out how we collect, use and share your data by reading
                 our Privacy Policy and how we use cookies and similar technologies by consulting our Cookie Usage Policy. You may receive
                 text notifications from us, and you can unsubscribe at any time.
               </p>
-              <button type="submit" className={styles.register__btn} onClick={handleSubmit}>
+              <button type="submit" className={styles.registerBtn} onClick={handleSubmit}>
                 Register
               </button>
-              <Link href="/login" name="Login" className={styles.login__link}>
+              <Link href="/login" name="Login" className={styles.loginLink}>
                 You already have an account ?
               </Link>
             </div>

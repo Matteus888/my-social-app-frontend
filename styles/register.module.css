@@ -13,11 +13,11 @@
   width: 600;
 }
 
-.page__title {
+.pageTitle {
   padding-bottom: 10;
 }
 
-.register__container {
+.registerContainer {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -31,7 +31,7 @@
   box-shadow: 0 1px 8px var(--lightgrey3);
 }
 
-.register__title {
+.registerTitle {
   margin-top: 12;
 }
 
@@ -46,21 +46,21 @@
   background-color: var(--lightgrey3);
 }
 
-.form__container {
+.formContainer {
   display: flex;
   flex-direction: column;
   align-items: center;
   width: 410;
 }
 
-.name__container {
+.nameContainer {
   display: flex;
   justify-content: space-between;
   width: 100%;
   margin-top: 18;
 }
 
-.name__input {
+.nameInput {
   width: 200;
   height: 40;
   padding: 0 14;
@@ -81,14 +81,14 @@
   }
 }
 
-.birthdate__container {
+.birthdateContainer {
   display: flex;
   flex-direction: column;
   width: 100%;
   margin-top: 14;
 }
 
-.label__container {
+.labelContainer {
   display: flex;
 }
 
@@ -110,7 +110,7 @@
   z-index: 1000;
 }
 
-.select__container {
+.selectContainer {
   display: flex;
   justify-content: space-between;
   width: 100%;
@@ -128,21 +128,21 @@
     sans-serif;
 }
 
-.gender__container {
+.genderContainer {
   display: flex;
   flex-direction: column;
   width: 100%;
   margin-top: 14;
 }
 
-.checkbox__container {
+.checkboxContainer {
   display: flex;
   justify-content: space-between;
   width: 100%;
   margin-top: 4;
 }
 
-.checkbox__label {
+.checkboxLabel {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -155,7 +155,7 @@
   font-weight: 450;
 }
 
-.email__input {
+.emailInput {
   width: 100%;
   height: 40;
   margin-top: 14;
@@ -177,7 +177,7 @@
   }
 }
 
-.password__container {
+.passwordContainer {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -189,7 +189,7 @@
   border-radius: 4px;
 }
 
-.password__input {
+.passwordInput {
   width: 90%;
   padding: 2 0;
   border: none;
@@ -208,17 +208,17 @@
   }
 }
 
-.error__text {
+.errorText {
   color: red;
   font-size: 12;
 }
 
-.policy__text {
+.policyText {
   margin-top: 6;
   font-size: 11;
 }
 
-.register__btn {
+.registerBtn {
   width: 200;
   height: 40;
   margin-top: 14;
@@ -234,7 +234,7 @@
   cursor: pointer;
 }
 
-.login__link {
+.loginLink {
   margin-top: 12;
   color: var(--blue1);
   font-size: 18;
