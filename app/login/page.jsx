@@ -9,7 +9,7 @@ import { useState, useRef } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { useDispatch } from "react-redux";
-import { login } from "@/reducers/userReducer";
+import { login } from "@/store/userReducer";
 
 export default function Login() {
   const [emailValue, setEmailValue] = useState("");

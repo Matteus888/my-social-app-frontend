@@ -1,10 +1,20 @@
+"use client";
+
 import styles from "../styles/home.module.css";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import SideNav from "@/components/SideNav";
 import ContactsSection from "@/components/ContactsSection";
+import { useSelector } from "react-redux";
+import { redirect } from "next/navigation";
 
 export default function Home() {
+  const user = useSelector((state) => state.user.value);
+
+  if (!user.token) {
+    redirect("/login");
+  }
+
   return (
     <div className={styles.page}>
       <Header />

@@ -7,6 +7,8 @@ import { faCircleQuestion, faEye, faEyeSlash } from "@fortawesome/free-solid-svg
 import { useState, useRef } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import { useDispatch } from "react-redux";
+import { login } from "@/store/userReducer";
 
 export default function Register() {
   const today = new Date();
@@ -29,6 +31,8 @@ export default function Register() {
   const [isDialogGender, setIsDialogGender] = useState(false);
 
   const router = useRouter();
+
+  const dispatch = useDispatch();
 
   const emailRef = useRef(null);
   const passwordRef = useRef(null);
@@ -103,6 +107,7 @@ export default function Register() {
         const data = await response.json();
         if (data.result) {
           console.log("Signup successful", data);
+          dispatch(login({ firstname: data.user.profile.firstname, lastname: data.user.profile.lastname, token: data.user.token }));
           router.push("/");
         }
       } else {
