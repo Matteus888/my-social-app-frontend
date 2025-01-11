@@ -8,7 +8,7 @@ import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 import { useState, useRef } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { login } from "@/store/userReducer";
 
 export default function Login() {
@@ -20,6 +20,7 @@ export default function Login() {
 
   const router = useRouter();
 
+  const user = useSelector((state) => state.user.value);
   const dispatch = useDispatch();
 
   const emailRef = useRef(null);

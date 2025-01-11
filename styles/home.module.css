@@ -8,7 +8,7 @@
 
   font-family: var(--font-geist-sans);
   margin-top: 60;
-  width: 100%;
+  width: 100vw;
 }
 
 .main {
@@ -19,6 +19,7 @@
 .flux {
   width: calc(100vw - 600px);
   height: calc(100vh - 60px);
+  padding: 0 20px;
   overflow-y: auto;
 
   &::-webkit-scrollbar {
