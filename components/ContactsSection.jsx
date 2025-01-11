@@ -1,13 +1,13 @@
 import styles from "../styles/contactsSection.module.css";
 import ContactCard from "./ContactCard";
 
-export default function ContactsSection() {
+export default function ContactsSection({ isDropdownOpen }) {
   return (
-    <div className={styles.contacts}>
+    <div className={styles.contacts} style={{ position: "relative", zIndex: isDropdownOpen ? -1 : 1 }}>
       <h2 className={styles.title}>Contacts</h2>
-      <ContactCard name="Matt" image="/users/man1.png" />
+      <ContactCard name="Matt Yeah" image="/users/man1.png" />
       <ContactCard name="John" image="/users/man2.png" />
-      <ContactCard name="Jane" image="/users/woman1.png" />
+      <ContactCard name="Aurélie Poulette" image="/users/woman1.png" />
       <ContactCard name="Billie" image="/users/man3.png" />
       <ContactCard name="William" image="/users/man4.png" />
       <ContactCard name="Giraffe Boy" image="/users/other1.png" />

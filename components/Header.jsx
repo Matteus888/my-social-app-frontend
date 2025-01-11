@@ -8,10 +8,9 @@ import { faBell } from "@fortawesome/free-regular-svg-icons";
 import { faChevronDown, faArrowRightFromBracket, faGear } from "@fortawesome/free-solid-svg-icons";
 import { useSelector, useDispatch } from "react-redux";
 import { logout } from "@/store/userReducer";
-import { useState, useEffect, useRef } from "react";
+import { useEffect, useRef } from "react";
 
-export default function Header() {
-  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+export default function Header({ isDropdownOpen, setIsDropdownOpen }) {
   const dropdownRef = useRef(null);
 
   const user = useSelector((state) => state.user.value);
@@ -33,7 +32,7 @@ export default function Header() {
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
-  }, []);
+  }, [setIsDropdownOpen]);
 
   return (
     <header className={styles.header}>
