@@ -1,12 +1,7 @@
 .contacts {
-  position: fixed;
-  top: 50;
-  right: 0;
   width: 300;
-  height: calc(100vh - 50px);
+  height: calc(100vh - 60px);
   overflow-y: hidden;
-  z-index: 1;
-  /* border: 1px solid blue; */
 
   &:hover {
     overflow-y: auto;

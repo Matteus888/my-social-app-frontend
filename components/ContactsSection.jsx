@@ -3,7 +3,7 @@ import ContactCard from "./ContactCard";
 
 export default function ContactsSection() {
   return (
-    <aside className={styles.contacts}>
+    <div className={styles.contacts}>
       <h2 className={styles.title}>Contacts</h2>
       <ContactCard name="Matt" image="/users/man1.png" />
       <ContactCard name="John" image="/users/man2.png" />
@@ -25,6 +25,6 @@ export default function ContactsSection() {
       <ContactCard name="Jean-Eudes" image="/users/man5.png" />
       <ContactCard name="Koala Man" image="/users/other4.png" />
       <ContactCard name="Girl Power" image="/users/woman3.png" />
-    </aside>
+    </div>
   );
 }

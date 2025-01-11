@@ -1,7 +1,4 @@
 .sidenav {
-  position: fixed;
-  top: 50;
-  left: 0;
   width: 300;
   height: 500;
   border-bottom: 1.5px solid var(--lightgrey2);

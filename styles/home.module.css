@@ -7,7 +7,23 @@
   --button-secondary-hover: #f2f2f2;
 
   font-family: var(--font-geist-sans);
-  margin: 60 330;
+  margin-top: 60;
+  width: 100%;
+}
+
+.main {
+  display: flex;
+  height: 100%;
+}
+
+.flux {
+  width: calc(100vw - 600px);
+  height: calc(100vh - 60px);
+  overflow-y: auto;
+
+  &::-webkit-scrollbar {
+    width: 0;
+  }
 }
 
 /* @media (prefers-color-scheme: dark) {
