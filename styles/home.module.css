@@ -1,12 +1,4 @@
 .page {
-  --gray-rgb: 0, 0, 0;
-  --gray-alpha-200: rgba(var(--gray-rgb), 0.08);
-  --gray-alpha-100: rgba(var(--gray-rgb), 0.05);
-
-  --button-primary-hover: #383838;
-  --button-secondary-hover: #f2f2f2;
-
-  font-family: var(--font-geist-sans);
   margin-top: 50;
   width: 100vw;
 }
@@ -19,7 +11,7 @@
 
 .fluxContainer {
   height: calc(100vh - 60px);
-  padding: 10 20px;
+  padding: 20 20px;
   overflow-y: auto;
 
   &::-webkit-scrollbar {
@@ -30,21 +22,3 @@
 .flux {
   width: 600;
 }
-
-/* @media (prefers-color-scheme: dark) {
-  .page {
-    --gray-rgb: 255, 255, 255;
-    --gray-alpha-200: rgba(var(--gray-rgb), 0.145);
-    --gray-alpha-100: rgba(var(--gray-rgb), 0.06);
-
-    --button-primary-hover: #ccc;
-    --button-secondary-hover: #1a1a1a;
-  }
-}
-
-/* Enable hover only on non-touch devices */
-/* @media (hover: hover) and (pointer: fine) {}
-
-@media (max-width: 600px) {
-  .page {}
-} */

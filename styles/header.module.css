@@ -12,6 +12,30 @@
   box-shadow: 0 1px 8px var(--lightgrey3);
 }
 
+.logo {
+  position: relative;
+  border: none;
+  width: 40;
+  height: 40;
+
+  &::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    background-color: rgba(0, 0, 0, 0.06);
+    opacity: 0;
+    transition: opacity 0.3 ease;
+  }
+
+  &:hover::after {
+    opacity: 1;
+  }
+}
+
 .options {
   display: flex;
   justify-content: space-between;
@@ -25,9 +49,29 @@
   cursor: pointer;
   width: 40;
   height: 40;
+
+  &::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    background-color: rgba(0, 0, 0, 0.06);
+    opacity: 0;
+    transition: opacity 0.3 ease;
+  }
+
+  &:hover::after {
+    opacity: 1;
+  }
 }
 
 .avatar {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
   border-radius: 50%;
 }
 

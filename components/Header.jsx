@@ -36,7 +36,7 @@ export default function Header({ isDropdownOpen, setIsDropdownOpen }) {
 
   return (
     <header className={styles.header}>
-      <Link href="/" name="Home">
+      <Link href="/" name="Home" className={styles.logo}>
         <Image src="/logo.svg" width={40} height={40} alt="Logo" />
       </Link>
       <h1>My Social App</h1>
@@ -55,7 +55,7 @@ export default function Header({ isDropdownOpen, setIsDropdownOpen }) {
         {isDropdownOpen && (
           <ul className={styles.dropdownMenu}>
             <li className={styles.dropdownCard}>
-              <Image className={styles.avatar} src={user.avatar} width={20} height={20} alt="User Avatar" />
+              <Image className={styles.avatarCard} src={user.avatar} width={20} height={20} alt="User Avatar" />
               <Link href="/profile" className={styles.dropdownItem}>
                 {user.firstname}'s Profile
               </Link>

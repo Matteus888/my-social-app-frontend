@@ -1,0 +1,54 @@
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10;
+  width: 600;
+  height: 68;
+  background-color: white;
+  box-shadow: 0 1px 8px var(--lightgrey3);
+  border-radius: 6px;
+}
+
+.avatar {
+  position: relative;
+  vertical-align: middle;
+  height: 44;
+  border-radius: 50%;
+
+  &::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    background-color: rgba(0, 0, 0, 0.06);
+    opacity: 0;
+    transition: opacity 0.3 ease;
+  }
+
+  &:hover::after {
+    opacity: 1;
+  }
+}
+
+.inputBtn {
+  width: 86%;
+  height: 42px;
+  padding-left: 20px;
+  font-family: var(--font-quicksand), Arial, sans-serif;
+  font-size: 16;
+  font-weight: 450;
+  border: none;
+  border-radius: 22px;
+  background-color: var(--lightgrey4);
+  text-align: start;
+  transition: background-color 0.1s ease;
+
+  &:hover {
+    background-color: var(--lightgrey3);
+    cursor: pointer;
+  }
+}

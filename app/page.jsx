@@ -5,6 +5,8 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import SideNav from "@/components/SideNav";
 import ContactsSection from "@/components/ContactsSection";
+import PostInputBtn from "@/components/PostInputBtn";
+import PostCard from "@/components/PostCard";
 import { useSelector } from "react-redux";
 import { redirect } from "next/navigation";
 import { useState } from "react";
@@ -26,6 +28,8 @@ export default function Home() {
         <Footer />
         <div className={styles.fluxContainer}>
           <div className={styles.flux}>
+            <PostInputBtn />
+            <PostCard />
             <p>
               Lorem ipsum dolor, sit amet consectetur adipisicing elit. Nobis quos consequuntur, earum amet quo sed ab odio, dolore culpa
               aspernatur dignissimos odit magni eaque dicta debitis cumque, in illum accusantium? Ducimus et recusandae expedita minus in
