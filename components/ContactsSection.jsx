@@ -2,29 +2,27 @@ import styles from "../styles/contactsSection.module.css";
 import ContactCard from "./ContactCard";
 
 export default function ContactsSection({ isDropdownOpen }) {
+  // Fetch GET all friends
+
   return (
     <div className={styles.contacts} style={{ position: "relative", zIndex: isDropdownOpen ? -1 : 1 }}>
       <h2 className={styles.title}>Contacts</h2>
-      <ContactCard name="Matt Yeah" image="/users/man1.png" />
-      <ContactCard name="John" image="/users/man2.png" />
-      <ContactCard name="Aurélie Poulette" image="/users/woman1.png" />
-      <ContactCard name="Billie" image="/users/man3.png" />
-      <ContactCard name="William" image="/users/man4.png" />
-      <ContactCard name="Giraffe Boy" image="/users/other1.png" />
-      <ContactCard name="Kate" image="/users/woman2.png" />
-      <ContactCard name="Jean-Eudes" image="/users/man5.png" />
-      <ContactCard name="Koala Man" image="/users/other2.png" />
-      <ContactCard name="Girl Power" image="/users/woman3.png" />
-      <ContactCard name="Matt" image="/users/man1.png" />
-      <ContactCard name="John" image="/users/man2.png" />
-      <ContactCard name="Jane" image="/users/woman1.png" />
-      <ContactCard name="Billie" image="/users/man3.png" />
-      <ContactCard name="William" image="/users/man4.png" />
-      <ContactCard name="Giraffe Boy" image="/users/other3.png" />
-      <ContactCard name="Kate" image="/users/woman2.png" />
-      <ContactCard name="Jean-Eudes" image="/users/man5.png" />
-      <ContactCard name="Koala Man" image="/users/other4.png" />
-      <ContactCard name="Girl Power" image="/users/woman3.png" />
+      <ContactCard
+        name="Matt Yeah"
+        image="https://res.cloudinary.com/dzqy8gnmh/image/upload/v1736507142/my-social-app/user_profile/r7cfwapnvx8e68y9ndbr.png"
+      />
+      <ContactCard
+        name="John"
+        image="https://res.cloudinary.com/dzqy8gnmh/image/upload/v1736507142/my-social-app/user_profile/bwwdniezugfnqikmda0x.png"
+      />
+      <ContactCard
+        name="Aurélie Poulette"
+        image="https://res.cloudinary.com/dzqy8gnmh/image/upload/v1736507142/my-social-app/user_profile/avjelejrbqiwhgzb6cw2.png"
+      />
+      <ContactCard
+        name="Billie"
+        image="https://res.cloudinary.com/dzqy8gnmh/image/upload/v1736507142/my-social-app/user_profile/b9k6cgdztva8natoj0mc.png"
+      />
     </div>
   );
 }
