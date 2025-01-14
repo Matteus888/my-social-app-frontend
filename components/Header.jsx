@@ -45,7 +45,7 @@ export default function Header({ isDropdownOpen, setIsDropdownOpen }) {
         <Link href="#" name="notifications">
           <FontAwesomeIcon icon={faBell} style={{ color: "#171717", fontSize: "40px" }} />
         </Link>
-        <div className={styles.imageContainer} onClick={() => setIsDropdownOpen(!isDropdownOpen)} ref={dropdownRef}>
+        <div className={styles.imageContainer} onClick={() => setIsDropdownOpen(!isDropdownOpen)}>
           <Image className={styles.avatar} src={user.avatar} width={40} height={40} alt="User Avatar" />
           <div className={styles.iconContainer}>
             <FontAwesomeIcon icon={faChevronDown} className={styles.icon} />
@@ -53,7 +53,7 @@ export default function Header({ isDropdownOpen, setIsDropdownOpen }) {
         </div>
         {/* Menu déroulant */}
         {isDropdownOpen && (
-          <ul className={styles.dropdownMenu}>
+          <ul className={styles.dropdownMenu} ref={dropdownRef}>
             <li className={styles.dropdownCard}>
               <Image className={styles.avatarCard} src={user.avatar} width={20} height={20} alt="User Avatar" />
               <Link href="/profile" className={styles.dropdownItem}>

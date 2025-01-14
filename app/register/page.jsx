@@ -109,7 +109,6 @@ export default function Register() {
     };
 
     const avatarPath = getRandomPhotoPath(genderValue);
-    console.log(avatarPath);
 
     try {
       const response = await fetch("http://localhost:3000/users/signup", {

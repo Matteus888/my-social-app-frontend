@@ -9,7 +9,7 @@ import PostInputBtn from "@/components/PostInputBtn";
 import PostCardModal from "@/components/PostCardModal";
 import { useSelector } from "react-redux";
 import { redirect } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export default function Home() {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
@@ -20,6 +20,22 @@ export default function Home() {
   if (!user.token) {
     redirect("/login");
   }
+
+  useEffect(() => {
+    const fetchPosts = async () => {
+      try {
+        const response = await fetch("http://localhost:3000/posts");
+        if (response.ok) {
+          const data = await response.json();
+          console.log(data);
+          // Enoyer dans un état pour affichage
+        }
+      } catch (error) {
+        console.error("Error during getting posts", error);
+      }
+    };
+    fetchPosts();
+  }, []);
 
   const openPostCardModal = () => setIsPostCardModalOpen(true);
   const closePostCardModal = () => setIsPostCardModalOpen(false);

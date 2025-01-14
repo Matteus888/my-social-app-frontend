@@ -1,3 +1,5 @@
+"use client";
+
 import styles from "@/styles/postCardModal.module.css";
 import Image from "next/image";
 import Link from "next/link";
@@ -10,8 +12,29 @@ export default function PostCardModal({ onClosePostCardModal }) {
   const [content, setContent] = useState("");
 
   const user = useSelector((state) => state.user.value);
+  // console.log(user.token);
 
   const isDisabled = content.trim() === "";
+
+  const handleSubmitPost = async () => {
+    try {
+      const response = await fetch("http://localhost:3000/posts", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ content: content, author: user.token }),
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        if (data.result) {
+          console.log("Post recorded", data);
+        }
+      }
+    } catch (error) {
+      console.error("Error during post recording:", error);
+    }
+    onClosePostCardModal();
+  };
 
   return (
     <div className={styles.modalOverlay} onClick={onClosePostCardModal}>
@@ -30,7 +53,7 @@ export default function PostCardModal({ onClosePostCardModal }) {
               <p className={styles.name}>{user.firstname}</p>
             </div>
           </Link>
-          <form action="submit">
+          <form action="submit" onSubmit={async (e) => e.preventDefault()}>
             <textarea
               className={styles.textarea}
               value={content}
@@ -39,7 +62,12 @@ export default function PostCardModal({ onClosePostCardModal }) {
               placeholder={`What's up ${user.firstname}`}
               maxLength={400}
             />
-            <button type="submit" className={`${styles.submitBtn} ${isDisabled ? styles.disabled : styles.active}`} disabled={isDisabled}>
+            <button
+              type="submit"
+              className={`${styles.submitBtn} ${isDisabled ? styles.disabled : styles.active}`}
+              disabled={isDisabled}
+              onClick={handleSubmitPost}
+            >
               Publish
             </button>
           </form>
