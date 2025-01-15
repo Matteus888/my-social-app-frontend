@@ -8,7 +8,7 @@ import { useSelector } from "react-redux";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faXmark } from "@fortawesome/free-solid-svg-icons";
 
-export default function PostCardModal({ onClosePostCardModal }) {
+export default function PostCardModal({ onClosePostCardModal, onNewPost }) {
   const [content, setContent] = useState("");
 
   const user = useSelector((state) => state.user.value);
@@ -33,6 +33,7 @@ export default function PostCardModal({ onClosePostCardModal }) {
     } catch (error) {
       console.error("Error during post recording:", error);
     }
+    onNewPost();
     onClosePostCardModal();
   };
 

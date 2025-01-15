@@ -1,0 +1,112 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  margin-top: 20;
+  padding: 10 10 0 10;
+  width: 600;
+  min-height: 150;
+  background-color: white;
+  box-shadow: 0 1px 8px var(--lightgrey3);
+  border-radius: 6px;
+}
+
+.postedHeader {
+  display: flex;
+  position: relative;
+  width: 100%;
+  height: 40;
+}
+
+.postedHeaderText {
+  display: flex;
+  flex-direction: column;
+  margin-left: 10;
+}
+
+.name {
+  font-weight: 700;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+.date {
+  font-size: 12;
+}
+
+.postedHeaderIcon {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 25;
+  height: 25;
+  border-radius: 50%;
+  transition: background-color 0.3 ease-in-out;
+
+  &:hover {
+    background-color: var(--lightgrey4);
+    cursor: pointer;
+  }
+}
+
+.icon {
+  width: 20;
+  height: 20;
+}
+
+.postedContent {
+  margin-top: 15;
+  width: 100%;
+}
+
+.content {
+  word-wrap: break-word;
+}
+
+.commentCountSection {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10;
+  font-size: 12;
+}
+
+.line {
+  margin-top: 5;
+  width: 100%;
+  height: 1;
+  background-color: var(--lightgrey3);
+}
+
+.commentSection {
+  display: flex;
+  justify-content: space-around;
+  width: 100%;
+  height: 50px;
+  padding: 10;
+  /* border: 1px solid black; */
+}
+
+.commentBtn {
+  display: flex;
+  padding: 5 10;
+  font-size: 20;
+  color: var(--forebground);
+  transition: background-color 0.3 ease-in-out;
+
+  &:hover {
+    background-color: var(--lightgrey4);
+    cursor: pointer;
+  }
+}
+
+.commentIcon {
+  margin-right: 8;
+}
+
+.commentBtnText {
+  font-size: 16;
+}
