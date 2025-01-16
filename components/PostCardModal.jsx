@@ -12,23 +12,23 @@ export default function PostCardModal({ onClosePostCardModal, onNewPost }) {
   const [content, setContent] = useState("");
 
   const user = useSelector((state) => state.user.value);
-  // console.log(user.token);
 
   const isDisabled = content.trim() === "";
 
   const handleSubmitPost = async () => {
+    const token = localStorage.getItem("token");
+
     try {
       const response = await fetch("http://localhost:3000/posts", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ content: content, author: user.token }),
+        headers: { "Content-Type": "application/json", Authorization: token ? `Bearer ${token}` : "" },
+        body: JSON.stringify({ content: content, author: user.publicId }),
       });
 
       if (response.ok) {
         const data = await response.json();
-        if (data.result) {
-          console.log("Post recorded", data);
-        }
+      } else {
+        console.error("Failed to create post, response status:", response.status);
       }
     } catch (error) {
       console.error("Error during post recording:", error);
@@ -62,6 +62,7 @@ export default function PostCardModal({ onClosePostCardModal, onNewPost }) {
               name="postContent"
               placeholder={`What's up ${user.firstname}`}
               maxLength={400}
+              autoFocus
             />
             <button
               type="submit"

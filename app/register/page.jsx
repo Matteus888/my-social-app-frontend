@@ -120,12 +120,14 @@ export default function Register() {
       if (response.ok) {
         const data = await response.json();
         if (data.result) {
-          console.log("Signup successful", data);
+          localStorage.setItem("token", data.token);
+          localStorage.setItem("user", JSON.stringify(data.user));
+
           dispatch(
             login({
               firstname: data.user.profile.firstname,
               lastname: data.user.profile.lastname,
-              token: data.user.token,
+              publicId: data.user.publicId,
               avatar: data.user.profile.avatar,
             })
           );

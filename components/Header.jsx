@@ -3,22 +3,32 @@
 import styles from "../styles/header.module.css";
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBell } from "@fortawesome/free-regular-svg-icons";
 import { faChevronDown, faArrowRightFromBracket, faGear } from "@fortawesome/free-solid-svg-icons";
 import { useSelector, useDispatch } from "react-redux";
 import { logout } from "@/store/userReducer";
 import { useEffect, useRef } from "react";
+import { useHeader } from "@/contexts/HeaderContext";
 
-export default function Header({ isDropdownOpen, setIsDropdownOpen }) {
+export default function Header() {
+  const { isDropdownOpen, setIsDropdownOpen } = useHeader();
   const dropdownRef = useRef(null);
+  const router = useRouter();
 
   const user = useSelector((state) => state.user.value);
   const dispatch = useDispatch();
 
   const handleLogout = (e) => {
     e.preventDefault();
-    dispatch(logout());
+    localStorage.removeItem("token");
+    localStorage.removeItem("user");
+    setIsDropdownOpen(false);
+    router.push("/login");
+    setTimeout(() => {
+      dispatch(logout());
+    }, 500);
   };
 
   // Gestion du clic à l'extérieur pour fermer le menu
@@ -56,7 +66,7 @@ export default function Header({ isDropdownOpen, setIsDropdownOpen }) {
           <ul className={styles.dropdownMenu} ref={dropdownRef}>
             <li className={styles.dropdownCard}>
               <Image className={styles.avatarCard} src={user.avatar} width={20} height={20} alt="User Avatar" />
-              <Link href="/profile" className={styles.dropdownItem}>
+              <Link href={`/profile/${user.publicId}`} className={styles.dropdownItem}>
                 {user.firstname}'s Profile
               </Link>
             </li>

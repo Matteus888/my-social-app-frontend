@@ -9,13 +9,13 @@ const moment = require("moment");
 
 export default function PostedCard({ author, date, content }) {
   const formattedDate = moment(date).format("MMMM Do YYYY, hh:mm a");
-  console.log(author._id);
+
   return (
     <div className={styles.container}>
       <div className={styles.postedHeader}>
         <Image src={author.profile.avatar} alt={`${author.profile.firstname} profile pic`} width={40} height={40} />
         <div className={styles.postedHeaderText}>
-          <Link href={`/profile/${author._id}`} className={styles.name}>
+          <Link href={`/profile/${author.publicId}`} className={styles.name}>
             {author.profile.firstname} {author.profile.lastname}
           </Link>
           <p className={styles.date}>{formattedDate}</p>
