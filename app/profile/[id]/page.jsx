@@ -10,6 +10,34 @@ export default function Profile({ params }) {
   const [userData, setUserData] = useState(null);
   const [postsList, setPostsList] = useState([]);
   const [error, setError] = useState(false);
+  const [addFriendError, setAddFriendError] = useState(null);
+  const [addFriendSuccess, setAddFriendSuccess] = useState(false);
+
+  const handleAddFriend = async () => {
+    const token = localStorage.getItem("token");
+
+    try {
+      const res = await fetch(`http://localhost:3000/users/${id}/friends`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: token ? `Bearer ${token}` : "",
+        },
+      });
+      if (res.ok) {
+        setAddFriendSuccess(true);
+        setAddFriendError(null);
+      } else {
+        const errorData = await res.json();
+        setAddFriendError(errorData.error || "Something went wrong");
+        setAddFriendSuccess(false);
+      }
+    } catch (err) {
+      console.error(err);
+      setAddFriendError("Error connecting to the server");
+      setAddFriendSuccess(false);
+    }
+  };
 
   useEffect(() => {
     async function fetchUserData() {
@@ -64,6 +92,10 @@ export default function Profile({ params }) {
     <div className={styles.page}>
       <p>ProfilePage {userData.profile.firstname}</p>
       <p>ID: {userData.publicId}</p>
+      {/* Affichage du message de succès ou d'erreur */}
+      {addFriendSuccess && <p style={{ color: "green" }}>Friend added successfully!</p>}
+      {addFriendError && <p style={{ color: "red" }}>{addFriendError}</p>}
+      <button onClick={handleAddFriend}>Add to my friend's group</button>
       <h2>Posts</h2>
       {postsList.length > 0 ? posts : <p>No posts available.</p>}
     </div>
