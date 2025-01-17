@@ -1,28 +1,50 @@
+import { useEffect, useState } from "react";
 import styles from "../styles/contactsSection.module.css";
 import ContactCard from "./ContactCard";
+import { useHeader } from "@/contexts/HeaderContext";
 
-export default function ContactsSection({ isDropdownOpen, isFriendRequestOpen }) {
-  // Fetch GET all friends
+export default function ContactsSection() {
+  const [friendsList, setFriendsList] = useState([]);
+  const { isDropdownOpen } = useHeader();
+  const { isFriendRequestOpen } = useHeader();
+
+  useEffect(() => {
+    const fetchFriends = async () => {
+      const token = localStorage.getItem("token");
+
+      try {
+        const res = await fetch("http://localhost:3000/users/friends", {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: token ? `Bearer ${token}` : "",
+          },
+        });
+
+        if (!res.ok) {
+          throw new Error("Failed to fetch friends.");
+        }
+
+        const data = await res.json();
+        setFriendsList(data.friends);
+      } catch (error) {
+        console.error("Error fetching friends:", error);
+      }
+    };
+
+    fetchFriends();
+  }, []);
 
   return (
     <div className={styles.contacts} style={{ position: "relative", zIndex: isDropdownOpen || isFriendRequestOpen ? -1 : 1 }}>
       <h2 className={styles.title}>Contacts</h2>
-      <ContactCard
-        name="Matt Yeah"
-        image="https://res.cloudinary.com/dzqy8gnmh/image/upload/v1736507142/my-social-app/user_profile/r7cfwapnvx8e68y9ndbr.png"
-      />
-      <ContactCard
-        name="John"
-        image="https://res.cloudinary.com/dzqy8gnmh/image/upload/v1736507142/my-social-app/user_profile/bwwdniezugfnqikmda0x.png"
-      />
-      <ContactCard
-        name="Aurélie Poulette"
-        image="https://res.cloudinary.com/dzqy8gnmh/image/upload/v1736507142/my-social-app/user_profile/avjelejrbqiwhgzb6cw2.png"
-      />
-      <ContactCard
-        name="Billie"
-        image="https://res.cloudinary.com/dzqy8gnmh/image/upload/v1736507142/my-social-app/user_profile/b9k6cgdztva8natoj0mc.png"
-      />
+      {friendsList.length > 0 ? (
+        friendsList.map((friend, i) => (
+          <ContactCard key={i} name={`${friend.profile.firstname} ${friend.profile.lastname}`} image={friend.profile.avatar} />
+        ))
+      ) : (
+        <p className={styles.empty}>No friend added</p>
+      )}
     </div>
   );
 }

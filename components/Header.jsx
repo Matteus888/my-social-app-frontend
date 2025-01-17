@@ -3,27 +3,31 @@
 import styles from "../styles/header.module.css";
 import Image from "next/image";
 import Link from "next/link";
+import FriendRequestCard from "./FriendRequestCard";
+import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
+import { useSelector, useDispatch } from "react-redux";
+import { logout } from "@/store/userReducer";
+import { useHeader } from "@/contexts/HeaderContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBell } from "@fortawesome/free-regular-svg-icons";
 import { faChevronDown, faArrowRightFromBracket, faGear } from "@fortawesome/free-solid-svg-icons";
-import { useSelector, useDispatch } from "react-redux";
-import { logout } from "@/store/userReducer";
-import { useEffect, useRef, useState } from "react";
-import { useHeader } from "@/contexts/HeaderContext";
-import FriendRequestCard from "./FriendRequestCard";
 
 export default function Header() {
   const [friendRequests, setFriendRequests] = useState([]);
+
   const { isFriendRequestOpen, setIsFriendRequestOpen } = useHeader();
   const { isDropdownOpen, setIsDropdownOpen } = useHeader();
+
   const dropdownRef = useRef(null);
   const friendRequestRef = useRef(null);
+
   const router = useRouter();
 
   const user = useSelector((state) => state.user.value);
   const dispatch = useDispatch();
 
+  // Pour se déconnecter
   const handleLogout = (e) => {
     e.preventDefault();
     localStorage.removeItem("token");
@@ -64,7 +68,7 @@ export default function Header() {
     fetchFriendRequests();
   }, []);
 
-  // Gestion du clic à l'extérieur pour fermer le menu
+  // Gestion du clic à l'extérieur pour fermer les menus
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target) && isDropdownOpen) {
