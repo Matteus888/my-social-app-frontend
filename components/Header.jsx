@@ -37,32 +37,33 @@ export default function Header() {
   // Boutons Reject /users/:id/friend-request/reject
 
   // Pour récupérer les demandes d'amis A TESTER
-  // useEffect(() => {
-  //   async function fetchFriendRequests() {
-  //     const token = localStorage.getItem("token");
+  useEffect(() => {
+    const fetchFriendRequests = async () => {
+      const token = localStorage.getItem("token");
 
-  //     try {
-  //       const res = await fetch("http://localhost:3000/users/friend-requests", {
-  //         method: "GET",
-  //         headers: {
-  //           "Content-Type": "application/json",
-  //           Authorization: token ? `Bearer ${token}` : "",
-  //         },
-  //       });
+      try {
+        const res = await fetch("http://localhost:3000/users/friend-requests", {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: token ? `Bearer ${token}` : "",
+          },
+        });
 
-  //       if (!res.ok) {
-  //         throw new Error("Failed to fetch friend requests.");
-  //       }
+        if (!res.ok) {
+          throw new Error("Failed to fetch friend requests.");
+        }
 
-  //       const data = await res.json();
-  //       setFriendRequests(data.friendRequests);
-  //     } catch (error) {
-  //       console.error("Error fetching friend requests:", error);
-  //     }
-  //   }
+        const data = await res.json();
+        console.log(data.friendRequests);
+        setFriendRequests(data.friendRequests);
+      } catch (error) {
+        console.error("Error fetching friend requests:", error);
+      }
+    };
 
-  //   fetchFriendRequests();
-  // }, []);
+    fetchFriendRequests();
+  }, []);
 
   // Gestion du clic à l'extérieur pour fermer le menu
   useEffect(() => {
@@ -87,6 +88,7 @@ export default function Header() {
       <div className={styles.options}>
         <Link href="#" name="notifications">
           <FontAwesomeIcon icon={faBell} style={{ color: "#171717", fontSize: "40px" }} />
+          {friendRequests && <p>You have friend request{friendRequests.length}</p>}
         </Link>
         <div className={styles.imageContainer} onClick={() => setIsDropdownOpen(!isDropdownOpen)}>
           <Image className={styles.avatar} src={user.avatar} width={40} height={40} alt="User Avatar" />
