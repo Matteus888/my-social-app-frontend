@@ -1,11 +1,11 @@
 import styles from "../styles/contactsSection.module.css";
 import ContactCard from "./ContactCard";
 
-export default function ContactsSection({ isDropdownOpen }) {
+export default function ContactsSection({ isDropdownOpen, isFriendRequestOpen }) {
   // Fetch GET all friends
 
   return (
-    <div className={styles.contacts} style={{ position: "relative", zIndex: isDropdownOpen ? -1 : 1 }}>
+    <div className={styles.contacts} style={{ position: "relative", zIndex: isDropdownOpen || isFriendRequestOpen ? -1 : 1 }}>
       <h2 className={styles.title}>Contacts</h2>
       <ContactCard
         name="Matt Yeah"

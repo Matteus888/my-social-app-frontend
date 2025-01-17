@@ -11,11 +11,14 @@ import { useSelector, useDispatch } from "react-redux";
 import { logout } from "@/store/userReducer";
 import { useEffect, useRef, useState } from "react";
 import { useHeader } from "@/contexts/HeaderContext";
+import FriendRequestCard from "./FriendRequestCard";
 
 export default function Header() {
-  const [friendRequests, setFriendRequests] = useState();
+  const [friendRequests, setFriendRequests] = useState([]);
+  const { isFriendRequestOpen, setIsFriendRequestOpen } = useHeader();
   const { isDropdownOpen, setIsDropdownOpen } = useHeader();
   const dropdownRef = useRef(null);
+  const friendRequestRef = useRef(null);
   const router = useRouter();
 
   const user = useSelector((state) => state.user.value);
@@ -26,17 +29,14 @@ export default function Header() {
     localStorage.removeItem("token");
     localStorage.removeItem("user");
     setIsDropdownOpen(false);
+    setIsFriendRequestOpen(false);
     router.push("/login");
     setTimeout(() => {
       dispatch(logout());
     }, 500);
   };
 
-  // Récupérer friendRequests
-  // Boutons Accept /users/:id/friend-request/accept
-  // Boutons Reject /users/:id/friend-request/reject
-
-  // Pour récupérer les demandes d'amis A TESTER
+  // Pour récupérer les demandes d'amis
   useEffect(() => {
     const fetchFriendRequests = async () => {
       const token = localStorage.getItem("token");
@@ -55,7 +55,6 @@ export default function Header() {
         }
 
         const data = await res.json();
-        console.log(data.friendRequests);
         setFriendRequests(data.friendRequests);
       } catch (error) {
         console.error("Error fetching friend requests:", error);
@@ -68,15 +67,18 @@ export default function Header() {
   // Gestion du clic à l'extérieur pour fermer le menu
   useEffect(() => {
     const handleClickOutside = (event) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target) && isDropdownOpen) {
         setIsDropdownOpen(false);
+      }
+      if (friendRequestRef.current && !friendRequestRef.current.contains(event.target) && isFriendRequestOpen) {
+        setIsFriendRequestOpen(false);
       }
     };
     document.addEventListener("mousedown", handleClickOutside);
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
-  }, [setIsDropdownOpen]);
+  }, [isDropdownOpen, isFriendRequestOpen, setIsDropdownOpen, setIsFriendRequestOpen]);
 
   return (
     <header className={styles.header}>
@@ -86,17 +88,39 @@ export default function Header() {
       <h1>My Social App</h1>
 
       <div className={styles.options}>
-        <Link href="#" name="notifications">
-          <FontAwesomeIcon icon={faBell} style={{ color: "#171717", fontSize: "40px" }} />
-          {friendRequests && <p>You have friend request{friendRequests.length}</p>}
-        </Link>
-        <div className={styles.imageContainer} onClick={() => setIsDropdownOpen(!isDropdownOpen)}>
+        {/* Bouton des demandes d'amis */}
+        <div
+          className={styles.notifContainer}
+          onClick={() => {
+            setIsFriendRequestOpen(!isFriendRequestOpen);
+            setIsDropdownOpen(false);
+          }}
+        >
+          <FontAwesomeIcon icon={faBell} className={styles.bellIcon} />
+          {friendRequests.length > 0 && <div className={styles.iconContainer}>{friendRequests.length}</div>}
+        </div>
+        {/* Liste des demandes d'amis */}
+        {isFriendRequestOpen && (
+          <div className={styles.friendRequestList} ref={friendRequestRef}>
+            {friendRequests.map((friend, i) => (
+              <FriendRequestCard key={i} name={`${friend.profile.firstname} ${friend.profile.lastname}`} image={friend.profile.avatar} />
+            ))}
+          </div>
+        )}
+
+        <div
+          className={styles.avatarContainer}
+          onClick={() => {
+            setIsDropdownOpen(!isDropdownOpen);
+            setIsFriendRequestOpen(false);
+          }}
+        >
           <Image className={styles.avatar} src={user.avatar} width={40} height={40} alt="User Avatar" />
-          <div className={styles.iconContainer}>
-            <FontAwesomeIcon icon={faChevronDown} className={styles.icon} />
+          <div className={styles.chevronContainer}>
+            <FontAwesomeIcon icon={faChevronDown} className={styles.chevronIcon} />
           </div>
         </div>
-        {/* Menu déroulant */}
+        {/* Menu options */}
         {isDropdownOpen && (
           <ul className={styles.dropdownMenu} ref={dropdownRef}>
             <li className={styles.dropdownCard}>

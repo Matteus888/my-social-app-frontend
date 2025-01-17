@@ -6,7 +6,12 @@ const HeaderContext = createContext();
 
 export function HeaderProvider({ children }) {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-  return <HeaderContext.Provider value={{ isDropdownOpen, setIsDropdownOpen }}>{children}</HeaderContext.Provider>;
+  const [isFriendRequestOpen, setIsFriendRequestOpen] = useState(false);
+  return (
+    <HeaderContext.Provider value={{ isDropdownOpen, setIsDropdownOpen, isFriendRequestOpen, setIsFriendRequestOpen }}>
+      {children}
+    </HeaderContext.Provider>
+  );
 }
 
 export function useHeader() {

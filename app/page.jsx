@@ -14,6 +14,7 @@ import { useHeader } from "@/contexts/HeaderContext";
 
 export default function Home() {
   const { isDropdownOpen } = useHeader();
+  const { isFriendRequestOpen } = useHeader();
   const [postedCardList, setPostedCardList] = useState([]);
   const [isPostCardModalOpen, setIsPostCardModalOpen] = useState(false);
   const [newPost, setNewPost] = useState(false);
@@ -65,7 +66,7 @@ export default function Home() {
             {messages}
           </div>
         </div>
-        <ContactsSection isDropdownOpen={isDropdownOpen} />
+        <ContactsSection isDropdownOpen={isDropdownOpen} isFriendRequestOpen={isFriendRequestOpen} />
       </div>
     </div>
   );
