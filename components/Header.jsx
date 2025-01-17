@@ -18,6 +18,7 @@ export default function Header() {
 
   const { isFriendRequestOpen, setIsFriendRequestOpen } = useHeader();
   const { isDropdownOpen, setIsDropdownOpen } = useHeader();
+  const { newFriend, setNewFriend } = useHeader();
 
   const dropdownRef = useRef(null);
   const friendRequestRef = useRef(null);
@@ -68,6 +69,29 @@ export default function Header() {
     fetchFriendRequests();
   }, []);
 
+  // Pour accepter ou refuser une demande d'ami
+  const handleFriendRequest = async (userId, action) => {
+    const token = localStorage.getItem("token");
+
+    try {
+      const res = await fetch(`http://localhost:3000/users/${userId}/friend-request/${action}`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: token ? `Bearer ${token}` : "",
+        },
+      });
+      if (!res.ok) {
+        throw new Error("Failed to process friend request.");
+      }
+      const data = await res.json();
+      setNewFriend(!newFriend);
+      setFriendRequests((prevRequests) => prevRequests.filter((request) => request.publicId !== userId));
+    } catch (error) {
+      console.error("Error handling friend request1:", error);
+    }
+  };
+
   // Gestion du clic à l'extérieur pour fermer les menus
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -107,7 +131,13 @@ export default function Header() {
         {isFriendRequestOpen && (
           <div className={styles.friendRequestList} ref={friendRequestRef}>
             {friendRequests.map((friend, i) => (
-              <FriendRequestCard key={i} name={`${friend.profile.firstname} ${friend.profile.lastname}`} image={friend.profile.avatar} />
+              <FriendRequestCard
+                key={i}
+                name={`${friend.profile.firstname} ${friend.profile.lastname}`}
+                image={friend.profile.avatar}
+                onAccept={async () => await handleFriendRequest(friend.publicId, "accept")}
+                onReject={async () => await handleFriendRequest(friend.publicId, "reject")}
+              />
             ))}
           </div>
         )}

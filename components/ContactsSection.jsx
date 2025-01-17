@@ -7,6 +7,7 @@ export default function ContactsSection() {
   const [friendsList, setFriendsList] = useState([]);
   const { isDropdownOpen } = useHeader();
   const { isFriendRequestOpen } = useHeader();
+  const { newFriend } = useHeader();
 
   useEffect(() => {
     const fetchFriends = async () => {
@@ -33,7 +34,7 @@ export default function ContactsSection() {
     };
 
     fetchFriends();
-  }, []);
+  }, [newFriend]);
 
   return (
     <div className={styles.contacts} style={{ position: "relative", zIndex: isDropdownOpen || isFriendRequestOpen ? -1 : 1 }}>
