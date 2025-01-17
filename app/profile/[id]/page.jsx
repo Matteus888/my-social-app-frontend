@@ -10,10 +10,37 @@ export default function Profile({ params }) {
   const [userData, setUserData] = useState(null);
   const [postsList, setPostsList] = useState([]);
   const [error, setError] = useState(false);
-  const [errorMessage, setErrorMessage] = useState(null);
   const [followMessage, setFollowMessage] = useState(null);
+  const [followErrorMessage, setFollowErrorMessage] = useState(null);
+  const [friendRequestMessage, setFriendRequestMessage] = useState(null);
+  const [friendRequestErrorMessage, setFriendRequestErrorMessage] = useState(null);
 
-  // Bouton "Friend request"
+  const handleFriendRequest = async () => {
+    const token = localStorage.getItem("token");
+
+    try {
+      const res = await fetch(`http://localhost:3000/users/${id}/friend-request`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: token ? `Bearer ${token}` : "",
+        },
+      });
+      if (res.ok) {
+        const successData = await res.json();
+        setFriendRequestMessage(successData.message);
+        setFriendRequestErrorMessage(null);
+      } else {
+        const errorData = await res.json();
+        setFriendRequestErrorMessage(errorData.error);
+        setFriendRequestMessage(null);
+      }
+    } catch (err) {
+      console.error(err);
+      setFriendRequestErrorMessage("Error connecting to the server");
+      setFriendRequestMessage(null);
+    }
+  };
 
   const handleFollow = async () => {
     const token = localStorage.getItem("token");
@@ -29,15 +56,15 @@ export default function Profile({ params }) {
       if (res.ok) {
         const successData = await res.json();
         setFollowMessage(successData.message);
-        setErrorMessage(null);
+        setFollowErrorMessage(null);
       } else {
         const errorData = await res.json();
-        setErrorMessage(errorData.error || "Something went wrong");
+        setFollowErrorMessage(errorData.error);
         setFollowMessage(null);
       }
     } catch (err) {
       console.error(err);
-      setErrorMessage("Error connecting to the server");
+      setFollowErrorMessage("Error connecting to the server");
       setFollowMessage(null);
     }
   };
@@ -95,10 +122,18 @@ export default function Profile({ params }) {
     <div className={styles.page}>
       <p>ProfilePage {userData.profile.firstname}</p>
       <p>ID: {userData.publicId}</p>
-      {/* Affichage du message de succès ou d'erreur */}
-      {followMessage && <p style={{ color: "green" }}>{followMessage}</p>}
-      {errorMessage && <p style={{ color: "red" }}>{errorMessage}</p>}
-      <button onClick={handleFollow}>Follow this person</button>
+      <div className={styles.socialBtn}>
+        <div>
+          {followMessage && <p style={{ color: "green" }}>{followMessage}</p>}
+          {followErrorMessage && <p style={{ color: "red" }}>{followErrorMessage}</p>}
+          <button onClick={handleFollow}>Follow this person</button>
+        </div>
+        <div>
+          {friendRequestMessage && <p style={{ color: "green" }}>{friendRequestMessage}</p>}
+          {friendRequestErrorMessage && <p style={{ color: "red" }}>{friendRequestErrorMessage}</p>}
+          <button onClick={handleFriendRequest}>Send a request to be friend</button>
+        </div>
+      </div>
       <h2>Posts</h2>
       {postsList.length > 0 ? posts : <p>No posts available.</p>}
     </div>
