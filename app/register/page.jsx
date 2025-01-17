@@ -111,7 +111,7 @@ export default function Register() {
     const avatarPath = getRandomPhotoPath(genderValue);
 
     try {
-      const response = await fetch("http://localhost:3000/users/signup", {
+      const response = await fetch("http://localhost:3000/auth/signup", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ emailValue, passwordValue, firstnameValue, lastnameValue, birthdateValue, genderValue, avatarPath }),
