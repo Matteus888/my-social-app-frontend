@@ -10,14 +10,16 @@ export default function Profile({ params }) {
   const [userData, setUserData] = useState(null);
   const [postsList, setPostsList] = useState([]);
   const [error, setError] = useState(false);
-  const [addFriendError, setAddFriendError] = useState(null);
-  const [addFriendSuccess, setAddFriendSuccess] = useState(false);
+  const [errorMessage, setErrorMessage] = useState(null);
+  const [followMessage, setFollowMessage] = useState(null);
 
-  const handleAddFriend = async () => {
+  // Bouton "Friend request"
+
+  const handleFollow = async () => {
     const token = localStorage.getItem("token");
 
     try {
-      const res = await fetch(`http://localhost:3000/users/${id}/friends`, {
+      const res = await fetch(`http://localhost:3000/users/${id}/follow`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -25,17 +27,18 @@ export default function Profile({ params }) {
         },
       });
       if (res.ok) {
-        setAddFriendSuccess(true);
-        setAddFriendError(null);
+        const successData = await res.json();
+        setFollowMessage(successData.message);
+        setErrorMessage(null);
       } else {
         const errorData = await res.json();
-        setAddFriendError(errorData.error || "Something went wrong");
-        setAddFriendSuccess(false);
+        setErrorMessage(errorData.error || "Something went wrong");
+        setFollowMessage(null);
       }
     } catch (err) {
       console.error(err);
-      setAddFriendError("Error connecting to the server");
-      setAddFriendSuccess(false);
+      setErrorMessage("Error connecting to the server");
+      setFollowMessage(null);
     }
   };
 
@@ -93,9 +96,9 @@ export default function Profile({ params }) {
       <p>ProfilePage {userData.profile.firstname}</p>
       <p>ID: {userData.publicId}</p>
       {/* Affichage du message de succès ou d'erreur */}
-      {addFriendSuccess && <p style={{ color: "green" }}>Friend added successfully!</p>}
-      {addFriendError && <p style={{ color: "red" }}>{addFriendError}</p>}
-      <button onClick={handleAddFriend}>Add to my friend's group</button>
+      {followMessage && <p style={{ color: "green" }}>{followMessage}</p>}
+      {errorMessage && <p style={{ color: "red" }}>{errorMessage}</p>}
+      <button onClick={handleFollow}>Follow this person</button>
       <h2>Posts</h2>
       {postsList.length > 0 ? posts : <p>No posts available.</p>}
     </div>

@@ -9,10 +9,11 @@ import { faBell } from "@fortawesome/free-regular-svg-icons";
 import { faChevronDown, faArrowRightFromBracket, faGear } from "@fortawesome/free-solid-svg-icons";
 import { useSelector, useDispatch } from "react-redux";
 import { logout } from "@/store/userReducer";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useHeader } from "@/contexts/HeaderContext";
 
 export default function Header() {
+  const [friendRequests, setFriendRequests] = useState();
   const { isDropdownOpen, setIsDropdownOpen } = useHeader();
   const dropdownRef = useRef(null);
   const router = useRouter();
@@ -30,6 +31,38 @@ export default function Header() {
       dispatch(logout());
     }, 500);
   };
+
+  // Récupérer friendRequests
+  // Boutons Accept /users/:id/friend-request/accept
+  // Boutons Reject /users/:id/friend-request/reject
+
+  // Pour récupérer les demandes d'amis A TESTER
+  // useEffect(() => {
+  //   async function fetchFriendRequests() {
+  //     const token = localStorage.getItem("token");
+
+  //     try {
+  //       const res = await fetch("http://localhost:3000/users/friend-requests", {
+  //         method: "GET",
+  //         headers: {
+  //           "Content-Type": "application/json",
+  //           Authorization: token ? `Bearer ${token}` : "",
+  //         },
+  //       });
+
+  //       if (!res.ok) {
+  //         throw new Error("Failed to fetch friend requests.");
+  //       }
+
+  //       const data = await res.json();
+  //       setFriendRequests(data.friendRequests);
+  //     } catch (error) {
+  //       console.error("Error fetching friend requests:", error);
+  //     }
+  //   }
+
+  //   fetchFriendRequests();
+  // }, []);
 
   // Gestion du clic à l'extérieur pour fermer le menu
   useEffect(() => {
