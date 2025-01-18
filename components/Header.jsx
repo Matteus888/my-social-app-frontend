@@ -13,6 +13,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBell } from "@fortawesome/free-regular-svg-icons";
 import { faChevronDown, faArrowRightFromBracket, faGear } from "@fortawesome/free-solid-svg-icons";
 
+// Ajouter une searchbar pour chercher parmis tous les utilisateurs
+
 export default function Header() {
   const [friendRequests, setFriendRequests] = useState([]);
 

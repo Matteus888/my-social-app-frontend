@@ -78,6 +78,10 @@ export default function Login() {
                 lastname: data.user.profile.lastname,
                 publicId: data.user.publicId,
                 avatar: data.user.profile.avatar,
+                friends: data.user.social.friends,
+                friendRequests: data.user.social.friendRequests,
+                following: data.user.social.following,
+                followers: data.user.social.followers,
               })
             );
             router.push("/");
