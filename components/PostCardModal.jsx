@@ -8,7 +8,7 @@ import { useSelector } from "react-redux";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faXmark } from "@fortawesome/free-solid-svg-icons";
 
-export default function PostCardModal({ onClosePostCardModal, onNewPost }) {
+export default function PostCardModal({ onClosePostCardModal, onNewPost, placeholder }) {
   const [content, setContent] = useState("");
 
   const user = useSelector((state) => state.user.value);
@@ -60,7 +60,7 @@ export default function PostCardModal({ onClosePostCardModal, onNewPost }) {
               value={content}
               onChange={(e) => setContent(e.target.value)}
               name="postContent"
-              placeholder={`What's up ${user.firstname}`}
+              placeholder={placeholder}
               maxLength={400}
               autoFocus
             />

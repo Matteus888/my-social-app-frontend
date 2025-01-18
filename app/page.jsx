@@ -58,7 +58,7 @@ export default function Home() {
         <Footer />
         <div className={styles.fluxContainer}>
           <div className={styles.flux}>
-            <PostInputBtn onOpenPostCardModal={openPostCardModal} />
+            <PostInputBtn onOpenPostCardModal={openPostCardModal} placeholder={`What's up, ${user.firstname} ?`} />
             {isPostCardModalOpen && <PostCardModal onClosePostCardModal={closePostCardModal} onNewPost={() => setNewPost(!newPost)} />}
             {messages}
           </div>

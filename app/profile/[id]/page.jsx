@@ -2,6 +2,9 @@
 
 import styles from "@/styles/profile.module.css";
 import PostedCard from "@/components/PostedCard";
+import PostCardModal from "@/components/PostCardModal";
+import PostInputBtn from "@/components/PostInputBtn";
+import Image from "next/image";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { use } from "react";
@@ -19,6 +22,8 @@ export default function Profile({ params }) {
   const [isFriend, setIsFriend] = useState(null);
   const [hasFollower, setHasFollower] = useState(null);
   const [isFollower, setIsFollower] = useState(null);
+  const [isPostCardModalOpen, setIsPostCardModalOpen] = useState(false);
+  const [newPost, setNewPost] = useState(false);
 
   const user = useSelector((state) => state.user.value);
 
@@ -70,7 +75,7 @@ export default function Profile({ params }) {
       }
     }
     fetchUserData();
-  }, [id]);
+  }, [id, newPost]);
 
   const handleFriendRequest = async () => {
     const token = localStorage.getItem("token");
@@ -136,34 +141,51 @@ export default function Profile({ params }) {
     return <p>Loading...</p>;
   }
 
+  const openPostCardModal = () => setIsPostCardModalOpen(true);
+  const closePostCardModal = () => setIsPostCardModalOpen(false);
+
   const posts = postsList.map((post, i) => <PostedCard key={i} author={userData} content={post.content} date={post.createdAt} />);
 
   return (
     <div className={styles.page}>
-      <p>ProfilePage {userData.profile.firstname}</p>
-      <p>ID: {userData.publicId}</p>
-      <div className={styles.socialBtn}>
-        <div>
-          {followMessage && <p style={{ color: "green" }}>{followMessage}</p>}
-          {followErrorMessage && <p style={{ color: "red" }}>{followErrorMessage}</p>}
-          {!isFriend && <button onClick={handleFollow}>{!isFollower ? <p>Follow this person</p> : <p>Unfollow this person</p>}</button>}
-          {isFollower && <p>You follow this guy</p>}
-          {hasFollower && <p>You are follow by this guy</p>}
-        </div>
-        <div>
-          {friendRequestMessage && <p style={{ color: "green" }}>{friendRequestMessage}</p>}
-          {friendRequestErrorMessage && <p style={{ color: "red" }}>{friendRequestErrorMessage}</p>}
-          {!isFriend ? (
-            <button onClick={handleFriendRequest} className={styles.friendBtn}>
-              Send a friend request
-            </button>
-          ) : (
-            <p>I'm your friend</p>
-          )}
+      <div className={styles.header}>
+        <Image src={userData.profile.avatar} width={150} height={150} alt={`${userData.profile.firstname} pic`} />
+        <p>ProfilePage {userData.profile.firstname}</p>
+        <div className={styles.socialBtn}>
+          <div>
+            {followMessage && <p style={{ color: "green" }}>{followMessage}</p>}
+            {followErrorMessage && <p style={{ color: "red" }}>{followErrorMessage}</p>}
+            {!isFriend && <button onClick={handleFollow}>{!isFollower ? <p>Follow this person</p> : <p>Unfollow this person</p>}</button>}
+            {isFollower && <p>You follow this guy</p>}
+            {hasFollower && <p>You are follow by this guy</p>}
+          </div>
+          <div>
+            {friendRequestMessage && <p style={{ color: "green" }}>{friendRequestMessage}</p>}
+            {friendRequestErrorMessage && <p style={{ color: "red" }}>{friendRequestErrorMessage}</p>}
+            {!isFriend ? (
+              <button onClick={handleFriendRequest} className={styles.friendBtn}>
+                Send a friend request
+              </button>
+            ) : (
+              <p>I'm your friend</p>
+            )}
+          </div>
         </div>
       </div>
-      <h2>Posts</h2>
-      {postsList.length > 0 ? posts : <p>No posts available.</p>}
+      <div className={styles.main}>
+        <div className={styles.randomCard}></div>
+        <div className={styles.postsFlow}>
+          <PostInputBtn onOpenPostCardModal={openPostCardModal} placeholder={`Write a message to ${userData.profile.firstname}`} />
+          {isPostCardModalOpen && (
+            <PostCardModal
+              onClosePostCardModal={closePostCardModal}
+              onNewPost={() => setNewPost(!newPost)}
+              placeholder={`Write a message to ${userData.profile.firstname}`}
+            />
+          )}
+          {postsList.length > 0 ? posts : <p>No posts available.</p>}
+        </div>
+      </div>
     </div>
   );
 }
