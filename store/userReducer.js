@@ -37,8 +37,11 @@ export const userSlice = createSlice({
       state.value.following = [];
       state.value.followers = [];
     },
+    updateUser: (state, action) => {
+      state.value = { ...state.value, ...action.payload };
+    },
   },
 });
 
-export const { login, logout } = userSlice.actions;
+export const { login, logout, updateUser } = userSlice.actions;
 export default userSlice.reducer;

@@ -8,7 +8,7 @@ export default function PostInputBtn({ onOpenPostCardModal, placeholder }) {
 
   return (
     <div className={styles.container}>
-      <Link href="/profile" name="Profile" className={styles.avatar}>
+      <Link href={`/profile/${user.publicId}`} name="Profile" className={styles.avatar}>
         <Image src={user.avatar} width={44} height={44} alt="User avatar" />
       </Link>
       <button className={styles.inputBtn} onClick={onOpenPostCardModal}>

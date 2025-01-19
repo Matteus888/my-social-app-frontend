@@ -6,7 +6,8 @@ import PostCardModal from "@/components/PostCardModal";
 import PostInputBtn from "@/components/PostInputBtn";
 import Image from "next/image";
 import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { updateUser } from "@/store/userReducer";
 import { use } from "react";
 
 export default function Profile({ params }) {
@@ -23,9 +24,11 @@ export default function Profile({ params }) {
   const [hasFollower, setHasFollower] = useState(null);
   const [isFollower, setIsFollower] = useState(null);
   const [isPostCardModalOpen, setIsPostCardModalOpen] = useState(false);
+  const [isMyProfile, setIsMyProfile] = useState(false);
   const [newPost, setNewPost] = useState(false);
 
   const user = useSelector((state) => state.user.value);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     async function fetchUserData() {
@@ -43,18 +46,13 @@ export default function Profile({ params }) {
           throw new Error("User not found or unauthorized.");
         }
         const userData = await userRes.json();
+        console.log("matt", user);
+        console.log("lolo", userData);
         setUserData(userData.user);
-        console.log(user);
-        console.log(userData);
-        if (user.friends.includes(userData.user._id)) {
-          setIsFriend(true);
-        }
-        if (user.followers.includes(userData.user._id)) {
-          setHasFollower(true);
-        }
-        if (user.following.includes(userData.user._id)) {
-          setIsFollower(true);
-        }
+        setIsFriend(user.friends.includes(userData.user._id));
+        setHasFollower(user.followers.includes(userData.user._id));
+        setIsFollower(user.following.includes(userData.user._id));
+        setIsMyProfile(user.publicId === userData.user.publicId);
 
         const postsRes = await fetch(`http://localhost:3000/users/${id}/posts`, {
           method: "GET",
@@ -92,6 +90,8 @@ export default function Profile({ params }) {
         const successData = await res.json();
         setFriendRequestMessage(successData.message);
         setFriendRequestErrorMessage(null);
+
+        dispatch(updateUser({ friendRequests: [...user.friendRequests, id] }));
       } else {
         const errorData = await res.json();
         setFriendRequestErrorMessage(errorData.error);
@@ -119,8 +119,13 @@ export default function Profile({ params }) {
         const successData = await res.json();
         setFollowMessage(successData.message);
         setFollowErrorMessage(null);
-        isFollower ? setIsFollower(false) : setIsFollower(true);
-        hasFollower ? setHasFollower(true) : setHasFollower(false);
+        setIsFollower(!isFollower);
+
+        const updatedFollowing = isFollower // Si utilisateur déjà follower
+          ? user.following.filter((userId) => userId !== id) // Retirer l'utilisateur
+          : [...user.following, id]; // Sinon ajouter l'utilisateur
+
+        dispatch(updateUser({ following: updatedFollowing }));
       } else {
         const errorData = await res.json();
         setFollowErrorMessage(errorData.error);
@@ -155,23 +160,28 @@ export default function Profile({ params }) {
           <div>
             {followMessage && <p style={{ color: "green" }}>{followMessage}</p>}
             {followErrorMessage && <p style={{ color: "red" }}>{followErrorMessage}</p>}
-            {!isFriend && <button onClick={handleFollow}>{!isFollower ? <p>Follow this person</p> : <p>Unfollow this person</p>}</button>}
+            {isMyProfile ? (
+              <p>This is your profile</p>
+            ) : isFriend ? (
+              <p>You are friends with this person</p>
+            ) : (
+              <button onClick={handleFollow}>{isFollower ? "Unfollow this person" : "Follow this person"}</button>
+            )}
             {isFollower && <p>You follow this guy</p>}
             {hasFollower && <p>You are follow by this guy</p>}
           </div>
           <div>
             {friendRequestMessage && <p style={{ color: "green" }}>{friendRequestMessage}</p>}
             {friendRequestErrorMessage && <p style={{ color: "red" }}>{friendRequestErrorMessage}</p>}
-            {!isFriend ? (
+            {!isFriend && !isMyProfile && (
               <button onClick={handleFriendRequest} className={styles.friendBtn}>
                 Send a friend request
               </button>
-            ) : (
-              <p>I'm your friend</p>
             )}
           </div>
         </div>
       </div>
+
       <div className={styles.main}>
         <div className={styles.randomCard}></div>
         <div className={styles.postsFlow}>

@@ -48,10 +48,12 @@ export default function PostCardModal({ onClosePostCardModal, onNewPost, placeho
         </div>
         <div className={styles.line}></div>
         <div className={styles.mainContainer}>
-          <Link href="/profile" name="Profile">
+          <Link href={`/profile/${user.publicId}`} name="Profile">
             <div className={styles.userCard}>
               <Image src={user.avatar} alt={`${user.firstname} profile pic`} width={40} height={40} />
-              <p className={styles.name}>{user.firstname}</p>
+              <p className={styles.name}>
+                {user.firstname} {user.lastname}
+              </p>
             </div>
           </Link>
           <form action="submit" onSubmit={async (e) => e.preventDefault()}>

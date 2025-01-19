@@ -27,7 +27,7 @@ export default function ContactsSection() {
         }
 
         const data = await res.json();
-        setFriendsList(data.friends);
+        setFriendsList(data.friends.sort(() => Math.random() - 0.5));
       } catch (error) {
         console.error("Error fetching friends:", error);
       }
