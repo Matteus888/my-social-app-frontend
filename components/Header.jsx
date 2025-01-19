@@ -4,6 +4,7 @@ import styles from "../styles/header.module.css";
 import Image from "next/image";
 import Link from "next/link";
 import FriendRequestCard from "./FriendRequestCard";
+import SearchBar from "./SearchBar";
 import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useSelector, useDispatch } from "react-redux";
@@ -112,10 +113,13 @@ export default function Header() {
 
   return (
     <header className={styles.header}>
-      <Link href="/" name="Home" className={styles.logo}>
-        <Image src="/logo.svg" width={40} height={40} alt="Logo" />
-      </Link>
-      <h1>My Social App</h1>
+      <div className={styles.logoContainer}>
+        <Link href="/" name="Home" className={styles.logo}>
+          <Image src="/logo.svg" width={40} height={40} alt="Logo" />
+        </Link>
+        <SearchBar placeholder="Search people" />
+      </div>
+      <h1 className={styles.title}>My Social App</h1>
 
       <div className={styles.options}>
         {/* Bouton des demandes d'amis */}

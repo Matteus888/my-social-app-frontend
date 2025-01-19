@@ -12,6 +12,11 @@
   box-shadow: 0 1px 8px var(--lightgrey3);
 }
 
+.logoContainer {
+  display: flex;
+  align-items: center;
+}
+
 .logo {
   position: relative;
   border: none;
@@ -34,6 +39,12 @@
   &:hover::after {
     opacity: 1;
   }
+}
+
+.title {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
 }
 
 .options {
