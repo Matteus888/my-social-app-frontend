@@ -5,10 +5,9 @@ import PostedCard from "@/components/PostedCard";
 import PostCardModal from "@/components/PostCardModal";
 import PostInputBtn from "@/components/PostInputBtn";
 import Image from "next/image";
-import { useEffect, useState } from "react";
+import { useEffect, useState, use } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { updateUser } from "@/store/userReducer";
-import { use } from "react";
 
 export default function Profile({ params }) {
   const { id } = use(params);

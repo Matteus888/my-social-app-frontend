@@ -2,7 +2,7 @@
 
 import styles from "../styles/home.module.css";
 import Footer from "@/components/Footer";
-import SideNav from "@/components/SideNav";
+import FollowingSection from "@/components/FollowingSection";
 import ContactsSection from "@/components/ContactsSection";
 import PostInputBtn from "@/components/PostInputBtn";
 import PostCardModal from "@/components/PostCardModal";
@@ -56,7 +56,7 @@ export default function Home() {
   return (
     <div className={styles.page}>
       <div className={styles.main}>
-        <SideNav />
+        <FollowingSection />
         <Footer />
         <div className={styles.fluxContainer} style={{ position: "relative", zIndex: isSearchListOpen ? -1 : 1 }}>
           <div className={styles.flux}>

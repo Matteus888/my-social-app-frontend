@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react";
 import styles from "../styles/contactsSection.module.css";
+import { useEffect, useState } from "react";
 import ContactCard from "./ContactCard";
 import { useHeader } from "@/contexts/HeaderContext";
 
@@ -38,7 +38,7 @@ export default function ContactsSection() {
 
   return (
     <div className={styles.contacts} style={{ position: "relative", zIndex: isDropdownOpen || isFriendRequestOpen ? -1 : 1 }}>
-      <h2 className={styles.title}>Contacts</h2>
+      <h2 className={styles.title}>Friends</h2>
       {friendsList.length > 0 ? (
         friendsList.map((friend, i) => (
           <ContactCard

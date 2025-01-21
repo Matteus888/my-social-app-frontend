@@ -175,7 +175,7 @@ export default function Header() {
             </li>
             <li className={styles.dropdownCard}>
               <FontAwesomeIcon icon={faGear} className={styles.dropdownIcon} />
-              <Link href="/settings" className={styles.dropdownItem}>
+              <Link href={`/settings/${user.publicId}`} className={styles.dropdownItem}>
                 Settings
               </Link>
             </li>

@@ -21,7 +21,7 @@
   background-color: white;
   position: absolute;
   top: 38;
-  left: 50;
+  left: 0;
   border: 1px solid var(--lightgrey3);
   border-radius: 4px;
   box-shadow: 0 1px 8px var(--lightgrey3);
