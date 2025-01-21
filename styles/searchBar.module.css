@@ -1,4 +1,5 @@
 .inputContainer {
+  position: relative;
   width: 300;
   height: 35;
   margin-left: 10;
@@ -14,4 +15,14 @@
   font-family: var(--font-quicksand), Arial, sans-serif;
   font-size: 16;
   font-weight: 450;
+}
+
+.searchResultsContainer {
+  background-color: white;
+  position: absolute;
+  top: 38;
+  left: 50;
+  border: 1px solid var(--lightgrey3);
+  border-radius: 4px;
+  box-shadow: 0 1px 8px var(--lightgrey3);
 }

@@ -10,11 +10,13 @@ import PostedCard from "@/components/PostedCard";
 import { useSelector } from "react-redux";
 import { redirect } from "next/navigation";
 import { useEffect, useState } from "react";
+import { useHeader } from "@/contexts/HeaderContext";
 
 export default function Home() {
   const [postedCardList, setPostedCardList] = useState([]);
   const [isPostCardModalOpen, setIsPostCardModalOpen] = useState(false);
   const [newPost, setNewPost] = useState(false);
+  const { isSearchListOpen } = useHeader();
 
   const user = useSelector((state) => state.user.value);
 
@@ -56,7 +58,7 @@ export default function Home() {
       <div className={styles.main}>
         <SideNav />
         <Footer />
-        <div className={styles.fluxContainer}>
+        <div className={styles.fluxContainer} style={{ position: "relative", zIndex: isSearchListOpen ? -1 : 1 }}>
           <div className={styles.flux}>
             <PostInputBtn onOpenPostCardModal={openPostCardModal} placeholder={`What's up, ${user.firstname} ?`} />
             {isPostCardModalOpen && <PostCardModal onClosePostCardModal={closePostCardModal} onNewPost={() => setNewPost(!newPost)} />}

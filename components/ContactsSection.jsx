@@ -41,7 +41,15 @@ export default function ContactsSection() {
       <h2 className={styles.title}>Contacts</h2>
       {friendsList.length > 0 ? (
         friendsList.map((friend, i) => (
-          <ContactCard key={i} name={`${friend.profile.firstname} ${friend.profile.lastname}`} image={friend.profile.avatar} />
+          <ContactCard
+            key={i}
+            name={`${friend.profile.firstname} ${friend.profile.lastname}`}
+            image={friend.profile.avatar}
+            imgWidth={40}
+            imgHeight={40}
+            fontSize={18}
+            link={`/profile/${friend.publicId}`}
+          />
         ))
       ) : (
         <p className={styles.empty}>No friend added</p>

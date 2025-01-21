@@ -7,11 +7,21 @@ const HeaderContext = createContext();
 export function HeaderProvider({ children }) {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isFriendRequestOpen, setIsFriendRequestOpen] = useState(false);
+  const [isSearchListOpen, setIsSearchListOpen] = useState(false);
   const [newFriend, setNewFriend] = useState(false);
 
   return (
     <HeaderContext.Provider
-      value={{ isDropdownOpen, setIsDropdownOpen, isFriendRequestOpen, setIsFriendRequestOpen, newFriend, setNewFriend }}
+      value={{
+        isDropdownOpen,
+        setIsDropdownOpen,
+        isFriendRequestOpen,
+        setIsFriendRequestOpen,
+        isSearchListOpen,
+        setIsSearchListOpen,
+        newFriend,
+        setNewFriend,
+      }}
     >
       {children}
     </HeaderContext.Provider>

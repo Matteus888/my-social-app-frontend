@@ -6,15 +6,13 @@ import Link from "next/link";
 import FriendRequestCard from "./FriendRequestCard";
 import SearchBar from "./SearchBar";
 import { useEffect, useRef, useState } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter, usePathname } from "next/navigation";
 import { useSelector, useDispatch } from "react-redux";
 import { logout } from "@/store/userReducer";
 import { useHeader } from "@/contexts/HeaderContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBell } from "@fortawesome/free-regular-svg-icons";
 import { faChevronDown, faArrowRightFromBracket, faGear } from "@fortawesome/free-solid-svg-icons";
-
-// Ajouter une searchbar pour chercher parmis tous les utilisateurs
 
 export default function Header() {
   const [friendRequests, setFriendRequests] = useState([]);
@@ -27,6 +25,7 @@ export default function Header() {
   const friendRequestRef = useRef(null);
 
   const router = useRouter();
+  const pathname = usePathname();
 
   const user = useSelector((state) => state.user.value);
   const dispatch = useDispatch();
@@ -110,6 +109,11 @@ export default function Header() {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, [isDropdownOpen, isFriendRequestOpen, setIsDropdownOpen, setIsFriendRequestOpen]);
+
+  // Ferme le menu à chaque changement de page
+  useEffect(() => {
+    setIsDropdownOpen(false);
+  }, [pathname]);
 
   return (
     <header className={styles.header}>
