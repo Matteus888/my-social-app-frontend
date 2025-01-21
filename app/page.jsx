@@ -49,8 +49,19 @@ export default function Home() {
   const openPostCardModal = () => setIsPostCardModalOpen(true);
   const closePostCardModal = () => setIsPostCardModalOpen(false);
 
+  const handlePostDeleted = (deletedPostId) => {
+    setPostedCardList((prevPosts) => prevPosts.filter((post) => post._id !== deletedPostId));
+  };
+
   const messages = postedCardList.map((post, i) => (
-    <PostedCard key={i} author={post.author} content={post.content} date={post.createdAt} />
+    <PostedCard
+      key={i}
+      author={post.author}
+      content={post.content}
+      date={post.createdAt}
+      postId={post._id}
+      onPostDeleted={handlePostDeleted}
+    />
   ));
 
   return (
