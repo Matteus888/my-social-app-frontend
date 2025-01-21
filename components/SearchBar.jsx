@@ -7,7 +7,7 @@ import ContactCard from "./ContactCard";
 export default function SearchBar({ placeholder }) {
   const [searchQuery, setSearchQuery] = useState("");
   const [searchResults, setSearchResults] = useState([]);
-  const { isSearchListOpen, setIsSearchListOpen } = useHeader();
+  const { setIsSearchListOpen } = useHeader();
   const pathname = usePathname();
 
   // Relier au provider

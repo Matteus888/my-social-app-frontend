@@ -47,7 +47,7 @@ export default function Profile({ params }) {
         }
         const userData = await userRes.json();
         console.log("matt", user);
-        console.log("lolo", userData);
+        console.log("profil", userData);
         setUserData(userData.user);
         setIsFriend(user.friends.includes(userData.user._id));
         setHasFollower(user.followers.includes(userData.user._id));
@@ -154,7 +154,7 @@ export default function Profile({ params }) {
   return (
     <div className={styles.page}>
       <div className={styles.header}>
-        <Image src={userData.profile.avatar} width={150} height={150} alt={`${userData.profile.firstname} pic`} />
+        <Image src={userData.profile.avatar} width={150} height={150} alt={`${userData.profile.firstname} pic`} priority />
         <p>ProfilePage {userData.profile.firstname}</p>
         <div className={styles.socialBtn}>
           <div>

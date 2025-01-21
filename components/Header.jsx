@@ -119,7 +119,7 @@ export default function Header() {
     <header className={styles.header}>
       <div className={styles.logoContainer}>
         <Link href="/" name="Home" className={styles.logo}>
-          <Image src="/logo.svg" width={40} height={40} alt="Logo" />
+          <Image src="/logo.svg" width={40} height={40} alt="Logo" priority />
         </Link>
         <SearchBar placeholder="Search people" />
       </div>
@@ -159,7 +159,7 @@ export default function Header() {
             setIsFriendRequestOpen(false);
           }}
         >
-          <Image className={styles.avatar} src={user.avatar} width={40} height={40} alt="User Avatar" />
+          <Image className={styles.avatar} src={user.avatar} width={40} height={40} alt="User Avatar" priority />
           <div className={styles.chevronContainer}>
             <FontAwesomeIcon icon={faChevronDown} className={styles.chevronIcon} />
           </div>
