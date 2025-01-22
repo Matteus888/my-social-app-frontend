@@ -16,6 +16,7 @@ export default function Home() {
   const [postedCardList, setPostedCardList] = useState([]);
   const [isPostCardModalOpen, setIsPostCardModalOpen] = useState(false);
   const [newPost, setNewPost] = useState(false);
+  const [refreshPost, setRefreshPost] = useState(false);
   const { isSearchListOpen } = useHeader();
 
   const user = useSelector((state) => state.user.value);
@@ -44,7 +45,7 @@ export default function Home() {
       }
     };
     fetchPosts();
-  }, [newPost]);
+  }, [newPost, refreshPost]);
 
   const openPostCardModal = () => setIsPostCardModalOpen(true);
   const closePostCardModal = () => setIsPostCardModalOpen(false);
@@ -53,14 +54,20 @@ export default function Home() {
     setPostedCardList((prevPosts) => prevPosts.filter((post) => post._id !== deletedPostId));
   };
 
-  const messages = postedCardList.map((post, i) => (
+  const handleRefresh = () => {
+    setRefreshPost(!refreshPost);
+  };
+
+  const messages = postedCardList.map((post) => (
     <PostedCard
-      key={i}
+      key={post._id}
       author={post.author}
       content={post.content}
       date={post.createdAt}
       postId={post._id}
+      likes={post.likes.length}
       onPostDeleted={handlePostDeleted}
+      onRefresh={handleRefresh}
     />
   ));
 

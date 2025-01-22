@@ -39,21 +39,23 @@ export default function ContactsSection() {
   return (
     <div className={styles.contacts} style={{ position: "relative", zIndex: isDropdownOpen || isFriendRequestOpen ? -1 : 1 }}>
       <h2 className={styles.title}>Friends</h2>
-      {friendsList.length > 0 ? (
-        friendsList.map((friend, i) => (
-          <ContactCard
-            key={i}
-            name={`${friend.profile.firstname} ${friend.profile.lastname}`}
-            image={friend.profile.avatar}
-            imgWidth={40}
-            imgHeight={40}
-            fontSize={18}
-            link={`/profile/${friend.publicId}`}
-          />
-        ))
-      ) : (
-        <p className={styles.empty}>No friend added</p>
-      )}
+      <div className={styles.list}>
+        {friendsList.length > 0 ? (
+          friendsList.map((friend, i) => (
+            <ContactCard
+              key={i}
+              name={`${friend.profile.firstname} ${friend.profile.lastname}`}
+              image={friend.profile.avatar}
+              imgWidth={40}
+              imgHeight={40}
+              fontSize={18}
+              link={`/profile/${friend.publicId}`}
+            />
+          ))
+        ) : (
+          <p className={styles.empty}>No friend added</p>
+        )}
+      </div>
     </div>
   );
 }

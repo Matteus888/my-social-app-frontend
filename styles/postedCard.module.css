@@ -72,7 +72,14 @@
   display: flex;
   justify-content: space-between;
   margin-top: 10;
+  height: 20;
   font-size: 12;
+}
+
+.thumbUp {
+  color: var(--blue1);
+  font-size: 20;
+  margin: 0 10;
 }
 
 .line {
@@ -109,6 +116,41 @@
 
 .commentBtnText {
   font-size: 16;
+}
+
+.commentContainer {
+  display: flex;
+  flex-direction: column;
+}
+
+.inputContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  margin: 5 0;
+}
+
+.input {
+  width: 85%;
+  height: 30;
+  padding-left: 15;
+  border: none;
+  border-radius: 22px;
+  background-color: var(--lightgrey4);
+  font-family: var(--font-quicksand), Arial, sans-serif;
+  font-weight: 450;
+}
+
+.postBtn {
+  color: var(--blue1);
+  font-size: 20;
+  margin-right: 10;
+
+  &:hover {
+    cursor: pointer;
+    opacity: 0.85;
+  }
 }
 
 .modalOverlay {
@@ -163,4 +205,8 @@
 
 .cancelBtn {
   background-color: red;
+}
+
+.okBtn {
+  background-color: var(--blue1);
 }

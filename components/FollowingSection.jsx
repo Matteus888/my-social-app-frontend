@@ -37,21 +37,23 @@ export default function FollowingSection() {
   return (
     <div className={styles.following} style={{ position: "relative", zIndex: isSearchListOpen ? -1 : 1 }}>
       <h2 className={styles.title}>Following</h2>
-      {followingList.length > 0 ? (
-        followingList.map((follow, i) => (
-          <ContactCard
-            key={i}
-            name={`${follow.profile.firstname} ${follow.profile.lastname}`}
-            image={follow.profile.avatar}
-            imgWidth={40}
-            imgHeight={40}
-            fontSize={18}
-            link={`/profile/${follow.publicId}`}
-          />
-        ))
-      ) : (
-        <p className={styles.empty}>You don't follow anybody</p>
-      )}
+      <div className={styles.list}>
+        {followingList.length > 0 ? (
+          followingList.map((follow, i) => (
+            <ContactCard
+              key={i}
+              name={`${follow.profile.firstname} ${follow.profile.lastname}`}
+              image={follow.profile.avatar}
+              imgWidth={40}
+              imgHeight={40}
+              fontSize={18}
+              link={`/profile/${follow.publicId}`}
+            />
+          ))
+        ) : (
+          <p className={styles.empty}>You don't follow anybody</p>
+        )}
+      </div>
     </div>
   );
 }

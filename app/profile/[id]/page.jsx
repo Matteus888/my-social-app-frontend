@@ -148,7 +148,9 @@ export default function Profile({ params }) {
   const openPostCardModal = () => setIsPostCardModalOpen(true);
   const closePostCardModal = () => setIsPostCardModalOpen(false);
 
-  const posts = postsList.map((post, i) => <PostedCard key={i} author={userData} content={post.content} date={post.createdAt} />);
+  const posts = postsList.map((post) => (
+    <PostedCard key={post._id} postId={post._id} author={userData} content={post.content} date={post.createdAt} />
+  ));
 
   return (
     <div className={styles.page}>

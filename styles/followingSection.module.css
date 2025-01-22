@@ -1,8 +1,20 @@
 .following {
   width: 300;
   height: 500;
-  overflow-y: hidden;
   border-bottom: 1.5px solid var(--lightgrey2);
+
+}
+
+.title {
+  margin-top: 10;
+  margin-left: 10;
+  font-size: 20;
+  border-bottom: 1.5px solid var(--lightgrey2);
+}
+
+.list {
+  height: 465;
+  overflow-y: hidden;
 
   &:hover {
     overflow-y: auto;
@@ -24,12 +36,6 @@
   &::-webkit-scrollbar-thumb:hover {
     background: var(--lightgrey1);
   }
-}
-
-.title {
-  margin-top: 10;
-  margin-left: 10;
-  font-size: 20;
 }
 
 .empty {
