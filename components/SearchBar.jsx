@@ -7,7 +7,7 @@ import ContactCard from "./ContactCard";
 export default function SearchBar({ placeholder }) {
   const [searchQuery, setSearchQuery] = useState("");
   const [searchResults, setSearchResults] = useState([]);
-  const { setIsSearchListOpen } = useHeader();
+  const { isSearchListOpen, setIsSearchListOpen } = useHeader();
   const pathname = usePathname();
 
   // Relier au provider
@@ -19,6 +19,7 @@ export default function SearchBar({ placeholder }) {
 
     if (query.length === 0) {
       setSearchResults([]);
+      setIsSearchListOpen(false);
       return;
     }
 
@@ -45,7 +46,8 @@ export default function SearchBar({ placeholder }) {
   useEffect(() => {
     setSearchQuery("");
     setSearchResults([]);
-  }, [pathname]);
+    setIsSearchListOpen(false);
+  }, [pathname, setIsSearchListOpen]);
 
   return (
     <div className={styles.inputContainer}>
