@@ -4,11 +4,32 @@
   align-items: center;
   margin-top: 50;
   width: 100%;
+  height: calc(100vh - 60px);
+  overflow-y: auto;
+
+  &::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  &::-webkit-scrollbar-track {
+    border-radius: 10px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: var(--lightgrey2);
+    border-radius: 10px;
+  }
+
+  &::-webkit-scrollbar-thumb:hover {
+    background: var(--lightgrey1);
+  }
 }
 
 .header {
   background-color: white;
   width: 100%;
+  min-height: 500;
+  box-shadow: 0 1px 8px var(--lightgrey3);
 }
 
 .socialBtn {
@@ -20,13 +41,11 @@
   display: flex;
   justify-content: space-between;
   width: 1000;
-  margin: 0 auto;
-  border: 1px solid black;
+  margin: 15 auto;
 }
 
-.randomCard {
+.infosFlow {
   width: 38%;
-  background-color: aquamarine;
 }
 
 .postsFlow {

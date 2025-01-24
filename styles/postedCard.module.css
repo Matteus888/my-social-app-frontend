@@ -82,6 +82,11 @@
   margin: 0 10;
 }
 
+.commentTxt:hover {
+  text-decoration: underline;
+  cursor: pointer;
+}
+
 .line {
   margin-top: 5;
   width: 100%;
@@ -110,6 +115,10 @@
   }
 }
 
+.commentBtnOpen {
+  background-color: var(--lightgrey4);
+}
+
 .commentIcon {
   margin-right: 8;
 }
@@ -123,12 +132,34 @@
   flex-direction: column;
 }
 
+.commentWrapper {
+  max-height: 300;
+  overflow-y: auto;
+
+  &::-webkit-scrollbar {
+    width: 5px;
+  }
+
+  &::-webkit-scrollbar-track {
+    border-radius: 10px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: var(--lightgrey2);
+    border-radius: 10px;
+  }
+
+  &::-webkit-scrollbar-thumb:hover {
+    background: var(--lightgrey1);
+  }
+}
+
 .inputContainer {
   display: flex;
   justify-content: space-between;
   align-items: center;
   width: 100%;
-  margin: 5 0;
+  margin: 10 0;
 }
 
 .input {
@@ -140,6 +171,14 @@
   background-color: var(--lightgrey4);
   font-family: var(--font-quicksand), Arial, sans-serif;
   font-weight: 450;
+
+  &:focus {
+    outline-color: var(--foreground);
+
+    &::placeholder {
+      opacity: 0.6;
+    }
+  }
 }
 
 .postBtn {

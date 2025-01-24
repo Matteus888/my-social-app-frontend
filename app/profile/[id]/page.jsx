@@ -4,6 +4,7 @@ import styles from "@/styles/profile.module.css";
 import PostedCard from "@/components/PostedCard";
 import PostCardModal from "@/components/PostCardModal";
 import PostInputBtn from "@/components/PostInputBtn";
+import ProfileInfoCard from "@/components/ProfileInfoCard";
 import Image from "next/image";
 import { useEffect, useState, use } from "react";
 import { useSelector, useDispatch } from "react-redux";
@@ -12,7 +13,7 @@ import { updateUser } from "@/store/userReducer";
 export default function Profile({ params }) {
   const { id } = use(params);
 
-  const [userData, setUserData] = useState(null);
+  const [profileData, setProfileData] = useState(null);
   const [postsList, setPostsList] = useState([]);
   const [error, setError] = useState(false);
   const [followMessage, setFollowMessage] = useState(null);
@@ -25,33 +26,33 @@ export default function Profile({ params }) {
   const [isPostCardModalOpen, setIsPostCardModalOpen] = useState(false);
   const [isMyProfile, setIsMyProfile] = useState(false);
   const [newPost, setNewPost] = useState(false);
+  const [refreshPost, setRefreshPost] = useState(false);
 
   const user = useSelector((state) => state.user.value);
   const dispatch = useDispatch();
 
   useEffect(() => {
-    async function fetchUserData() {
+    async function fetchProfileData() {
       const token = localStorage.getItem("token");
+
       try {
-        const userRes = await fetch(`http://localhost:3000/users/${id}`, {
+        const profileRes = await fetch(`http://localhost:3000/users/${id}`, {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
             Authorization: token ? `Bearer ${token}` : "",
           },
         });
-        if (!userRes.ok) {
-          console.error("Failed to fetch user data:", userRes.status);
+        if (!profileRes.ok) {
+          console.error("Failed to fetch user data:", profileRes.status);
           throw new Error("User not found or unauthorized.");
         }
-        const userData = await userRes.json();
-        console.log("matt", user);
-        console.log("profil", userData);
-        setUserData(userData.user);
-        setIsFriend(user.friends.includes(userData.user._id));
-        setHasFollower(user.followers.includes(userData.user._id));
-        setIsFollower(user.following.includes(userData.user._id));
-        setIsMyProfile(user.publicId === userData.user.publicId);
+        const profileData = await profileRes.json();
+        setProfileData(profileData.user);
+        setIsFriend(user.friends.includes(profileData.user._id));
+        setHasFollower(user.followers.includes(profileData.user._id));
+        setIsFollower(user.following.includes(profileData.user._id));
+        setIsMyProfile(user.publicId === profileData.user.publicId);
 
         const postsRes = await fetch(`http://localhost:3000/users/${id}/posts`, {
           method: "GET",
@@ -71,8 +72,16 @@ export default function Profile({ params }) {
         setError(true);
       }
     }
-    fetchUserData();
-  }, [id, newPost]);
+    fetchProfileData();
+  }, [id, newPost, refreshPost]);
+
+  const handlePostDeleted = (deletedPostId) => {
+    setPostsList((prevPosts) => prevPosts.filter((post) => post._id !== deletedPostId));
+  };
+
+  const handleRefresh = () => {
+    setRefreshPost(!refreshPost);
+  };
 
   const handleFriendRequest = async () => {
     const token = localStorage.getItem("token");
@@ -120,9 +129,7 @@ export default function Profile({ params }) {
         setFollowErrorMessage(null);
         setIsFollower(!isFollower);
 
-        const updatedFollowing = isFollower // Si utilisateur déjà follower
-          ? user.following.filter((userId) => userId !== id) // Retirer l'utilisateur
-          : [...user.following, id]; // Sinon ajouter l'utilisateur
+        const updatedFollowing = isFollower ? user.following.filter((userId) => userId !== id) : [...user.following, id];
 
         dispatch(updateUser({ following: updatedFollowing }));
       } else {
@@ -137,11 +144,49 @@ export default function Profile({ params }) {
     }
   };
 
+  const handleUpdateInfo = async (field, value) => {
+    const token = localStorage.getItem("token");
+
+    const updateData = {};
+
+    if (field === "bio") {
+      updateData.bio = value;
+    } else if (field === "job") {
+      updateData.job = value;
+    } else if (field === "location") {
+      updateData.location = value;
+    } else if (field === "website") {
+      updateData.website = value;
+    } else if (field === "avatar") {
+      updateData.avatar = value;
+    } else if (field === "backgroundImage") {
+      updateData.backgroundImage = value;
+    }
+
+    try {
+      const response = await fetch("http://localhost:3000/users/profile", {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: token ? `Bearer ${token}` : "",
+        },
+        body: JSON.stringify(updateData),
+      });
+      if (response.ok) {
+        const data = await response.json();
+        console.log(data.message);
+        setRefreshPost(!refreshPost);
+      }
+    } catch (err) {
+      console.error("Error during updating profile infos:", err);
+    }
+  };
+
   if (error) {
     return <p>Profil introuvable</p>;
   }
 
-  if (!userData) {
+  if (!profileData) {
     return <p>Loading...</p>;
   }
 
@@ -149,14 +194,22 @@ export default function Profile({ params }) {
   const closePostCardModal = () => setIsPostCardModalOpen(false);
 
   const posts = postsList.map((post) => (
-    <PostedCard key={post._id} postId={post._id} author={userData} content={post.content} date={post.createdAt} />
+    <PostedCard
+      key={post._id}
+      postId={post._id}
+      author={profileData}
+      content={post.content}
+      date={post.createdAt}
+      onPostDeleted={handlePostDeleted}
+      onRefresh={handleRefresh}
+    />
   ));
 
   return (
     <div className={styles.page}>
       <div className={styles.header}>
-        <Image src={userData.profile.avatar} width={150} height={150} alt={`${userData.profile.firstname} pic`} priority />
-        <p>ProfilePage {userData.profile.firstname}</p>
+        <Image src={profileData.profile.avatar} width={150} height={150} alt={`${profileData.profile.firstname} pic`} priority />
+        <p>ProfilePage {profileData.profile.firstname}</p>
         <div className={styles.socialBtn}>
           <div>
             {followMessage && <p style={{ color: "green" }}>{followMessage}</p>}
@@ -184,14 +237,26 @@ export default function Profile({ params }) {
       </div>
 
       <div className={styles.main}>
-        <div className={styles.randomCard}></div>
+        <div className={styles.infosFlow}>
+          <ProfileInfoCard
+            firstname={profileData.profile.firstname}
+            lastname={profileData.profile.lastname}
+            bio={profileData.profile.bio}
+            location={profileData.profile.location}
+            email={profileData.email}
+            website={profileData.profile.website}
+            birthdate={profileData.profile.birthdate}
+            job={profileData.profile.job}
+            onUpdate={handleUpdateInfo}
+          />
+        </div>
         <div className={styles.postsFlow}>
-          <PostInputBtn onOpenPostCardModal={openPostCardModal} placeholder={`Write a message to ${userData.profile.firstname}`} />
+          <PostInputBtn onOpenPostCardModal={openPostCardModal} placeholder={`Write a message to ${profileData.profile.firstname}`} />
           {isPostCardModalOpen && (
             <PostCardModal
               onClosePostCardModal={closePostCardModal}
               onNewPost={() => setNewPost(!newPost)}
-              placeholder={`Write a message to ${userData.profile.firstname}`}
+              placeholder={`Write a message to ${profileData.profile.firstname}`}
             />
           )}
           {postsList.length > 0 ? posts : <p>No posts available.</p>}

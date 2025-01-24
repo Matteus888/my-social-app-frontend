@@ -168,6 +168,7 @@
 
 .dropdownCard {
   display: flex;
+  flex-direction: row;
   align-items: center;
   padding: 10px 10px;
   opacity: 0.8;

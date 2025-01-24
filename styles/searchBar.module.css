@@ -15,6 +15,14 @@
   font-family: var(--font-quicksand), Arial, sans-serif;
   font-size: 16;
   font-weight: 450;
+
+  &:focus {
+    outline-color: var(--foreground);
+
+    &::placeholder {
+      opacity: 0.6;
+    }
+  }
 }
 
 .searchResultsContainer {

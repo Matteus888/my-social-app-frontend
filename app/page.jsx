@@ -38,7 +38,7 @@ export default function Home() {
         });
         if (response.ok) {
           const data = await response.json();
-          setPostedCardList(data.posts.reverse());
+          setPostedCardList(data.posts);
         }
       } catch (error) {
         console.error("Error during getting posts", error);

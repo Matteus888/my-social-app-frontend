@@ -129,7 +129,7 @@ export default function PostedCard({ author, date, content, postId, likes, onPos
         });
         if (response.ok) {
           const data = await response.json();
-          setCommentsList(data.comments);
+          setCommentsList(data.comments.reverse());
         }
       } catch (err) {
         console.error("Error during getting comments:", err);
@@ -180,7 +180,9 @@ export default function PostedCard({ author, date, content, postId, likes, onPos
             </div>
           </div>
         )}
-        <div>{commentsList.length > 0 ? `${commentsList.length} comment${commentsList.length > 1 ? "s" : ""}` : null}</div>
+        <div onClick={() => setIsCommentsOpen(!isCommentsOpen)} className={styles.commentTxt}>
+          {commentsList.length > 0 ? `${commentsList.length} comment${commentsList.length > 1 ? "s" : ""}` : null}
+        </div>
       </div>
       <div className={styles.line}></div>
       <div className={styles.commentSection}>
@@ -188,7 +190,10 @@ export default function PostedCard({ author, date, content, postId, likes, onPos
           <FontAwesomeIcon icon={faThumbsUp} className={styles.commentIcon} />
           <p className={styles.commentBtnText}>I like</p>
         </div>
-        <div className={styles.commentBtn} onClick={() => setIsCommentsOpen(!isCommentsOpen)}>
+        <div
+          className={`${styles.commentBtn} ${isCommentsOpen ? styles.commentBtnOpen : ""}`}
+          onClick={() => setIsCommentsOpen(!isCommentsOpen)}
+        >
           <FontAwesomeIcon icon={faComments} className={styles.commentIcon} />
           <p className={styles.commentBtnText}>Comment</p>
         </div>
@@ -196,7 +201,7 @@ export default function PostedCard({ author, date, content, postId, likes, onPos
       {isCommentsOpen && (
         <div className={styles.commentContainer}>
           <div className={styles.line}></div>
-          <div>
+          <div className={styles.commentWrapper}>
             {commentsList.map((comment, i) => (
               <CommentCard
                 key={i}
@@ -208,6 +213,7 @@ export default function PostedCard({ author, date, content, postId, likes, onPos
               />
             ))}
           </div>
+          <div className={styles.line}></div>
           <div className={styles.inputContainer}>
             <Image src={user.avatar} alt={`${user.firstname} profile pic`} width={30} height={30} />
             <input
