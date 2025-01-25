@@ -5,7 +5,7 @@ import ContactCard from "./ContactCard";
 import { useEffect, useState } from "react";
 import { useHeader } from "@/contexts/HeaderContext";
 
-export default function ProfileFriendSection({ firstname }) {
+export default function ProfileFriendSection({ firstname, id }) {
   const [friendsList, setFriendsList] = useState([]);
 
   const { newFriend } = useHeader();
@@ -15,7 +15,7 @@ export default function ProfileFriendSection({ firstname }) {
       const token = localStorage.getItem("token");
 
       try {
-        const res = await fetch("http://localhost:3000/users/friends", {
+        const res = await fetch(`http://localhost:3000/users/${id}/friends`, {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
@@ -28,7 +28,8 @@ export default function ProfileFriendSection({ firstname }) {
         }
 
         const data = await res.json();
-        setFriendsList(data.friends.sort(() => Math.random() - 0.5));
+        console.log(data.user);
+        setFriendsList(data.user.social.friends.sort(() => Math.random() - 0.5));
       } catch (error) {
         console.error("Error fetching friends:", error);
       }

@@ -256,7 +256,7 @@ export default function Profile({ params }) {
             job={profileData.profile.job}
             onUpdate={handleUpdateInfo}
           />
-          <ProfileFriendSection firstname={profileData.profile.firstname} friends={profileData.social.friends} />
+          <ProfileFriendSection firstname={profileData.profile.firstname} id={id} />
         </div>
         <div className={styles.postsFlow}>
           <PostInputBtn onOpenPostCardModal={openPostCardModal} placeholder={`Write a message to ${profileData.profile.firstname}`} />
