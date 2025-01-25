@@ -6,6 +6,11 @@
   padding: 10 20 20 20;
 }
 
+.title {
+  font-size: 20;
+  font-weight: 700;
+}
+
 .line {
   margin-top: 5;
   width: 100%;

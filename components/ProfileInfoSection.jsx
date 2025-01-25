@@ -1,4 +1,4 @@
-import styles from "@/styles/profileInfoCard.module.css";
+import styles from "@/styles/profileInfoSection.module.css";
 import UpdateInfoInput from "./UpdateInfoInput";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHouseChimney, faAt, faEnvelope, faCakeCandles, faEllipsis, faUser, faBriefcase } from "@fortawesome/free-solid-svg-icons";
@@ -6,7 +6,7 @@ import { useState } from "react";
 
 const moment = require("moment");
 
-export default function ProfileInfoCard({ firstname, lastname, bio, location, email, website, birthdate, job, onUpdate }) {
+export default function ProfileInfoSection({ firstname, lastname, bio, location, email, website, birthdate, job, onUpdate }) {
   const [editingField, setEditingField] = useState(null);
 
   const formattedBirthDate = moment(birthdate).format("MMMM Do YYYY");
@@ -23,7 +23,9 @@ export default function ProfileInfoCard({ firstname, lastname, bio, location, em
 
   return (
     <div className={styles.container}>
-      <h2 className={styles.title}>About {firstname}</h2>
+      <p className={styles.title}>
+        About {firstname} {lastname}
+      </p>
       <div className={styles.line}></div>
       <div className={styles.infoContainer}>
         <div className={styles.infoCard}>

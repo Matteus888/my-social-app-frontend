@@ -7,10 +7,10 @@ import ContactCard from "./ContactCard";
 export default function SearchBar({ placeholder }) {
   const [searchQuery, setSearchQuery] = useState("");
   const [searchResults, setSearchResults] = useState([]);
-  const { isSearchListOpen, setIsSearchListOpen } = useHeader();
-  const pathname = usePathname();
 
-  // Relier au provider
+  const { setIsSearchListOpen } = useHeader();
+
+  const pathname = usePathname();
 
   const handleSearch = async (e) => {
     const token = localStorage.getItem("token");

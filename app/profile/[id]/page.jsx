@@ -4,11 +4,12 @@ import styles from "@/styles/profile.module.css";
 import PostedCard from "@/components/PostedCard";
 import PostCardModal from "@/components/PostCardModal";
 import PostInputBtn from "@/components/PostInputBtn";
-import ProfileInfoCard from "@/components/ProfileInfoCard";
+import ProfileInfoSection from "@/components/ProfileInfoSection";
 import Image from "next/image";
 import { useEffect, useState, use } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { updateUser } from "@/store/userReducer";
+import { useHeader } from "@/contexts/HeaderContext";
 
 export default function Profile({ params }) {
   const { id } = use(params);
@@ -27,6 +28,8 @@ export default function Profile({ params }) {
   const [isMyProfile, setIsMyProfile] = useState(false);
   const [newPost, setNewPost] = useState(false);
   const [refreshPost, setRefreshPost] = useState(false);
+
+  const { isSearchListOpen, isDropdownOpen, isFriendRequestOpen } = useHeader();
 
   const user = useSelector((state) => state.user.value);
   const dispatch = useDispatch();
@@ -206,7 +209,10 @@ export default function Profile({ params }) {
   ));
 
   return (
-    <div className={styles.page}>
+    <div
+      className={styles.page}
+      style={{ position: "relative", zIndex: isSearchListOpen || isDropdownOpen || isFriendRequestOpen ? -1 : 1 }}
+    >
       <div className={styles.header}>
         <Image src={profileData.profile.avatar} width={150} height={150} alt={`${profileData.profile.firstname} pic`} priority />
         <p>ProfilePage {profileData.profile.firstname}</p>
@@ -238,7 +244,7 @@ export default function Profile({ params }) {
 
       <div className={styles.main}>
         <div className={styles.infosFlow}>
-          <ProfileInfoCard
+          <ProfileInfoSection
             firstname={profileData.profile.firstname}
             lastname={profileData.profile.lastname}
             bio={profileData.profile.bio}
