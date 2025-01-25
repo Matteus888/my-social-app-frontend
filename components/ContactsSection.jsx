@@ -5,9 +5,7 @@ import { useHeader } from "@/contexts/HeaderContext";
 
 export default function ContactsSection() {
   const [friendsList, setFriendsList] = useState([]);
-  const { isDropdownOpen } = useHeader();
-  const { isFriendRequestOpen } = useHeader();
-  const { newFriend } = useHeader();
+  const { isDropdownOpen, isFriendRequestOpen, newFriend } = useHeader();
 
   useEffect(() => {
     const fetchFriends = async () => {

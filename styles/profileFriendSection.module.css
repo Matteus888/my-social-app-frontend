@@ -1,0 +1,45 @@
+.container {
+  width: 100%;
+  background-color: white;
+  box-shadow: 0 1px 8px var(--lightgrey3);
+  border-radius: 6px;
+  padding: 10 20;
+  margin-top: 20;
+}
+
+.title {
+  font-size: 20;
+  font-weight: 700;
+}
+
+.line {
+  margin-top: 5;
+  margin-bottom: 10;
+  width: 100%;
+  height: 1;
+  background-color: var(--lightgrey3);
+}
+
+.friendsContainer {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 5;
+  height: 320;
+  overflow-y: auto;
+
+  &::-webkit-scrollbar {
+    width: 0;
+  }
+}
+
+.friendCard {
+  width: 70;
+  height: 102;
+}
+
+.name {
+  margin-top: -5;
+  text-align: center;
+  font-size: 12;
+}

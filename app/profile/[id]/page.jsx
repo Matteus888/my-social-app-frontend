@@ -5,6 +5,7 @@ import PostedCard from "@/components/PostedCard";
 import PostCardModal from "@/components/PostCardModal";
 import PostInputBtn from "@/components/PostInputBtn";
 import ProfileInfoSection from "@/components/ProfileInfoSection";
+import ProfileFriendSection from "@/components/ProfileFriendSection";
 import Image from "next/image";
 import { useEffect, useState, use } from "react";
 import { useSelector, useDispatch } from "react-redux";
@@ -255,6 +256,7 @@ export default function Profile({ params }) {
             job={profileData.profile.job}
             onUpdate={handleUpdateInfo}
           />
+          <ProfileFriendSection firstname={profileData.profile.firstname} friends={profileData.social.friends} />
         </div>
         <div className={styles.postsFlow}>
           <PostInputBtn onOpenPostCardModal={openPostCardModal} placeholder={`Write a message to ${profileData.profile.firstname}`} />
