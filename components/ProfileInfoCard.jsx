@@ -17,6 +17,10 @@ export default function ProfileInfoCard({ firstname, lastname, bio, location, em
     setEditingField(null);
   };
 
+  const handleClose = () => {
+    setEditingField(null);
+  };
+
   return (
     <div className={styles.container}>
       <h2 className={styles.title}>About {firstname}</h2>
@@ -25,7 +29,13 @@ export default function ProfileInfoCard({ firstname, lastname, bio, location, em
         <div className={styles.infoCard}>
           <FontAwesomeIcon icon={faUser} className={styles.icon} />
           {editingField === "bio" ? (
-            <UpdateInfoInput initialValue={bio || ""} onSave={(newValue) => handleSave("bio", newValue)} />
+            <UpdateInfoInput
+              inputName="Biography"
+              type="textarea"
+              initialValue={bio || ""}
+              onSave={(newValue) => handleSave("bio", newValue)}
+              onClose={handleClose}
+            />
           ) : (
             <p className={styles.text}>{bio}</p>
           )}
@@ -34,7 +44,13 @@ export default function ProfileInfoCard({ firstname, lastname, bio, location, em
         <div className={styles.infoCard}>
           <FontAwesomeIcon icon={faBriefcase} className={styles.icon} />
           {editingField === "job" ? (
-            <UpdateInfoInput initialValue={job || ""} onSave={(newValue) => handleSave("job", newValue)} />
+            <UpdateInfoInput
+              inputName="Work"
+              type="text"
+              initialValue={job || ""}
+              onSave={(newValue) => handleSave("job", newValue)}
+              onClose={handleClose}
+            />
           ) : (
             <p className={styles.text}>{job}</p>
           )}
@@ -47,18 +63,37 @@ export default function ProfileInfoCard({ firstname, lastname, bio, location, em
         <div className={styles.infoCard}>
           <FontAwesomeIcon icon={faAt} className={styles.icon} />
           {editingField === "website" ? (
-            <UpdateInfoInput initialValue={website || ""} onSave={(newValue) => handleSave("website", newValue)} />
+            <UpdateInfoInput
+              inputName="Website"
+              type="url"
+              initialValue={website || "http://"}
+              onSave={(newValue) => handleSave("website", newValue)}
+              onClose={handleClose}
+            />
           ) : (
-            <p className={styles.text}>{website}</p>
+            <a className={`${styles.link} ${styles.text}`} href={website} target="_blank">
+              {website}
+            </a>
           )}
           <FontAwesomeIcon icon={faEllipsis} className={styles.iconUpdate} onClick={() => setEditingField("website")} />
         </div>
         <div className={styles.infoCard}>
           <FontAwesomeIcon icon={faHouseChimney} className={styles.icon} />
           {editingField === "location" ? (
-            <UpdateInfoInput initialValue={location || ""} onSave={(newValue) => handleSave("location", newValue)} />
+            <UpdateInfoInput
+              inputName="Location"
+              type="text"
+              initialValue={location || ""}
+              onSave={(newValue) => handleSave("location", newValue)}
+              onClose={handleClose}
+            />
           ) : (
-            <p className={styles.text}>Lives at {location}</p>
+            <p className={styles.text}>
+              Lives at{" "}
+              <a className={styles.link} href={`https://www.google.fr/maps/place/${location}`} target="_blank">
+                {location}
+              </a>
+            </p>
           )}
           <FontAwesomeIcon icon={faEllipsis} className={styles.iconUpdate} onClick={() => setEditingField("location")} />
         </div>
