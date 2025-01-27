@@ -17,9 +17,8 @@ import { faChevronDown, faArrowRightFromBracket, faGear } from "@fortawesome/fre
 export default function Header() {
   const [friendRequests, setFriendRequests] = useState([]);
 
-  const { isFriendRequestOpen, setIsFriendRequestOpen } = useHeader();
-  const { isDropdownOpen, setIsDropdownOpen } = useHeader();
-  const { newFriend, setNewFriend } = useHeader();
+  const { isFriendRequestOpen, setIsFriendRequestOpen, isDropdownOpen, setIsDropdownOpen, newFriend, setNewFriend } = useHeader();
+  const {} = useHeader();
 
   const dropdownRef = useRef(null);
   const friendRequestRef = useRef(null);

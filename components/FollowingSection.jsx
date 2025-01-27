@@ -5,6 +5,7 @@ import { useHeader } from "@/contexts/HeaderContext";
 
 export default function FollowingSection() {
   const [followingList, setFollowingList] = useState([]);
+
   const { isSearchListOpen } = useHeader();
 
   useEffect(() => {

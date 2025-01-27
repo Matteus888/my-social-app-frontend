@@ -5,6 +5,7 @@ import { useHeader } from "@/contexts/HeaderContext";
 
 export default function ContactsSection() {
   const [friendsList, setFriendsList] = useState([]);
+
   const { isDropdownOpen, isFriendRequestOpen, newFriend } = useHeader();
 
   useEffect(() => {

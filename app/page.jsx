@@ -17,6 +17,7 @@ export default function Home() {
   const [isPostCardModalOpen, setIsPostCardModalOpen] = useState(false);
   const [newPost, setNewPost] = useState(false);
   const [refreshPost, setRefreshPost] = useState(false);
+
   const { isSearchListOpen } = useHeader();
 
   const user = useSelector((state) => state.user.value);

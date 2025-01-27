@@ -2,12 +2,13 @@ import styles from "@/styles/profileFriendSection.module.css";
 import Image from "next/image";
 import Link from "next/link";
 
-export default function ProfileFriendSection({ firstname, friendsList, friendsInCommon }) {
+export default function ProfileFriendSection({ firstname, friendsList, friendsInCommon, isMyProfile }) {
   return (
     <div className={styles.container}>
       <div className={styles.titleContainer}>
         <p className={styles.title}>
-          {firstname}'s friends {friendsInCommon > 0 && <span className={styles.commonFriends}>({friendsInCommon} shared)</span>}
+          {firstname}'s friends{" "}
+          {friendsInCommon > 0 && !isMyProfile && <span className={styles.commonFriends}>({friendsInCommon} shared)</span>}
         </p>
         <p className={styles.number}>
           {friendsList.length} friend{friendsList.length > 1 && "s"}

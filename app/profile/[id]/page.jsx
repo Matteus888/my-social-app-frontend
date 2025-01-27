@@ -31,6 +31,8 @@ export default function Profile({ params }) {
   const [refreshPost, setRefreshPost] = useState(false);
   const [isConfirmationModalOpen, setIsConfirmationModalOpen] = useState(false);
   const [commonFriendsCount, setCommonFriendsCount] = useState(0);
+  const [selectedImage, setSelectedImage] = useState(null);
+  const [previewImage, setPreviewImage] = useState(null);
 
   const { isSearchListOpen, isDropdownOpen, isFriendRequestOpen, newFriend, setNewFriend } = useHeader();
 
@@ -90,10 +92,6 @@ export default function Profile({ params }) {
       setCommonFriendsCount(commonFriends.length);
     }
   }, [friendData, user.friends]);
-
-  // console.log("user.friends", user.friends);
-  // console.log("friendData", friendData);
-  console.log(commonFriendsCount);
 
   const handlePostDeleted = (deletedPostId) => {
     setPostsList((prevPosts) => prevPosts.filter((post) => post._id !== deletedPostId));
@@ -184,44 +182,6 @@ export default function Profile({ params }) {
     }
   };
 
-  const handleUpdateInfo = async (field, value) => {
-    const token = localStorage.getItem("token");
-
-    const updateData = {};
-
-    if (field === "bio") {
-      updateData.bio = value;
-    } else if (field === "job") {
-      updateData.job = value;
-    } else if (field === "location") {
-      updateData.location = value;
-    } else if (field === "website") {
-      updateData.website = value;
-    } else if (field === "avatar") {
-      updateData.avatar = value;
-    } else if (field === "backgroundImage") {
-      updateData.backgroundImage = value;
-    }
-
-    try {
-      const response = await fetch("http://localhost:3000/users/profile", {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: token ? `Bearer ${token}` : "",
-        },
-        body: JSON.stringify(updateData),
-      });
-      if (response.ok) {
-        const data = await response.json();
-        console.log(data.message);
-        setRefreshPost(!refreshPost);
-      }
-    } catch (err) {
-      console.error("Error during updating profile infos:", err);
-    }
-  };
-
   if (error) {
     return <p>Profil introuvable</p>;
   }
@@ -242,6 +202,50 @@ export default function Profile({ params }) {
     />
   ));
 
+  const handleImageChange = (event) => {
+    const file = event.target.files[0];
+    if (file) {
+      setSelectedImage(file);
+      setPreviewImage(URL.createObjectURL(file));
+    }
+  };
+
+  // A adapter pour s'occuper aussi de backgroundImg
+  const handleImageUpload = async () => {
+    if (!selectedImage) {
+      alert("Veuillez sélectionner une image avant de l'envoyer.");
+      return;
+    }
+
+    const token = localStorage.getItem("token");
+    const formData = new FormData();
+    formData.append("image", selectedImage);
+    formData.append("field", "avatar"); // ou "backgroundImage"
+
+    try {
+      const response = await fetch("http://localhost:3000/users/profile/image", {
+        method: "PUT",
+        headers: {
+          Authorization: token ? `Bearer ${token}` : "",
+        },
+        body: formData,
+      });
+
+      if (!response.ok) {
+        throw new Error("Error during picture upload.");
+      }
+
+      const data = await response.json();
+      dispatch(updateUser({ avatar: data.imageUrl }));
+      handleRefresh();
+      alert("Image mise à jour avec succès !");
+      setSelectedImage(null);
+      setPreviewImage(null);
+    } catch (err) {
+      console.error("Error during picture upload:", err);
+    }
+  };
+
   return (
     <div
       className={styles.page}
@@ -259,6 +263,13 @@ export default function Profile({ params }) {
               alt={`${profileData.profile.firstname} pic`}
               priority
             />
+            <div>
+              <input type="file" accept="image/*" onChange={handleImageChange} />
+              <button onClick={handleImageUpload} disabled={!selectedImage}>
+                Envoyer l'image
+              </button>
+            </div>
+
             <div className={styles.profileInfo}>
               <p className={styles.profileName}>
                 {profileData.profile.firstname} {profileData.profile.lastname}
@@ -350,16 +361,20 @@ export default function Profile({ params }) {
           <ProfileInfoSection
             publicId={profileData.publicId}
             firstname={profileData.profile.firstname}
-            lastname={profileData.profile.lastname}
             bio={profileData.profile.bio}
             location={profileData.profile.location}
             email={profileData.email}
             website={profileData.profile.website}
             birthdate={profileData.profile.birthdate}
             job={profileData.profile.job}
-            onUpdate={handleUpdateInfo}
+            onRefresh={handleRefresh}
           />
-          <ProfileFriendSection firstname={profileData.profile.firstname} friendsList={friendData} friendsInCommon={commonFriendsCount} />
+          <ProfileFriendSection
+            firstname={profileData.profile.firstname}
+            friendsList={friendData}
+            friendsInCommon={commonFriendsCount}
+            isMyProfile={isMyProfile}
+          />
         </div>
         <div className={styles.postsFlow}>
           <PostInputBtn

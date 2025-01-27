@@ -7,7 +7,7 @@ import { useSelector } from "react-redux";
 
 const moment = require("moment");
 
-export default function ProfileInfoSection({ publicId, firstname, lastname, bio, location, email, website, birthdate, job, onUpdate }) {
+export default function ProfileInfoSection({ publicId, firstname, bio, location, email, website, birthdate, job, onRefresh }) {
   const [editingField, setEditingField] = useState(null);
 
   const user = useSelector((state) => state.user.value);
@@ -15,9 +15,27 @@ export default function ProfileInfoSection({ publicId, firstname, lastname, bio,
   const formattedBirthDate = moment(birthdate).format("MMMM Do YYYY");
   const age = moment().diff(moment(birthdate), "years");
 
-  const handleSave = (field, value) => {
-    onUpdate(field, value);
-    setEditingField(null);
+  const handleUpdateInfo = async (field, value) => {
+    const token = localStorage.getItem("token");
+
+    try {
+      const response = await fetch("http://localhost:3000/users/profile", {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: token ? `Bearer ${token}` : "",
+        },
+        body: JSON.stringify({ [field]: value }),
+      });
+      if (response.ok) {
+        const data = await response.json();
+        console.log(data.message);
+        onRefresh();
+        setEditingField(null);
+      }
+    } catch (err) {
+      console.error("Error during updating profile infos:", err);
+    }
   };
 
   const handleClose = () => {
@@ -36,7 +54,7 @@ export default function ProfileInfoSection({ publicId, firstname, lastname, bio,
               inputName="Biography"
               type="textarea"
               initialValue={bio || ""}
-              onSave={(newValue) => handleSave("bio", newValue)}
+              onSave={(newValue) => handleUpdateInfo("bio", newValue)}
               onClose={handleClose}
             />
           ) : (
@@ -53,7 +71,7 @@ export default function ProfileInfoSection({ publicId, firstname, lastname, bio,
               inputName="Work"
               type="text"
               initialValue={job || ""}
-              onSave={(newValue) => handleSave("job", newValue)}
+              onSave={(newValue) => handleUpdateInfo("job", newValue)}
               onClose={handleClose}
             />
           ) : (
@@ -74,7 +92,7 @@ export default function ProfileInfoSection({ publicId, firstname, lastname, bio,
               inputName="Website"
               type="url"
               initialValue={website || "http://"}
-              onSave={(newValue) => handleSave("website", newValue)}
+              onSave={(newValue) => handleUpdateInfo("website", newValue)}
               onClose={handleClose}
             />
           ) : (
@@ -93,7 +111,7 @@ export default function ProfileInfoSection({ publicId, firstname, lastname, bio,
               inputName="Location"
               type="text"
               initialValue={location || ""}
-              onSave={(newValue) => handleSave("location", newValue)}
+              onSave={(newValue) => handleUpdateInfo("location", newValue)}
               onClose={handleClose}
             />
           ) : (
