@@ -1,46 +1,18 @@
 import styles from "@/styles/profileFriendSection.module.css";
 import Image from "next/image";
 import Link from "next/link";
-import ContactCard from "./ContactCard";
-import { useEffect, useState } from "react";
-import { useHeader } from "@/contexts/HeaderContext";
 
-export default function ProfileFriendSection({ firstname, id }) {
-  const [friendsList, setFriendsList] = useState([]);
-
-  const { newFriend } = useHeader();
-
-  useEffect(() => {
-    const fetchFriends = async () => {
-      const token = localStorage.getItem("token");
-
-      try {
-        const res = await fetch(`http://localhost:3000/users/${id}/friends`, {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: token ? `Bearer ${token}` : "",
-          },
-        });
-
-        if (!res.ok) {
-          throw new Error("Failed to fetch friends.");
-        }
-
-        const data = await res.json();
-        console.log(data.user);
-        setFriendsList(data.user.social.friends.sort(() => Math.random() - 0.5));
-      } catch (error) {
-        console.error("Error fetching friends:", error);
-      }
-    };
-
-    fetchFriends();
-  }, [newFriend]);
-
+export default function ProfileFriendSection({ firstname, friendsList, friendsInCommon }) {
   return (
     <div className={styles.container}>
-      <p className={styles.title}>{firstname}'s friends</p>
+      <div className={styles.titleContainer}>
+        <p className={styles.title}>
+          {firstname}'s friends {friendsInCommon > 0 && <span className={styles.commonFriends}>({friendsInCommon} shared)</span>}
+        </p>
+        <p className={styles.number}>
+          {friendsList.length} friend{friendsList.length > 1 && "s"}
+        </p>
+      </div>
       <div className={styles.line}></div>
       <div className={styles.friendsContainer}>
         {friendsList.length > 0 ? (

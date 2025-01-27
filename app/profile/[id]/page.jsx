@@ -11,26 +11,28 @@ import { useEffect, useState, use } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { updateUser } from "@/store/userReducer";
 import { useHeader } from "@/contexts/HeaderContext";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faUserPlus, faFolderPlus, faFolderMinus, faUserCheck } from "@fortawesome/free-solid-svg-icons";
 
 export default function Profile({ params }) {
   const { id } = use(params);
 
   const [profileData, setProfileData] = useState(null);
+  const [friendData, setFriendData] = useState(null);
   const [postsList, setPostsList] = useState([]);
   const [error, setError] = useState(false);
-  const [followMessage, setFollowMessage] = useState(null);
-  const [followErrorMessage, setFollowErrorMessage] = useState(null);
   const [friendRequestMessage, setFriendRequestMessage] = useState(null);
   const [friendRequestErrorMessage, setFriendRequestErrorMessage] = useState(null);
   const [isFriend, setIsFriend] = useState(null);
-  const [hasFollower, setHasFollower] = useState(null);
   const [isFollower, setIsFollower] = useState(null);
   const [isPostCardModalOpen, setIsPostCardModalOpen] = useState(false);
   const [isMyProfile, setIsMyProfile] = useState(false);
   const [newPost, setNewPost] = useState(false);
   const [refreshPost, setRefreshPost] = useState(false);
+  const [isConfirmationModalOpen, setIsConfirmationModalOpen] = useState(false);
+  const [commonFriendsCount, setCommonFriendsCount] = useState(0);
 
-  const { isSearchListOpen, isDropdownOpen, isFriendRequestOpen } = useHeader();
+  const { isSearchListOpen, isDropdownOpen, isFriendRequestOpen, newFriend, setNewFriend } = useHeader();
 
   const user = useSelector((state) => state.user.value);
   const dispatch = useDispatch();
@@ -53,9 +55,9 @@ export default function Profile({ params }) {
         }
         const profileData = await profileRes.json();
         setProfileData(profileData.user);
-        setIsFriend(user.friends.includes(profileData.user._id));
-        setHasFollower(user.followers.includes(profileData.user._id));
-        setIsFollower(user.following.includes(profileData.user._id));
+        setFriendData(profileData.user.social.friends);
+        setIsFriend(user.friends.includes(profileData.user.publicId));
+        setIsFollower(user.following.includes(profileData.user.publicId));
         setIsMyProfile(user.publicId === profileData.user.publicId);
 
         const postsRes = await fetch(`http://localhost:3000/users/${id}/posts`, {
@@ -77,7 +79,21 @@ export default function Profile({ params }) {
       }
     }
     fetchProfileData();
-  }, [id, newPost, refreshPost]);
+  }, [id, newPost, refreshPost, newFriend]);
+
+  useEffect(() => {
+    if (friendData && user.friends) {
+      // Extraire les publicId des amis dans friendData
+      const friendPublicIds = friendData.map((friend) => friend.publicId);
+      // Calcul des amis en commun
+      const commonFriends = user.friends.filter((friendId) => friendPublicIds.includes(friendId));
+      setCommonFriendsCount(commonFriends.length);
+    }
+  }, [friendData, user.friends]);
+
+  // console.log("user.friends", user.friends);
+  // console.log("friendData", friendData);
+  console.log(commonFriendsCount);
 
   const handlePostDeleted = (deletedPostId) => {
     setPostsList((prevPosts) => prevPosts.filter((post) => post._id !== deletedPostId));
@@ -102,8 +118,6 @@ export default function Profile({ params }) {
         const successData = await res.json();
         setFriendRequestMessage(successData.message);
         setFriendRequestErrorMessage(null);
-
-        dispatch(updateUser({ friendRequests: [...user.friendRequests, id] }));
       } else {
         const errorData = await res.json();
         setFriendRequestErrorMessage(errorData.error);
@@ -113,6 +127,32 @@ export default function Profile({ params }) {
       console.error(err);
       setFriendRequestErrorMessage("Error connecting to the server");
       setFriendRequestMessage(null);
+    }
+  };
+
+  const handleDeleteFriend = async (friendId) => {
+    setIsConfirmationModalOpen(false);
+    const token = localStorage.getItem("token");
+
+    try {
+      const res = await fetch(`http://localhost:3000/users/${friendId}/unfriend`, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: token ? `Bearer ${token}` : "",
+        },
+      });
+      const data = await res.json();
+      if (res.ok) {
+        setFriendData((prev) => prev.filter((friend) => friend.publicId !== friendId));
+        setIsFriend(false);
+        setFriendRequestMessage(data.message);
+        setNewFriend(!newFriend);
+        dispatch(updateUser({ friends: user.friends.filter((id) => id !== friendId) }));
+      }
+      setFriendRequestErrorMessage(data.error);
+    } catch (err) {
+      console.error("Error removing friend:", err);
     }
   };
 
@@ -129,8 +169,7 @@ export default function Profile({ params }) {
       });
       if (res.ok) {
         const successData = await res.json();
-        setFollowMessage(successData.message);
-        setFollowErrorMessage(null);
+        console.log(successData.message);
         setIsFollower(!isFollower);
 
         const updatedFollowing = isFollower ? user.following.filter((userId) => userId !== id) : [...user.following, id];
@@ -138,13 +177,10 @@ export default function Profile({ params }) {
         dispatch(updateUser({ following: updatedFollowing }));
       } else {
         const errorData = await res.json();
-        setFollowErrorMessage(errorData.error);
-        setFollowMessage(null);
+        console.error(errorData.error);
       }
     } catch (err) {
       console.error(err);
-      setFollowErrorMessage("Error connecting to the server");
-      setFollowMessage(null);
     }
   };
 
@@ -194,9 +230,6 @@ export default function Profile({ params }) {
     return <p>Loading...</p>;
   }
 
-  const openPostCardModal = () => setIsPostCardModalOpen(true);
-  const closePostCardModal = () => setIsPostCardModalOpen(false);
-
   const posts = postsList.map((post) => (
     <PostedCard
       key={post._id}
@@ -215,37 +248,107 @@ export default function Profile({ params }) {
       style={{ position: "relative", zIndex: isSearchListOpen || isDropdownOpen || isFriendRequestOpen ? -1 : 1 }}
     >
       <div className={styles.header}>
-        <Image src={profileData.profile.avatar} width={150} height={150} alt={`${profileData.profile.firstname} pic`} priority />
-        <p>ProfilePage {profileData.profile.firstname}</p>
-        <div className={styles.socialBtn}>
-          <div>
-            {followMessage && <p style={{ color: "green" }}>{followMessage}</p>}
-            {followErrorMessage && <p style={{ color: "red" }}>{followErrorMessage}</p>}
-            {isMyProfile ? (
-              <p>This is your profile</p>
-            ) : isFriend ? (
-              <p>You are friends with this person</p>
-            ) : (
-              <button onClick={handleFollow}>{isFollower ? "Unfollow this person" : "Follow this person"}</button>
-            )}
-            {isFollower && <p>You follow this guy</p>}
-            {hasFollower && <p>You are follow by this guy</p>}
+        <div className={styles.backgroundImage}></div>
+        <div className={styles.headerInfo}>
+          <div className={styles.profileInfoContainer}>
+            <Image
+              className={styles.profileAvatar}
+              src={profileData.profile.avatar}
+              width={180}
+              height={180}
+              alt={`${profileData.profile.firstname} pic`}
+              priority
+            />
+            <div className={styles.profileInfo}>
+              <p className={styles.profileName}>
+                {profileData.profile.firstname} {profileData.profile.lastname}
+              </p>
+              <p className={styles.profileNbFriends}>
+                {friendData.length} friend{friendData.length > 1 && "s"}
+              </p>
+              <div>Photo d'amis{commonFriendsCount}</div>
+            </div>
           </div>
-          <div>
-            {friendRequestMessage && <p style={{ color: "green" }}>{friendRequestMessage}</p>}
-            {friendRequestErrorMessage && <p style={{ color: "red" }}>{friendRequestErrorMessage}</p>}
-            {!isFriend && !isMyProfile && (
-              <button onClick={handleFriendRequest} className={styles.friendBtn}>
-                Send a friend request
-              </button>
-            )}
+          <div className={styles.socialBtnContainer}>
+            <div>
+              {!isMyProfile &&
+                !isFriend &&
+                (!isFollower ? (
+                  <button className={`${styles.socialBtn} ${styles.followBtn}`} onClick={handleFollow}>
+                    <FontAwesomeIcon icon={faFolderPlus} width={20} height={20} />
+                    <p>Follow</p>
+                  </button>
+                ) : (
+                  <button className={`${styles.socialBtn} ${styles.followBtn}`} onClick={handleFollow}>
+                    <FontAwesomeIcon icon={faFolderMinus} width={20} height={20} />
+                    <p>Unfollow</p>
+                  </button>
+                ))}
+            </div>
+            <div>
+              {!isMyProfile &&
+                (!isFriend ? (
+                  <button className={`${styles.socialBtn} ${styles.friendBtn}`} onClick={handleFriendRequest}>
+                    <FontAwesomeIcon icon={faUserPlus} width={20} height={20} />
+                    <p>Add friend</p>
+                  </button>
+                ) : (
+                  <button className={`${styles.socialBtn} ${styles.friendBtn}`} onClick={() => setIsConfirmationModalOpen(true)}>
+                    <FontAwesomeIcon icon={faUserCheck} width={20} height={20} />
+                    <p>Friend</p>
+                  </button>
+                ))}
+            </div>
           </div>
         </div>
       </div>
+      {/* Confirmation Modals */}
+      {isConfirmationModalOpen && (
+        <div className={styles.modalOverlay}>
+          <div className={styles.modal}>
+            <p>
+              Are you sure you want to delete {profileData.profile.firstname} {profileData.profile.lastname} as friend ?
+            </p>
+            <div className={styles.modalActions}>
+              <button onClick={() => handleDeleteFriend(id)} className={`${styles.btn} ${styles.confirmBtn}`}>
+                Yes
+              </button>
+              <button onClick={() => setIsConfirmationModalOpen(false)} className={`${styles.btn} ${styles.cancelBtn}`}>
+                No
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+      {friendRequestMessage && (
+        <div className={styles.modalOverlay}>
+          <div className={styles.modal}>
+            <p>{friendRequestMessage}</p>
+            <div className={styles.modalActions}>
+              <button onClick={() => setFriendRequestMessage(null)} className={`${styles.btn} ${styles.okBtn}`}>
+                OK
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+      {friendRequestErrorMessage && (
+        <div className={styles.modalOverlay}>
+          <div className={styles.modal}>
+            <p>{friendRequestErrorMessage}</p>
+            <div className={styles.modalActions}>
+              <button onClick={() => setFriendRequestErrorMessage(null)} className={`${styles.btn} ${styles.okBtn}`}>
+                OK
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
 
       <div className={styles.main}>
         <div className={styles.infosFlow}>
           <ProfileInfoSection
+            publicId={profileData.publicId}
             firstname={profileData.profile.firstname}
             lastname={profileData.profile.lastname}
             bio={profileData.profile.bio}
@@ -256,13 +359,16 @@ export default function Profile({ params }) {
             job={profileData.profile.job}
             onUpdate={handleUpdateInfo}
           />
-          <ProfileFriendSection firstname={profileData.profile.firstname} id={id} />
+          <ProfileFriendSection firstname={profileData.profile.firstname} friendsList={friendData} friendsInCommon={commonFriendsCount} />
         </div>
         <div className={styles.postsFlow}>
-          <PostInputBtn onOpenPostCardModal={openPostCardModal} placeholder={`Write a message to ${profileData.profile.firstname}`} />
+          <PostInputBtn
+            onOpenPostCardModal={() => setIsPostCardModalOpen(true)}
+            placeholder={`Write a message to ${profileData.profile.firstname}`}
+          />
           {isPostCardModalOpen && (
             <PostCardModal
-              onClosePostCardModal={closePostCardModal}
+              onClosePostCardModal={() => setIsPostCardModalOpen(false)}
               onNewPost={() => setNewPost(!newPost)}
               placeholder={`Write a message to ${profileData.profile.firstname}`}
             />

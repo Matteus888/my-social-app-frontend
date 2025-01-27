@@ -3,11 +3,14 @@ import UpdateInfoInput from "./UpdateInfoInput";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHouseChimney, faAt, faEnvelope, faCakeCandles, faEllipsis, faUser, faBriefcase } from "@fortawesome/free-solid-svg-icons";
 import { useState } from "react";
+import { useSelector } from "react-redux";
 
 const moment = require("moment");
 
-export default function ProfileInfoSection({ firstname, lastname, bio, location, email, website, birthdate, job, onUpdate }) {
+export default function ProfileInfoSection({ publicId, firstname, lastname, bio, location, email, website, birthdate, job, onUpdate }) {
   const [editingField, setEditingField] = useState(null);
+
+  const user = useSelector((state) => state.user.value);
 
   const formattedBirthDate = moment(birthdate).format("MMMM Do YYYY");
   const age = moment().diff(moment(birthdate), "years");
@@ -23,9 +26,7 @@ export default function ProfileInfoSection({ firstname, lastname, bio, location,
 
   return (
     <div className={styles.container}>
-      <p className={styles.title}>
-        About {firstname} {lastname}
-      </p>
+      <p className={styles.title}>About {firstname}</p>
       <div className={styles.line}></div>
       <div className={styles.infoContainer}>
         <div className={styles.infoCard}>
@@ -41,7 +42,9 @@ export default function ProfileInfoSection({ firstname, lastname, bio, location,
           ) : (
             <p className={styles.text}>{bio}</p>
           )}
-          <FontAwesomeIcon icon={faEllipsis} className={styles.iconUpdate} onClick={() => setEditingField("bio")} />
+          {user.publicId === publicId && (
+            <FontAwesomeIcon icon={faEllipsis} className={styles.iconUpdate} onClick={() => setEditingField("bio")} />
+          )}
         </div>
         <div className={styles.infoCard}>
           <FontAwesomeIcon icon={faBriefcase} className={styles.icon} />
@@ -56,7 +59,9 @@ export default function ProfileInfoSection({ firstname, lastname, bio, location,
           ) : (
             <p className={styles.text}>{job}</p>
           )}
-          <FontAwesomeIcon icon={faEllipsis} className={styles.iconUpdate} onClick={() => setEditingField("job")} />
+          {user.publicId === publicId && (
+            <FontAwesomeIcon icon={faEllipsis} className={styles.iconUpdate} onClick={() => setEditingField("job")} />
+          )}
         </div>
         <div className={styles.infoCard}>
           <FontAwesomeIcon icon={faEnvelope} className={styles.icon} />
@@ -77,7 +82,9 @@ export default function ProfileInfoSection({ firstname, lastname, bio, location,
               {website}
             </a>
           )}
-          <FontAwesomeIcon icon={faEllipsis} className={styles.iconUpdate} onClick={() => setEditingField("website")} />
+          {user.publicId === publicId && (
+            <FontAwesomeIcon icon={faEllipsis} className={styles.iconUpdate} onClick={() => setEditingField("website")} />
+          )}
         </div>
         <div className={styles.infoCard}>
           <FontAwesomeIcon icon={faHouseChimney} className={styles.icon} />
@@ -97,7 +104,9 @@ export default function ProfileInfoSection({ firstname, lastname, bio, location,
               </a>
             </p>
           )}
-          <FontAwesomeIcon icon={faEllipsis} className={styles.iconUpdate} onClick={() => setEditingField("location")} />
+          {user.publicId === publicId && (
+            <FontAwesomeIcon icon={faEllipsis} className={styles.iconUpdate} onClick={() => setEditingField("location")} />
+          )}
         </div>
         <div className={styles.infoCard}>
           <FontAwesomeIcon icon={faCakeCandles} className={styles.icon} />

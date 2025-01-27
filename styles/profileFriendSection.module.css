@@ -7,25 +7,41 @@
   margin-top: 20;
 }
 
+.titleContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+}
+
 .title {
-  font-size: 20;
+  font-size: 20px;
   font-weight: 700;
 }
 
+.commonFriends {
+  font-size: 14px;
+  font-weight: 400;
+}
+
+.number {
+  font-size: 14px;
+}
+
 .line {
-  margin-top: 5;
-  margin-bottom: 10;
+  margin-top: 5px;
+  margin-bottom: 10px;
   width: 100%;
   height: 1;
   background-color: var(--lightgrey3);
 }
 
 .friendsContainer {
+  text-align: center;
   display: flex;
+  align-items: flex-start;
+  align-content: flex-start;
   flex-wrap: wrap;
-  justify-content: space-between;
-  gap: 5;
-  height: 320;
+  height: 370px;
   overflow-y: auto;
 
   &::-webkit-scrollbar {
@@ -34,12 +50,13 @@
 }
 
 .friendCard {
-  width: 70;
-  height: 102;
+  width: 85px;
+  height: 102px;
+  margin-bottom: 10px;
 }
 
 .name {
   margin-top: -5;
   text-align: center;
-  font-size: 12;
+  font-size: 12px;
 }

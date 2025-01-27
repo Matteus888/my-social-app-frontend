@@ -8,7 +8,7 @@ import SearchBar from "./SearchBar";
 import { useEffect, useRef, useState } from "react";
 import { useRouter, usePathname } from "next/navigation";
 import { useSelector, useDispatch } from "react-redux";
-import { logout } from "@/store/userReducer";
+import { logout, updateUser } from "@/store/userReducer";
 import { useHeader } from "@/contexts/HeaderContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBell } from "@fortawesome/free-regular-svg-icons";
@@ -89,6 +89,8 @@ export default function Header() {
       const data = await res.json();
       setNewFriend(!newFriend);
       setFriendRequests((prevRequests) => prevRequests.filter((request) => request.publicId !== userId));
+      dispatch(updateUser({ friends: [...user.friends, userId] }));
+      dispatch(updateUser({ friendRequests: user.friendRequests.filter((id) => id !== userId) }));
     } catch (error) {
       console.error("Error handling friend request1:", error);
     }

@@ -1,6 +1,6 @@
 .following {
   width: 300;
-  height: 500;
+  height: calc(100vh - 165px);
   border-bottom: 1.5px solid var(--lightgrey2);
 
 }
@@ -13,7 +13,7 @@
 }
 
 .list {
-  height: 465;
+  height: calc(100vh - 200px);
   overflow-y: hidden;
 
   &:hover {

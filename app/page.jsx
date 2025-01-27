@@ -47,9 +47,6 @@ export default function Home() {
     fetchPosts();
   }, [newPost, refreshPost]);
 
-  const openPostCardModal = () => setIsPostCardModalOpen(true);
-  const closePostCardModal = () => setIsPostCardModalOpen(false);
-
   const handlePostDeleted = (deletedPostId) => {
     setPostedCardList((prevPosts) => prevPosts.filter((post) => post._id !== deletedPostId));
   };
@@ -78,8 +75,10 @@ export default function Home() {
         <Footer />
         <div className={styles.fluxContainer} style={{ position: "relative", zIndex: isSearchListOpen ? -1 : 1 }}>
           <div className={styles.flux}>
-            <PostInputBtn onOpenPostCardModal={openPostCardModal} placeholder={`What's up, ${user.firstname} ?`} />
-            {isPostCardModalOpen && <PostCardModal onClosePostCardModal={closePostCardModal} onNewPost={() => setNewPost(!newPost)} />}
+            <PostInputBtn onOpenPostCardModal={() => setIsPostCardModalOpen(true)} placeholder={`What's up, ${user.firstname} ?`} />
+            {isPostCardModalOpen && (
+              <PostCardModal onClosePostCardModal={() => setIsPostCardModalOpen(false)} onNewPost={() => setNewPost(!newPost)} />
+            )}
             {messages}
           </div>
         </div>
