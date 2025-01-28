@@ -25,7 +25,9 @@ export default function CommentCard({ avatar, firstname, lastname, content, date
 
   return (
     <div className={styles.card}>
-      <Image src={avatar} alt={`${firstname} profile pic`} width={30} height={30} />
+      <div className={styles.avatar}>
+        <Image src={avatar} alt={`${firstname} profile pic`} width={30} height={30} style={{ objectFit: "cover" }} />
+      </div>
       <div className={styles.commentContainer}>
         <div className={styles.commentBubble}>
           <p className={styles.name}>{`${firstname} ${lastname}`}</p>

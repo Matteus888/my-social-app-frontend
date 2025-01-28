@@ -5,7 +5,9 @@ export default function FriendRequestCard({ name, image, onAccept, onReject }) {
   return (
     <div className={styles.card}>
       <div className={styles.friend}>
-        <Image src={image} alt={`${name} profile pic`} width={30} height={30} />
+        <div className={styles.avatar}>
+          <Image src={image} alt={`${name} profile pic`} width={35} height={35} style={{ objectFit: "cover" }} />
+        </div>
         <p className={styles.name}>{name}</p>
       </div>
       <div className={styles.btnContainer}>

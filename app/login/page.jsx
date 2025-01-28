@@ -100,7 +100,7 @@ export default function Login() {
     <div className={styles.page}>
       <div className={styles.main}>
         <h1 className={styles.pageTitle}>My Social App</h1>
-        <InfoCard content="You must login to continue." />
+        <InfoCard content="Just for a look connect with email: matteus888@test.com password: azerty" />
         <div className={styles.loginContainer}>
           <form action="submit" onSubmit={async (e) => e.preventDefault()}>
             <p className={styles.loginTitle}>Connect to My Social App</p>

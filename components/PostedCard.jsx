@@ -142,7 +142,15 @@ export default function PostedCard({ author, date, content, postId, likes, onPos
   return (
     <div className={styles.container}>
       <div className={styles.postedHeader}>
-        <Image src={author.profile.avatar} alt={`${author.profile.firstname} profile pic`} width={40} height={40} />
+        <div className={styles.avatar}>
+          <Image
+            src={author.profile.avatar}
+            alt={`${author.profile.firstname} profile pic`}
+            width={40}
+            height={40}
+            style={{ objectFit: "cover" }}
+          />
+        </div>
         <div className={styles.postedHeaderText}>
           <Link href={`/profile/${author.publicId}`} className={styles.name}>
             {author.profile.firstname} {author.profile.lastname}
@@ -215,7 +223,9 @@ export default function PostedCard({ author, date, content, postId, likes, onPos
           </div>
           <div className={styles.line}></div>
           <div className={styles.inputContainer}>
-            <Image src={user.avatar} alt={`${user.firstname} profile pic`} width={30} height={30} />
+            <div className={styles.inputAvatar}>
+              <Image src={user.avatar} alt={`${user.firstname} profile pic`} width={30} height={30} style={{ objectFit: "cover" }} />
+            </div>
             <input
               type="text"
               className={styles.input}

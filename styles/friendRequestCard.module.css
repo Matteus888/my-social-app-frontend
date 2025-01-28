@@ -15,9 +15,16 @@
   align-items: center;
 }
 
+.avatar {
+  width: 35px;
+  height: 35px;
+  overflow: hidden;
+  border-radius: 50%;
+}
+
 .name {
   padding-left: 10;
-  font-size: 16;
+  font-size: 18;
   font-weight: 500;
 }
 

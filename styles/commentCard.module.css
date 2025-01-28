@@ -4,6 +4,13 @@
   margin: 10 5;
 }
 
+.avatar {
+  width: 30px;
+  height: 30px;
+  overflow: hidden;
+  border-radius: 50%;
+}
+
 .commentContainer {
   display: flex;
   flex-direction: column;

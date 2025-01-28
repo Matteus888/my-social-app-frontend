@@ -29,19 +29,6 @@ export default function Header() {
   const user = useSelector((state) => state.user.value);
   const dispatch = useDispatch();
 
-  // Pour se déconnecter
-  const handleLogout = (e) => {
-    e.preventDefault();
-    localStorage.removeItem("token");
-    localStorage.removeItem("user");
-    setIsDropdownOpen(false);
-    setIsFriendRequestOpen(false);
-    router.push("/login");
-    setTimeout(() => {
-      dispatch(logout());
-    }, 500);
-  };
-
   // Pour récupérer les demandes d'amis
   useEffect(() => {
     const fetchFriendRequests = async () => {
@@ -70,6 +57,40 @@ export default function Header() {
     fetchFriendRequests();
   }, []);
 
+  // Gestion du clic à l'extérieur pour fermer les menus
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target) && isDropdownOpen) {
+        setIsDropdownOpen(false);
+      }
+      if (friendRequestRef.current && !friendRequestRef.current.contains(event.target) && isFriendRequestOpen) {
+        setIsFriendRequestOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [isDropdownOpen, isFriendRequestOpen, setIsDropdownOpen, setIsFriendRequestOpen]);
+
+  // Ferme le menu à chaque changement de page
+  useEffect(() => {
+    setIsDropdownOpen(false);
+  }, [pathname]);
+
+  // Pour se déconnecter
+  const handleLogout = (e) => {
+    e.preventDefault();
+    localStorage.removeItem("token");
+    localStorage.removeItem("user");
+    setIsDropdownOpen(false);
+    setIsFriendRequestOpen(false);
+    router.push("/login");
+    setTimeout(() => {
+      dispatch(logout());
+    }, 500);
+  };
+
   // Pour accepter ou refuser une demande d'ami
   const handleFriendRequest = async (userId, action) => {
     const token = localStorage.getItem("token");
@@ -94,27 +115,6 @@ export default function Header() {
       console.error("Error handling friend request1:", error);
     }
   };
-
-  // Gestion du clic à l'extérieur pour fermer les menus
-  useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(event.target) && isDropdownOpen) {
-        setIsDropdownOpen(false);
-      }
-      if (friendRequestRef.current && !friendRequestRef.current.contains(event.target) && isFriendRequestOpen) {
-        setIsFriendRequestOpen(false);
-      }
-    };
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, [isDropdownOpen, isFriendRequestOpen, setIsDropdownOpen, setIsFriendRequestOpen]);
-
-  // Ferme le menu à chaque changement de page
-  useEffect(() => {
-    setIsDropdownOpen(false);
-  }, [pathname]);
 
   return (
     <header className={styles.header}>
@@ -160,7 +160,9 @@ export default function Header() {
             setIsFriendRequestOpen(false);
           }}
         >
-          <Image className={styles.avatar} src={user.avatar} width={40} height={40} alt="User Avatar" priority />
+          <div className={styles.avatar}>
+            <Image src={user.avatar} width={40} height={40} style={{ objectFit: "cover" }} alt="User Avatar" priority />
+          </div>
           <div className={styles.chevronContainer}>
             <FontAwesomeIcon icon={faChevronDown} className={styles.chevronIcon} />
           </div>
@@ -169,7 +171,9 @@ export default function Header() {
         {isDropdownOpen && (
           <ul className={styles.dropdownMenu} ref={dropdownRef}>
             <li className={styles.dropdownCard}>
-              <Image className={styles.avatarCard} src={user.avatar} width={20} height={20} alt="User Avatar" />
+              <div className={styles.avatarCard}>
+                <Image src={user.avatar} width={25} height={25} style={{ objectFit: "cover" }} alt="User Avatar" />
+              </div>
               <Link href={`/profile/${user.publicId}`} className={styles.dropdownItem}>
                 {user.firstname}'s Profile
               </Link>

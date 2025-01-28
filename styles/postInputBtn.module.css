@@ -13,8 +13,10 @@
 .avatar {
   position: relative;
   vertical-align: middle;
-  height: 44;
+  width: 44px;
+  height: 44px;
   border-radius: 50%;
+  overflow: hidden;
 
   &::after {
     content: "";

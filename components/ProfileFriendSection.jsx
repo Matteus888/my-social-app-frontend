@@ -20,7 +20,16 @@ export default function ProfileFriendSection({ firstname, friendsList, friendsIn
           friendsList.map((friend, i) => (
             <div key={i} className={styles.friendCard}>
               <Link href={`/profile/${friend.publicId}`} className={styles.link}>
-                <Image src={friend.profile.avatar} width={70} height={70} alt={`${friend.firstname} profile pic`} />
+                <div className={styles.avatar}>
+                  <Image
+                    src={friend.profile.avatar}
+                    width={70}
+                    height={70}
+                    layout="intrinsic"
+                    style={{ objectFit: "cover" }}
+                    alt={`${friend.firstname} profile pic`}
+                  />
+                </div>
                 <p className={styles.name}>
                   {friend.profile.firstname} {friend.profile.lastname}
                 </p>

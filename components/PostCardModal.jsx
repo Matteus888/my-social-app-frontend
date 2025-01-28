@@ -50,7 +50,9 @@ export default function PostCardModal({ onClosePostCardModal, onNewPost, placeho
         <div className={styles.mainContainer}>
           <Link href={`/profile/${user.publicId}`} name="Profile">
             <div className={styles.userCard}>
-              <Image src={user.avatar} alt={`${user.firstname} profile pic`} width={40} height={40} />
+              <div className={styles.avatar}>
+                <Image src={user.avatar} alt={`${user.firstname} profile pic`} width={40} height={40} style={{ objectFit: "cover" }} />
+              </div>
               <p className={styles.name}>
                 {user.firstname} {user.lastname}
               </p>
