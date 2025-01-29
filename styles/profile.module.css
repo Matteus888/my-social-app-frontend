@@ -48,7 +48,7 @@
   overflow: hidden;
 }
 
-.backgroundTxtContainer {
+.backgroundTxt {
   display: flex;
   justify-content: center;
   align-items: center;

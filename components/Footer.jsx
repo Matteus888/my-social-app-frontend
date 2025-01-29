@@ -1,5 +1,5 @@
-import { useState } from "react";
 import styles from "../styles/footer.module.css";
+import { useState } from "react";
 
 export default function Footer() {
   const [isModalOpen, setIsModalOpen] = useState(false);

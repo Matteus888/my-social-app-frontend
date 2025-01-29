@@ -1,4 +1,5 @@
 import styles from "@/styles/profileFriendSection.module.css";
+
 import Image from "next/image";
 import Link from "next/link";
 

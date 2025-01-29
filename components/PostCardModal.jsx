@@ -1,10 +1,12 @@
 "use client";
 
 import styles from "@/styles/postCardModal.module.css";
+
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
 import { useSelector } from "react-redux";
+
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faXmark } from "@fortawesome/free-solid-svg-icons";
 
@@ -19,19 +21,19 @@ export default function PostCardModal({ onClosePostCardModal, onNewPost, placeho
     const token = localStorage.getItem("token");
 
     try {
-      const response = await fetch("http://localhost:3000/posts", {
+      const res = await fetch("http://localhost:3000/posts", {
         method: "POST",
         headers: { "Content-Type": "application/json", Authorization: token ? `Bearer ${token}` : "" },
         body: JSON.stringify({ content: content, author: user.publicId }),
       });
 
-      if (response.ok) {
-        const data = await response.json();
+      if (res.ok) {
+        const data = await res.json();
       } else {
-        console.error("Failed to create post, response status:", response.status);
+        console.error("Failed to create post, response status:", res.status);
       }
-    } catch (error) {
-      console.error("Error during post recording:", error);
+    } catch (err) {
+      console.error("Error during post recording:", err);
     }
     onNewPost();
     onClosePostCardModal();

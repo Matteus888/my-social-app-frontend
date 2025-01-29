@@ -1,15 +1,18 @@
 "use client";
 
 import styles from "../styles/header.module.css";
+
+import SearchBar from "./SearchBar";
+import FriendRequestCard from "./FriendRequestCard";
+
 import Image from "next/image";
 import Link from "next/link";
-import FriendRequestCard from "./FriendRequestCard";
-import SearchBar from "./SearchBar";
 import { useEffect, useRef, useState } from "react";
 import { useRouter, usePathname } from "next/navigation";
 import { useSelector, useDispatch } from "react-redux";
 import { logout, updateUser } from "@/store/userReducer";
 import { useHeader } from "@/contexts/FriendContext";
+
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBell } from "@fortawesome/free-regular-svg-icons";
 import { faChevronDown, faArrowRightFromBracket, faGear } from "@fortawesome/free-solid-svg-icons";

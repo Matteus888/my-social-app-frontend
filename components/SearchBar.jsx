@@ -1,13 +1,20 @@
 import styles from "@/styles/searchBar.module.css";
+
+import ContactCard from "./ContactCard";
+
 import { useState, useEffect } from "react";
 import { usePathname } from "next/navigation";
-import ContactCard from "./ContactCard";
 
 export default function SearchBar({ placeholder }) {
   const [searchQuery, setSearchQuery] = useState("");
   const [searchResults, setSearchResults] = useState([]);
 
   const pathname = usePathname();
+
+  useEffect(() => {
+    setSearchQuery("");
+    setSearchResults([]);
+  }, [pathname]);
 
   const handleSearch = async (e) => {
     const token = localStorage.getItem("token");
@@ -37,11 +44,6 @@ export default function SearchBar({ placeholder }) {
       console.error("Error during search:", err);
     }
   };
-
-  useEffect(() => {
-    setSearchQuery("");
-    setSearchResults([]);
-  }, [pathname]);
 
   return (
     <div className={styles.inputContainer}>

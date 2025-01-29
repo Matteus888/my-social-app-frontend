@@ -1,6 +1,8 @@
 import styles from "../styles/contactsSection.module.css";
-import { useEffect, useState } from "react";
+
 import ContactCard from "./ContactCard";
+
+import { useEffect, useState } from "react";
 import { useHeader } from "@/contexts/FriendContext";
 
 export default function ContactsSection() {

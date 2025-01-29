@@ -1,7 +1,9 @@
 import styles from "@/styles/updateImageModal.module.css";
+
+import { useState } from "react";
+
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUpload } from "@fortawesome/free-solid-svg-icons";
-import { useState } from "react";
 
 export default function UpdateImageModal({ inputName, onImageUpload, onClose, width, radius }) {
   const [fileName, setFileName] = useState("No file selected");

@@ -1,12 +1,14 @@
 "use client";
 
 import styles from "../styles/home.module.css";
-import Footer from "@/components/Footer";
-import FollowingSection from "@/components/FollowingSection";
+
 import ContactsSection from "@/components/ContactsSection";
 import PostInputBtn from "@/components/PostInputBtn";
 import PostCardModal from "@/components/PostCardModal";
 import PostedCard from "@/components/PostedCard";
+import FollowingSection from "@/components/FollowingSection";
+import Footer from "@/components/Footer";
+
 import { useSelector } from "react-redux";
 import { redirect } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -14,7 +16,6 @@ import { useEffect, useState } from "react";
 export default function Home() {
   const [postedCardList, setPostedCardList] = useState([]);
   const [isPostCardModalOpen, setIsPostCardModalOpen] = useState(false);
-  const [newPost, setNewPost] = useState(false);
   const [refreshPost, setRefreshPost] = useState(false);
 
   const user = useSelector((state) => state.user.value);
@@ -23,6 +24,7 @@ export default function Home() {
     redirect("/login");
   }
 
+  // Chargement de toutes les publications
   useEffect(() => {
     const fetchPosts = async () => {
       try {
@@ -43,17 +45,15 @@ export default function Home() {
       }
     };
     fetchPosts();
-  }, [newPost, refreshPost]);
+  }, [refreshPost]);
 
+  // Supprimer une publication
   const handlePostDeleted = (deletedPostId) => {
     setPostedCardList((prevPosts) => prevPosts.filter((post) => post._id !== deletedPostId));
   };
 
-  const handleRefresh = () => {
-    setRefreshPost(!refreshPost);
-  };
-
-  const messages = postedCardList.map((post) => (
+  // Liste de toutes les publications
+  const posts = postedCardList.map((post) => (
     <PostedCard
       key={post._id}
       author={post.author}
@@ -62,7 +62,7 @@ export default function Home() {
       postId={post._id}
       likes={post.likes.length}
       onPostDeleted={handlePostDeleted}
-      onRefresh={handleRefresh}
+      onRefresh={() => setRefreshPost(!refreshPost)}
     />
   ));
 
@@ -74,9 +74,9 @@ export default function Home() {
         <div className={styles.flux}>
           <PostInputBtn onOpenPostCardModal={() => setIsPostCardModalOpen(true)} placeholder={`What's up, ${user.firstname} ?`} />
           {isPostCardModalOpen && (
-            <PostCardModal onClosePostCardModal={() => setIsPostCardModalOpen(false)} onNewPost={() => setNewPost(!newPost)} />
+            <PostCardModal onClosePostCardModal={() => setIsPostCardModalOpen(false)} onNewPost={() => setRefreshPost(!refreshPost)} />
           )}
-          {messages}
+          {posts}
         </div>
       </div>
       <ContactsSection />

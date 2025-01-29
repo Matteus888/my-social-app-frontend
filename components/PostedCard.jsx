@@ -1,18 +1,20 @@
 import styles from "@/styles/postedCard.module.css";
+
+import CommentCard from "./CommentCard";
+
 import Image from "next/image";
 import Link from "next/link";
-import CommentCard from "./CommentCard";
+import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
+
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faXmark, faPaperPlane } from "@fortawesome/free-solid-svg-icons";
 import { faThumbsUp, faComments } from "@fortawesome/free-regular-svg-icons";
-import { useEffect, useState } from "react";
 
 const moment = require("moment");
 
 export default function PostedCard({ author, date, content, postId, likes, onPostDeleted, onRefresh }) {
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
-  const [errorModal, setErrorModal] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const [isCommentsOpen, setIsCommentsOpen] = useState(false);
   const [commentValue, setCommentValue] = useState("");
@@ -40,19 +42,45 @@ export default function PostedCard({ author, date, content, postId, likes, onPos
     }
   };
 
+  // Charger tous les commentaires des posts
+  useEffect(() => {
+    const fetchComments = async () => {
+      const token = localStorage.getItem("token");
+
+      try {
+        const res = await fetch(`http://localhost:3000/posts/${postId}/comments`, {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: token ? `Bearer ${token}` : "",
+          },
+        });
+        if (res.ok) {
+          const data = await res.json();
+          setCommentsList(data.comments.reverse());
+        }
+      } catch (err) {
+        console.error("Error during getting comments:", err);
+      }
+    };
+
+    fetchComments();
+  }, [newComment]);
+
+  // Supprimer une publication
   const handleDeletePost = async () => {
     const token = localStorage.getItem("token");
 
     try {
-      const response = await fetch(`http://localhost:3000/posts/${postId}`, {
+      const res = await fetch(`http://localhost:3000/posts/${postId}`, {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",
           Authorization: token ? `Bearer ${token}` : "",
         },
       });
-      if (response.ok) {
-        const data = await response.json();
+      if (res.ok) {
+        const data = await res.json();
         if (onPostDeleted) {
           onPostDeleted(postId);
         }
@@ -64,28 +92,22 @@ export default function PostedCard({ author, date, content, postId, likes, onPos
     }
   };
 
+  // Ajouter ou supprimer un like
   const handleLike = async () => {
     const token = localStorage.getItem("token");
 
     try {
-      const response = await fetch(`http://localhost:3000/posts/${postId}/likes`, {
+      const res = await fetch(`http://localhost:3000/posts/${postId}/likes`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
           Authorization: token ? `Bearer ${token}` : "",
         },
       });
-      if (response.ok) {
-        const data = await response.json();
-        console.log(data.message);
-
-        if (onRefresh) {
-          onRefresh();
-        }
-      }
-
-      if (response.status === 403) {
-        setErrorModal(true);
+      if (res.ok) {
+        const data = await res.json();
+        onRefresh();
+      } else if (res.status === 403) {
         setErrorMessage("You cannot like your own post");
       }
     } catch (err) {
@@ -93,11 +115,12 @@ export default function PostedCard({ author, date, content, postId, likes, onPos
     }
   };
 
+  // Poster un commentaire à propos d'une publication
   const handlePostComment = async () => {
     const token = localStorage.getItem("token");
 
     try {
-      const response = await fetch(`http://localhost:3000/posts/${postId}/comments`, {
+      const res = await fetch(`http://localhost:3000/posts/${postId}/comments`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -105,8 +128,8 @@ export default function PostedCard({ author, date, content, postId, likes, onPos
         },
         body: JSON.stringify({ content: commentValue }),
       });
-      if (response.ok) {
-        const data = await response.json();
+      if (res.ok) {
+        const data = await res.json();
         setCommentValue("");
         setNewComment(!newComment);
       }
@@ -114,30 +137,6 @@ export default function PostedCard({ author, date, content, postId, likes, onPos
       console.error("Error during sending comment:", err);
     }
   };
-
-  useEffect(() => {
-    const fetchComments = async () => {
-      const token = localStorage.getItem("token");
-
-      try {
-        const response = await fetch(`http://localhost:3000/posts/${postId}/comments`, {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: token ? `Bearer ${token}` : "",
-          },
-        });
-        if (response.ok) {
-          const data = await response.json();
-          setCommentsList(data.comments.reverse());
-        }
-      } catch (err) {
-        console.error("Error during getting comments:", err);
-      }
-    };
-
-    fetchComments();
-  }, [newComment]);
 
   return (
     <div className={styles.container}>
@@ -176,12 +175,12 @@ export default function PostedCard({ author, date, content, postId, likes, onPos
           ) : null}
         </div>
         {/* Modal d'erreur */}
-        {errorModal && (
+        {errorMessage && (
           <div className={styles.modalOverlay}>
             <div className={styles.modal}>
               <p>{errorMessage}</p>
               <div className={styles.modalActions}>
-                <button onClick={() => setErrorModal(false)} className={`${styles.btn} ${styles.okBtn}`}>
+                <button onClick={() => setErrorMessage("")} className={`${styles.btn} ${styles.okBtn}`}>
                   OK
                 </button>
               </div>

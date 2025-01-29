@@ -1,6 +1,6 @@
-import { Quicksand } from "next/font/google";
 import "../styles/globals.css";
 import ClientProvider from "@/components/ClientProvider";
+import { Quicksand } from "next/font/google";
 
 const quicksand = Quicksand({
   variable: "--font-quicksand",

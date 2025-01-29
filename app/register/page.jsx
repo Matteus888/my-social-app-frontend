@@ -1,15 +1,19 @@
 "use client";
 
 import styles from "../../styles/register.module.css";
+
 import defaultProfilePic from "@/data/defaultProfilePic";
+
 import Footer from "@/components/Footer";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCircleQuestion, faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
+
+import Link from "next/link";
 import { useState, useRef } from "react";
 import { useRouter } from "next/navigation";
-import Link from "next/link";
 import { useDispatch } from "react-redux";
 import { login } from "@/store/userReducer";
+
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCircleQuestion, faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 
 export default function Register() {
   const today = new Date();
@@ -26,7 +30,6 @@ export default function Register() {
   const [day, setDay] = useState(currentDay);
   const [month, setMonth] = useState(currentMonth);
   const [year, setYear] = useState(currentYear);
-  const [error, setError] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const [isDialogDate, setIsDialogDate] = useState(false);
   const [isDialogGender, setIsDialogGender] = useState(false);
@@ -43,7 +46,9 @@ export default function Register() {
   const days = Array.from({ length: new Date(year, month, 0).getDate() }, (_, i) => i + 1);
   const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
   const years = Array.from({ length: 123 }, (_, i) => currentYear - i);
+  const birthdateValue = new Date(year, month - 1, day);
 
+  // Calcul de l'âge pour vérification minimum 15ans
   const calculateAge = () => {
     const age = currentYear - year;
     const monthDiff = currentMonth - month;
@@ -55,10 +60,9 @@ export default function Register() {
     return age;
   };
 
-  const birthdateValue = new Date(year, month - 1, day);
-
+  // Création du compte utilisateur
   const handleSubmit = async () => {
-    // Validation des champs remplis
+    // Validation des champs requis
     const validate = () => {
       const regex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
 
@@ -90,18 +94,14 @@ export default function Register() {
 
     const validationMessage = validate();
     if (validationMessage) {
-      setError(true);
       setErrorMessage(validationMessage);
       return;
     }
-
-    setError(false);
     setErrorMessage("");
 
-    // Choix d'une photo de profile selon genre
+    // Choix au hasard d'une photo de profils selon genre choisi
     const getRandomPhotoPath = (gender) => {
       const genderPics = defaultProfilePic[gender];
-
       const randomIndex = Math.floor(Math.random() * genderPics.length);
       const randomPhotoId = genderPics[randomIndex];
 
@@ -111,14 +111,14 @@ export default function Register() {
     const avatarPath = getRandomPhotoPath(genderValue);
 
     try {
-      const response = await fetch("http://localhost:3000/auth/signup", {
+      const res = await fetch("http://localhost:3000/auth/signup", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ emailValue, passwordValue, firstnameValue, lastnameValue, birthdateValue, genderValue, avatarPath }),
       });
 
-      if (response.ok) {
-        const data = await response.json();
+      if (res.ok) {
+        const data = await res.json();
         if (data.result) {
           localStorage.setItem("token", data.token);
           localStorage.setItem("user", JSON.stringify(data.user));
@@ -138,12 +138,10 @@ export default function Register() {
           router.push("/");
         }
       } else {
-        setError(true);
         setErrorMessage("This user already exists.");
       }
     } catch (err) {
-      console.error("Error during register:", error);
-      setError(true);
+      console.error("Error during register:", err);
       setErrorMessage("Unable to connect to the server. Please try again later.");
     }
   };
@@ -307,7 +305,7 @@ export default function Register() {
                 )}
               </div>
               <p className={styles.errorText} role="alert">
-                {error ? errorMessage : <span style={{ visibility: "hidden" }}>Invisible</span>}
+                {errorMessage ? errorMessage : <span style={{ visibility: "hidden" }}>Invisible</span>}
               </p>
               <p className={styles.policyText}>
                 By clicking on Register, you agree to our Terms and Conditions. Find out how we collect, use and share your data by reading

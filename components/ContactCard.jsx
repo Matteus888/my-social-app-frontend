@@ -1,5 +1,6 @@
-import Link from "next/link";
 import styles from "../styles/contactCard.module.css";
+
+import Link from "next/link";
 import Image from "next/image";
 
 export default function ContactCard({ name, image, imgWidth, imgHeight, fontSize, txtWidth, link }) {

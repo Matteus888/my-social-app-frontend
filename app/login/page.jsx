@@ -1,15 +1,18 @@
 "use client";
 
 import styles from "../../styles/login.module.css";
+
 import InfoCard from "@/components/InfoCard";
 import Footer from "@/components/Footer";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
+
+import Link from "next/link";
 import { useState, useRef } from "react";
 import { useRouter } from "next/navigation";
-import Link from "next/link";
 import { useDispatch } from "react-redux";
 import { login } from "@/store/userReducer";
+
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 
 export default function Login() {
   const [emailValue, setEmailValue] = useState("");
@@ -30,12 +33,14 @@ export default function Login() {
     401: "Invalid password",
   };
 
+  // Message d'erreur en fonction du statut de la réponse
   const handleError = (status) => {
     const message = errorMessages[status] || "An unexpected error occurred. Please try again.";
     setError(true);
     setErrorMessage(message);
   };
 
+  // Se connecter à un compte utilisateur
   const handleSubmit = async () => {
     const regex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
 
@@ -59,14 +64,14 @@ export default function Login() {
       setErrorMessage("");
 
       try {
-        const response = await fetch("http://localhost:3000/auth/signin", {
+        const res = await fetch("http://localhost:3000/auth/signin", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ emailValue, passwordValue }),
         });
 
-        if (response.ok) {
-          const data = await response.json();
+        if (res.ok) {
+          const data = await res.json();
           if (data.result) {
             localStorage.setItem("token", data.token);
             localStorage.setItem("user", JSON.stringify(data.user));

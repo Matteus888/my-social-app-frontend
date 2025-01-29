@@ -1,9 +1,12 @@
 import styles from "@/styles/profileInfoSection.module.css";
+
 import UpdateInfoInput from "./UpdateInfoInput";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faHouseChimney, faAt, faEnvelope, faCakeCandles, faEllipsis, faUser, faBriefcase } from "@fortawesome/free-solid-svg-icons";
+
 import { useState } from "react";
 import { useSelector } from "react-redux";
+
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faHouseChimney, faAt, faEnvelope, faCakeCandles, faEllipsis, faUser, faBriefcase } from "@fortawesome/free-solid-svg-icons";
 
 const moment = require("moment");
 
@@ -15,11 +18,12 @@ export default function ProfileInfoSection({ publicId, firstname, bio, location,
   const formattedBirthDate = moment(birthdate).format("MMMM Do YYYY");
   const age = moment().diff(moment(birthdate), "years");
 
+  // Mettre à jour les informations textes
   const handleUpdateInfo = async (field, value) => {
     const token = localStorage.getItem("token");
 
     try {
-      const response = await fetch("http://localhost:3000/users/profile", {
+      const res = await fetch("http://localhost:3000/users/profile", {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
@@ -27,19 +31,14 @@ export default function ProfileInfoSection({ publicId, firstname, bio, location,
         },
         body: JSON.stringify({ [field]: value }),
       });
-      if (response.ok) {
-        const data = await response.json();
-        console.log(data.message);
+      if (res.ok) {
+        const data = await res.json();
         onRefresh();
         setEditingField(null);
       }
     } catch (err) {
       console.error("Error during updating profile infos:", err);
     }
-  };
-
-  const handleClose = () => {
-    setEditingField(null);
   };
 
   return (
@@ -55,7 +54,7 @@ export default function ProfileInfoSection({ publicId, firstname, bio, location,
               type="textarea"
               initialValue={bio || ""}
               onSave={(newValue) => handleUpdateInfo("bio", newValue)}
-              onClose={handleClose}
+              onClose={() => setEditingField(null)}
             />
           ) : (
             <p className={styles.text}>{bio}</p>
@@ -72,7 +71,7 @@ export default function ProfileInfoSection({ publicId, firstname, bio, location,
               type="text"
               initialValue={job || ""}
               onSave={(newValue) => handleUpdateInfo("job", newValue)}
-              onClose={handleClose}
+              onClose={() => setEditingField(null)}
             />
           ) : (
             <p className={styles.text}>{job}</p>
@@ -93,7 +92,7 @@ export default function ProfileInfoSection({ publicId, firstname, bio, location,
               type="url"
               initialValue={website || "http://"}
               onSave={(newValue) => handleUpdateInfo("website", newValue)}
-              onClose={handleClose}
+              onClose={() => setEditingField(null)}
             />
           ) : (
             <a className={`${styles.link} ${styles.text}`} href={website} target="_blank">
@@ -112,7 +111,7 @@ export default function ProfileInfoSection({ publicId, firstname, bio, location,
               type="text"
               initialValue={location || ""}
               onSave={(newValue) => handleUpdateInfo("location", newValue)}
-              onClose={handleClose}
+              onClose={() => setEditingField(null)}
             />
           ) : (
             <p className={styles.text}>

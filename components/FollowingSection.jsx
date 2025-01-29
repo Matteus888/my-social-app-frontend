@@ -1,5 +1,7 @@
 import styles from "../styles/followingSection.module.css";
+
 import ContactCard from "./ContactCard";
+
 import { useState, useEffect } from "react";
 
 export default function FollowingSection() {

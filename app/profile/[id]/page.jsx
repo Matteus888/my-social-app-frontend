@@ -1,17 +1,20 @@
 "use client";
 
 import styles from "@/styles/profile.module.css";
+
 import PostedCard from "@/components/PostedCard";
 import PostCardModal from "@/components/PostCardModal";
 import PostInputBtn from "@/components/PostInputBtn";
 import ProfileInfoSection from "@/components/ProfileInfoSection";
 import ProfileFriendSection from "@/components/ProfileFriendSection";
 import UpdateImageModal from "@/components/UpdateImageModal";
+
 import Image from "next/image";
 import { useEffect, useState, use } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { updateUser } from "@/store/userReducer";
 import { useHeader } from "@/contexts/FriendContext";
+
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUserPlus, faFolderPlus, faFolderMinus, faUserCheck, faCamera } from "@fortawesome/free-solid-svg-icons";
 
@@ -21,9 +24,7 @@ export default function Profile({ params }) {
   const [profileData, setProfileData] = useState(null);
   const [friendData, setFriendData] = useState(null);
   const [postsList, setPostsList] = useState([]);
-  const [error, setError] = useState(false);
   const [message, setMessage] = useState(null);
-  const [errorMessage, setErrorMessage] = useState(null);
   const [isFriend, setIsFriend] = useState(null);
   const [isFollower, setIsFollower] = useState(null);
   const [isPostCardModalOpen, setIsPostCardModalOpen] = useState(false);
@@ -40,6 +41,7 @@ export default function Profile({ params }) {
   const user = useSelector((state) => state.user.value);
   const dispatch = useDispatch();
 
+  // Chargement des infos utilisateurs et de ses posts
   useEffect(() => {
     async function fetchProfileData() {
       const token = localStorage.getItem("token");
@@ -78,30 +80,26 @@ export default function Profile({ params }) {
         setPostsList(postsData.posts.reverse());
       } catch (err) {
         console.error(err);
-        setError(true);
       }
     }
     fetchProfileData();
   }, [id, newPost, refreshPost, newFriend]);
 
+  // Calculer les amis en commun
   useEffect(() => {
     if (friendData && user.friends) {
-      // Extraire les publicId des amis dans friendData
       const friendPublicIds = friendData.map((friend) => friend.publicId);
-      // Calcul des amis en commun
       const commonFriends = user.friends.filter((friendId) => friendPublicIds.includes(friendId));
       setCommonFriendsCount(commonFriends.length);
     }
   }, [friendData, user.friends]);
 
+  // Supprimer un post
   const handlePostDeleted = (deletedPostId) => {
     setPostsList((prevPosts) => prevPosts.filter((post) => post._id !== deletedPostId));
   };
 
-  const handleRefresh = () => {
-    setRefreshPost(!refreshPost);
-  };
-
+  // Envoyer une demande d'ami
   const handleFriendRequest = async () => {
     const token = localStorage.getItem("token");
 
@@ -116,19 +114,17 @@ export default function Profile({ params }) {
       if (res.ok) {
         const successData = await res.json();
         setMessage(successData.message);
-        setErrorMessage(null);
       } else {
         const errorData = await res.json();
-        setErrorMessage(errorData.error);
-        setMessage(null);
+        setMessage(errorData.error);
       }
     } catch (err) {
       console.error(err);
-      setErrorMessage("Error connecting to the server");
-      setMessage(null);
+      setMessage("Error connecting to the server");
     }
   };
 
+  // Supprimer une amitié
   const handleDeleteFriend = async (friendId) => {
     setIsConfirmationModalOpen(false);
     const token = localStorage.getItem("token");
@@ -149,12 +145,13 @@ export default function Profile({ params }) {
         setNewFriend(!newFriend);
         dispatch(updateUser({ friends: user.friends.filter((id) => id !== friendId) }));
       }
-      setErrorMessage(data.error);
+      setMessage(data.error);
     } catch (err) {
       console.error("Error removing friend:", err);
     }
   };
 
+  // Suivre ou ne plus suivre un autre utilisateur
   const handleFollow = async () => {
     const token = localStorage.getItem("token");
 
@@ -183,10 +180,10 @@ export default function Profile({ params }) {
     }
   };
 
+  // Mettre à jour les images de profils
   const handleImageUpload = async (file, field) => {
     if (!file) {
-      setErrorMessage("Please select an image before sending.");
-      setMessage(null);
+      setMessage("Please select an image before sending.");
       return;
     }
 
@@ -210,9 +207,8 @@ export default function Profile({ params }) {
 
       const data = await response.json();
       dispatch(updateUser({ [field]: data.imageUrl }));
-      handleRefresh();
+      setRefreshPost(!refreshPost);
       setMessage("Picture successfully updated !");
-      setErrorMessage(null);
 
       if (field === "avatar") {
         setIsUpdateAvatarModalOpen(false);
@@ -224,14 +220,7 @@ export default function Profile({ params }) {
     }
   };
 
-  if (error) {
-    return <p>Profil introuvable</p>;
-  }
-
-  if (!profileData) {
-    return <p>Loading...</p>;
-  }
-
+  // Liste des publications
   const posts = postsList.map((post) => (
     <PostedCard
       key={post._id}
@@ -240,7 +229,7 @@ export default function Profile({ params }) {
       content={post.content}
       date={post.createdAt}
       onPostDeleted={handlePostDeleted}
-      onRefresh={handleRefresh}
+      onRefresh={() => setRefreshPost(!refreshPost)}
     />
   ));
 
@@ -258,7 +247,7 @@ export default function Profile({ params }) {
                 alt={`${profileData.profile.firstname} background pic`}
               />
             ) : (
-              <div className={styles.backgroundTxtContainer}>
+              <div className={styles.backgroundTxt}>
                 <p>Add a background image here</p>
               </div>
             )}
@@ -306,12 +295,11 @@ export default function Profile({ params }) {
                 radius="50%"
               />
             )}
-
             <div className={styles.profileInfo}>
               <p className={styles.profileName}>
                 {profileData.profile.firstname} {profileData.profile.lastname}
               </p>
-              <p className={styles.profileNbFriends}>
+              <p>
                 {friendData.length} friend{friendData.length > 1 && "s"}
               </p>
               <div>Photo d'amis{commonFriendsCount}</div>
@@ -350,7 +338,7 @@ export default function Profile({ params }) {
           </div>
         </div>
       </div>
-      {/* Confirmation Modals */}
+      {/* Modales de confirmation */}
       {isConfirmationModalOpen && (
         <div className={styles.modalOverlay}>
           <div className={styles.modal}>
@@ -380,18 +368,6 @@ export default function Profile({ params }) {
           </div>
         </div>
       )}
-      {errorMessage && (
-        <div className={styles.modalOverlay}>
-          <div className={styles.modal}>
-            <p>{errorMessage}</p>
-            <div className={styles.modalActions}>
-              <button onClick={() => setErrorMessage(null)} className={`${styles.btn} ${styles.okBtn}`}>
-                OK
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
 
       <div className={styles.main}>
         <div className={styles.infosFlow}>
@@ -404,7 +380,7 @@ export default function Profile({ params }) {
             website={profileData.profile.website}
             birthdate={profileData.profile.birthdate}
             job={profileData.profile.job}
-            onRefresh={handleRefresh}
+            onRefresh={() => setRefreshPost(!refreshPost)}
           />
           <ProfileFriendSection
             firstname={profileData.profile.firstname}
