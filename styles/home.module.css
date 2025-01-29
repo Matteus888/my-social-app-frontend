@@ -1,16 +1,16 @@
 .page {
   margin-top: 50;
   width: 100vw;
-}
-
-.main {
   display: flex;
   justify-content: space-between;
   height: 100%;
 }
 
 .fluxContainer {
-  height: calc(100vh - 60px);
+  height: calc(100vh - 50px);
+  width: calc(100% - 300px);
+  display: flex;
+  justify-content: center;
   padding: 20 20px;
   overflow-y: auto;
 
@@ -21,4 +21,10 @@
 
 .flux {
   width: 600;
+}
+
+@media screen and (max-width: 1240px) {
+  .fluxContainer {
+    width: 100%;
+  }
 }

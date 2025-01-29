@@ -1,12 +1,12 @@
 import styles from "../styles/contactsSection.module.css";
 import { useEffect, useState } from "react";
 import ContactCard from "./ContactCard";
-import { useHeader } from "@/contexts/HeaderContext";
+import { useHeader } from "@/contexts/FriendContext";
 
 export default function ContactsSection() {
   const [friendsList, setFriendsList] = useState([]);
 
-  const { isDropdownOpen, isFriendRequestOpen, newFriend } = useHeader();
+  const { newFriend } = useHeader();
 
   useEffect(() => {
     const fetchFriends = async () => {
@@ -36,7 +36,7 @@ export default function ContactsSection() {
   }, [newFriend]);
 
   return (
-    <div className={styles.contacts} style={{ position: "relative", zIndex: isDropdownOpen || isFriendRequestOpen ? -1 : 1 }}>
+    <div className={styles.contacts}>
       <h2 className={styles.title}>Friends</h2>
       <div className={styles.list}>
         {friendsList.length > 0 ? (
@@ -48,6 +48,7 @@ export default function ContactsSection() {
               imgWidth={40}
               imgHeight={40}
               fontSize={18}
+              txtWidth={230}
               link={`/profile/${friend.publicId}`}
             />
           ))

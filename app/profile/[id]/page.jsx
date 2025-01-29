@@ -11,7 +11,7 @@ import Image from "next/image";
 import { useEffect, useState, use } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { updateUser } from "@/store/userReducer";
-import { useHeader } from "@/contexts/HeaderContext";
+import { useHeader } from "@/contexts/FriendContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUserPlus, faFolderPlus, faFolderMinus, faUserCheck, faCamera } from "@fortawesome/free-solid-svg-icons";
 
@@ -35,7 +35,7 @@ export default function Profile({ params }) {
   const [isUpdateAvatarModalOpen, setIsUpdateAvatarModalOpen] = useState(false);
   const [isUpdateBcgModalOpen, setIsUpdateBcgModalOpen] = useState(false);
 
-  const { isSearchListOpen, isDropdownOpen, isFriendRequestOpen, newFriend, setNewFriend } = useHeader();
+  const { newFriend, setNewFriend } = useHeader();
 
   const user = useSelector((state) => state.user.value);
   const dispatch = useDispatch();
@@ -245,14 +245,11 @@ export default function Profile({ params }) {
   ));
 
   return (
-    <div
-      className={styles.page}
-      style={{ position: "relative", zIndex: isSearchListOpen || isDropdownOpen || isFriendRequestOpen ? -1 : 1 }}
-    >
+    <div className={styles.page}>
       <div className={styles.header}>
         <div className={styles.backgroundImageContainer}>
           <div className={styles.backgroundImage}>
-            {profileData.profile.backgroundImage && (
+            {profileData.profile.backgroundImage ? (
               <Image
                 src={profileData.profile.backgroundImage}
                 width={1000}
@@ -260,6 +257,10 @@ export default function Profile({ params }) {
                 style={{ objectFit: "cover" }}
                 alt={`${profileData.profile.firstname} background pic`}
               />
+            ) : (
+              <div className={styles.backgroundTxtContainer}>
+                <p>Add a background image here</p>
+              </div>
             )}
           </div>
           {isMyProfile && (

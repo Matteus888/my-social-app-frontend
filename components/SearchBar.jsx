@@ -1,14 +1,11 @@
 import styles from "@/styles/searchBar.module.css";
 import { useState, useEffect } from "react";
 import { usePathname } from "next/navigation";
-import { useHeader } from "@/contexts/HeaderContext";
 import ContactCard from "./ContactCard";
 
 export default function SearchBar({ placeholder }) {
   const [searchQuery, setSearchQuery] = useState("");
   const [searchResults, setSearchResults] = useState([]);
-
-  const { setIsSearchListOpen } = useHeader();
 
   const pathname = usePathname();
 
@@ -19,7 +16,6 @@ export default function SearchBar({ placeholder }) {
 
     if (query.length === 0) {
       setSearchResults([]);
-      setIsSearchListOpen(false);
       return;
     }
 
@@ -37,7 +33,6 @@ export default function SearchBar({ placeholder }) {
       }
       const data = await res.json();
       setSearchResults(data.users);
-      setIsSearchListOpen(true);
     } catch (err) {
       console.error("Error during search:", err);
     }
@@ -46,8 +41,7 @@ export default function SearchBar({ placeholder }) {
   useEffect(() => {
     setSearchQuery("");
     setSearchResults([]);
-    setIsSearchListOpen(false);
-  }, [pathname, setIsSearchListOpen]);
+  }, [pathname]);
 
   return (
     <div className={styles.inputContainer}>
@@ -61,6 +55,7 @@ export default function SearchBar({ placeholder }) {
             imgWidth={25}
             imgHeight={25}
             fontSize={14}
+            txtWidth={200}
             link={`/profile/${user.publicId}`}
           />
         ))}

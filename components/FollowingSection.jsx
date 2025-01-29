@@ -1,12 +1,9 @@
 import styles from "../styles/followingSection.module.css";
 import ContactCard from "./ContactCard";
 import { useState, useEffect } from "react";
-import { useHeader } from "@/contexts/HeaderContext";
 
 export default function FollowingSection() {
   const [followingList, setFollowingList] = useState([]);
-
-  const { isSearchListOpen } = useHeader();
 
   useEffect(() => {
     const fetchFollowing = async () => {
@@ -36,7 +33,7 @@ export default function FollowingSection() {
   }, []);
 
   return (
-    <div className={styles.following} style={{ position: "relative", zIndex: isSearchListOpen ? -1 : 1 }}>
+    <div className={styles.following} style={{ position: "relative" }}>
       <h2 className={styles.title}>Following</h2>
       <div className={styles.list}>
         {followingList.length > 0 ? (
@@ -48,6 +45,7 @@ export default function FollowingSection() {
               imgWidth={40}
               imgHeight={40}
               fontSize={18}
+              txtWidth={230}
               link={`/profile/${follow.publicId}`}
             />
           ))

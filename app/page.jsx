@@ -10,15 +10,12 @@ import PostedCard from "@/components/PostedCard";
 import { useSelector } from "react-redux";
 import { redirect } from "next/navigation";
 import { useEffect, useState } from "react";
-import { useHeader } from "@/contexts/HeaderContext";
 
 export default function Home() {
   const [postedCardList, setPostedCardList] = useState([]);
   const [isPostCardModalOpen, setIsPostCardModalOpen] = useState(false);
   const [newPost, setNewPost] = useState(false);
   const [refreshPost, setRefreshPost] = useState(false);
-
-  const { isSearchListOpen } = useHeader();
 
   const user = useSelector((state) => state.user.value);
 
@@ -71,20 +68,18 @@ export default function Home() {
 
   return (
     <div className={styles.page}>
-      <div className={styles.main}>
-        <FollowingSection />
-        <Footer />
-        <div className={styles.fluxContainer} style={{ position: "relative", zIndex: isSearchListOpen ? -1 : 1 }}>
-          <div className={styles.flux}>
-            <PostInputBtn onOpenPostCardModal={() => setIsPostCardModalOpen(true)} placeholder={`What's up, ${user.firstname} ?`} />
-            {isPostCardModalOpen && (
-              <PostCardModal onClosePostCardModal={() => setIsPostCardModalOpen(false)} onNewPost={() => setNewPost(!newPost)} />
-            )}
-            {messages}
-          </div>
+      <FollowingSection />
+      <Footer />
+      <div className={styles.fluxContainer}>
+        <div className={styles.flux}>
+          <PostInputBtn onOpenPostCardModal={() => setIsPostCardModalOpen(true)} placeholder={`What's up, ${user.firstname} ?`} />
+          {isPostCardModalOpen && (
+            <PostCardModal onClosePostCardModal={() => setIsPostCardModalOpen(false)} onNewPost={() => setNewPost(!newPost)} />
+          )}
+          {messages}
         </div>
-        <ContactsSection />
       </div>
+      <ContactsSection />
     </div>
   );
 }

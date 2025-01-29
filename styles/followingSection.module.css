@@ -14,10 +14,11 @@
 
 .list {
   height: calc(100vh - 200px);
-  overflow-y: hidden;
+  overflow-y: auto;
 
-  &:hover {
-    overflow-y: auto;
+  &:hover::-webkit-scrollbar-thumb {
+    background: var(--lightgrey2);
+    border-radius: 10px;
   }
 
   &::-webkit-scrollbar {
@@ -29,7 +30,7 @@
   }
 
   &::-webkit-scrollbar-thumb {
-    background: var(--lightgrey2);
+    background: var(--background);
     border-radius: 10px;
   }
 
@@ -41,4 +42,10 @@
 .empty {
   margin-top: 20;
   text-align: center;
+}
+
+@media screen and (max-width: 1240px) {
+  .following {
+    display: none;
+  }
 }

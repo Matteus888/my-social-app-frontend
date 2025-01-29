@@ -48,6 +48,16 @@
   overflow: hidden;
 }
 
+.backgroundTxtContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  background-color: white;
+  border: 1px solid black;
+  font-size: 24px;
+}
+
 .backgroundImageBtn {
   position: absolute;
   display: flex;

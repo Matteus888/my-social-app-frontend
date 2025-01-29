@@ -9,16 +9,17 @@ import { useEffect, useRef, useState } from "react";
 import { useRouter, usePathname } from "next/navigation";
 import { useSelector, useDispatch } from "react-redux";
 import { logout, updateUser } from "@/store/userReducer";
-import { useHeader } from "@/contexts/HeaderContext";
+import { useHeader } from "@/contexts/FriendContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBell } from "@fortawesome/free-regular-svg-icons";
 import { faChevronDown, faArrowRightFromBracket, faGear } from "@fortawesome/free-solid-svg-icons";
 
 export default function Header() {
   const [friendRequests, setFriendRequests] = useState([]);
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [isFriendRequestOpen, setIsFriendRequestOpen] = useState(false);
 
-  const { isFriendRequestOpen, setIsFriendRequestOpen, isDropdownOpen, setIsDropdownOpen, newFriend, setNewFriend } = useHeader();
-  const {} = useHeader();
+  const { newFriend, setNewFriend } = useHeader();
 
   const dropdownRef = useRef(null);
   const friendRequestRef = useRef(null);
