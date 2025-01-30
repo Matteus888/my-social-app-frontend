@@ -16,6 +16,7 @@ export const metadata = {
   icons: {
     icon: "/logo.ico",
   },
+  prefetch: false,
 };
 
 export default function RootLayout({ children }) {
