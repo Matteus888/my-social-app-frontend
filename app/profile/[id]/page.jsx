@@ -253,14 +253,20 @@ export default function Profile({ params }) {
           <div className={styles.profileInfoContainer}>
             <div className={styles.profileAvatarContainer}>
               <div className={styles.profileAvatar}>
-                <Image
-                  src={profileData.profile.avatar}
-                  width={180}
-                  height={180}
-                  style={{ objectFit: "cover" }}
-                  alt={`${profileData.profile.firstname} pic`}
-                  priority
-                />
+                {profileData.profile.avatar ? (
+                  <Image
+                    src={profileData.profile.avatar}
+                    width={180}
+                    height={180}
+                    style={{ objectFit: "cover" }}
+                    alt={`${profileData.profile.firstname} pic`}
+                    priority
+                  />
+                ) : (
+                  <div className={styles.avatarTxt}>
+                    <p>Add avatar pic here</p>
+                  </div>
+                )}
               </div>
               {isMyProfile && (
                 <div className={styles.cameraBtn}>
