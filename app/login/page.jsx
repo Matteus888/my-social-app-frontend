@@ -1,6 +1,6 @@
 "use client";
 
-import styles from "../../styles/login.module.css";
+import styles from "@/styles/login.module.css";
 
 import InfoCard from "@/components/InfoCard";
 import Footer from "@/components/Footer";
