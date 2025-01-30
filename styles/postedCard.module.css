@@ -1,10 +1,10 @@
 .container {
   display: flex;
   flex-direction: column;
-  margin-top: 20;
-  padding: 10 10 0 10;
+  margin-top: 20px;
+  padding: 10px 10px 0 10px;
   width: 100%;
-  min-height: 150;
+  min-height: 150px;
   background-color: white;
   box-shadow: 0 1px 8px var(--lightgrey3);
   border-radius: 6px;
@@ -14,7 +14,7 @@
   display: flex;
   position: relative;
   width: 100%;
-  height: 40;
+  height: 40px;
 }
 
 .avatar {
@@ -27,7 +27,7 @@
 .postedHeaderText {
   display: flex;
   flex-direction: column;
-  margin-left: 10;
+  margin-left: 10px;
 }
 
 .name {
@@ -39,7 +39,7 @@
 }
 
 .date {
-  font-size: 12;
+  font-size: 12px;
 }
 
 .postedHeaderIcon {
@@ -49,8 +49,8 @@
   position: absolute;
   top: 0;
   right: 0;
-  width: 25;
-  height: 25;
+  width: 25px;
+  height: 25px;
   border-radius: 50%;
   transition: background-color 0.3 ease-in-out;
 
@@ -61,12 +61,12 @@
 }
 
 .icon {
-  width: 20;
-  height: 20;
+  width: 20px;
+  height: 20px;
 }
 
 .postedContent {
-  margin-top: 15;
+  margin-top: 15px;
   width: 100%;
 }
 
@@ -78,15 +78,15 @@
 .commentCountSection {
   display: flex;
   justify-content: space-between;
-  margin-top: 10;
-  height: 20;
-  font-size: 12;
+  margin-top: 10px;
+  height: 20px;
+  font-size: 12px;
 }
 
 .thumbUp {
   color: var(--blue1);
-  font-size: 20;
-  margin: 0 10;
+  font-size: 20px;
+  margin: 0 10px;
 }
 
 .commentTxt:hover {
@@ -95,9 +95,9 @@
 }
 
 .line {
-  margin-top: 5;
+  margin-top: 5px;
   width: 100%;
-  height: 1;
+  height: 1px;
   background-color: var(--lightgrey3);
 }
 
@@ -106,13 +106,13 @@
   justify-content: space-around;
   width: 100%;
   height: 50px;
-  padding: 10;
+  padding: 10px;
 }
 
 .commentBtn {
   display: flex;
-  padding: 5 10;
-  font-size: 20;
+  padding: 5px 10px;
+  font-size: 20px;
   color: var(--forebground);
   transition: background-color 0.3 ease-in-out;
 
@@ -127,11 +127,11 @@
 }
 
 .commentIcon {
-  margin-right: 8;
+  margin-right: 8px;
 }
 
 .commentBtnText {
-  font-size: 16;
+  font-size: 16px;
 }
 
 .commentContainer {
@@ -140,7 +140,7 @@
 }
 
 .commentWrapper {
-  max-height: 300;
+  max-height: 300px;
   overflow-y: auto;
 
   &::-webkit-scrollbar {
@@ -166,7 +166,7 @@
   justify-content: space-between;
   align-items: center;
   width: 100%;
-  margin: 10 0;
+  margin: 10px 0;
 }
 
 .inputAvatar {
@@ -178,8 +178,8 @@
 
 .input {
   width: 85%;
-  height: 30;
-  padding-left: 15;
+  height: 30px;
+  padding-left: 15px;
   border: none;
   border-radius: 22px;
   background-color: var(--lightgrey4);
@@ -197,8 +197,8 @@
 
 .postBtn {
   color: var(--blue1);
-  font-size: 20;
-  margin-right: 10;
+  font-size: 20px;
+  margin-right: 10px;
 
   &:hover {
     cursor: pointer;
@@ -241,10 +241,10 @@
 .btn {
   color: white;
   font-family: var(--font-quicksand), Arial, sans-serif;
-  font-size: 16;
+  font-size: 16px;
   border: none;
-  border-radius: 4;
-  padding: 5 15;
+  border-radius: 4px;
+  padding: 5px 15px;
 
   &:hover {
     cursor: pointer;

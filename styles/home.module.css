@@ -1,5 +1,5 @@
 .page {
-  margin-top: 50;
+  margin-top: 50px;
   width: 100vw;
   display: flex;
   justify-content: space-between;
@@ -11,7 +11,7 @@
   width: calc(100% - 300px);
   display: flex;
   justify-content: center;
-  padding: 20 20px;
+  padding: 20px 20px;
   overflow-y: auto;
 
   &::-webkit-scrollbar {
@@ -20,7 +20,7 @@
 }
 
 .flux {
-  width: 600;
+  width: 600px;
 }
 
 @media screen and (max-width: 1240px) {

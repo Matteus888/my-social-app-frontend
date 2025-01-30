@@ -1,14 +1,14 @@
 .following {
-  width: 300;
+  width: 300px;
   height: calc(100vh - 165px);
   border-bottom: 1.5px solid var(--lightgrey2);
 
 }
 
 .title {
-  margin-top: 10;
-  margin-left: 10;
-  font-size: 20;
+  margin-top: 10px;
+  margin-left: 10px;
+  font-size: 20px;
   border-bottom: 1.5px solid var(--lightgrey2);
 }
 
@@ -40,7 +40,7 @@
 }
 
 .empty {
-  margin-top: 20;
+  margin-top: 20px;
   text-align: center;
 }
 

@@ -1,12 +1,12 @@
 .contacts {
-  width: 300;
+  width: 300px;
   height: calc(100vh - 50px);
 }
 
 .title {
-  margin-top: 10;
-  margin-left: 5;
-  font-size: 20;
+  margin-top: 10px;
+  margin-left: 5px;
+  font-size: 20px;
   border-bottom: 1.5px solid var(--lightgrey2);
 }
 
@@ -39,7 +39,7 @@
 }
 
 .empty {
-  margin-top: 20;
+  margin-top: 20px;
   text-align: center;
 }
 

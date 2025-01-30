@@ -1,7 +1,7 @@
 .card {
   display: flex;
   align-items: start;
-  margin: 10 5;
+  margin: 10px 5px;
 }
 
 .avatar {
@@ -14,12 +14,12 @@
 .commentContainer {
   display: flex;
   flex-direction: column;
-  margin-left: 10;
-  font-size: 14;
+  margin-left: 10px;
+  font-size: 14px;
 }
 
 .commentBubble {
-  padding: 10;
+  padding: 10px;
   background-color: var(--lightgrey4);
   border-radius: 10px;
 }
@@ -29,6 +29,6 @@
 }
 
 .date {
-  font-size: 12;
+  font-size: 12px;
   text-align: end;
 }

@@ -9,22 +9,22 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-top: 40;
-  width: 600;
+  margin-top: 40px;
+  width: 600px;
 }
 
 .pageTitle {
-  padding-bottom: 10;
+  padding-bottom: 10px;
 }
 
 .registerContainer {
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 450;
-  height: 570;
-  margin-top: 20;
-  margin-bottom: 12;
+  width: 450px;
+  height: 570px;
+  margin-top: 20px;
+  margin-bottom: 12px;
   background-color: white;
   border: 1px solid var(--lightgrey3);
   border-radius: 5px;
@@ -32,17 +32,17 @@
 }
 
 .registerTitle {
-  margin-top: 12;
+  margin-top: 12px;
 }
 
 .slogan {
-  margin-top: 2;
+  margin-top: 2px;
 }
 
 .line {
   width: 100%;
-  height: 1;
-  margin-top: 12;
+  height: 1px;
+  margin-top: 12px;
   background-color: var(--lightgrey3);
 }
 
@@ -50,27 +50,25 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 410;
+  width: 410px;
 }
 
 .nameContainer {
   display: flex;
   justify-content: space-between;
   width: 100%;
-  margin-top: 18;
+  margin-top: 18px;
 }
 
 .nameInput {
-  width: 200;
-  height: 40;
-  padding: 0 14;
+  width: 200px;
+  height: 40px;
+  padding: 0 14px;
   border: 1px solid var(--lightgrey3);
   border-radius: 4px;
-  font-size: 16;
+  font-size: 16px;
   font-weight: 500;
-  font-family: var(--font-quicksand),
-    Arial,
-    sans-serif;
+  font-family: var(--font-quicksand), Arial, sans-serif;
 
   &:focus {
     border-color: black;
@@ -85,7 +83,7 @@
   display: flex;
   flex-direction: column;
   width: 100%;
-  margin-top: 14;
+  margin-top: 14px;
 }
 
 .labelContainer {
@@ -93,8 +91,8 @@
 }
 
 .label {
-  font-size: 12;
-  margin-right: 6;
+  font-size: 12px;
+  margin-right: 6px;
 }
 
 .dialog {
@@ -114,59 +112,55 @@
   display: flex;
   justify-content: space-between;
   width: 100%;
-  margin-top: 4;
+  margin-top: 4px;
 }
 
 .select {
-  width: 125;
-  height: 35;
+  width: 125px;
+  height: 35px;
   border: 1px solid var(--lightgrey3);
   border-radius: 4px;
-  font-size: 14;
-  font-family: var(--font-quicksand),
-    Arial,
-    sans-serif;
+  font-size: 14px;
+  font-family: var(--font-quicksand), Arial, sans-serif;
 }
 
 .genderContainer {
   display: flex;
   flex-direction: column;
   width: 100%;
-  margin-top: 14;
+  margin-top: 14px;
 }
 
 .checkboxContainer {
   display: flex;
   justify-content: space-between;
   width: 100%;
-  margin-top: 4;
+  margin-top: 4px;
 }
 
 .checkboxLabel {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  width: 95;
-  height: 35;
-  padding: 0 5;
+  width: 95px;
+  height: 35px;
+  padding: 0 5px;
   border: 1px solid var(--lightgrey3);
   border-radius: 4px;
-  font-size: 14;
+  font-size: 14px;
   font-weight: 450;
 }
 
 .emailInput {
   width: 100%;
-  height: 40;
-  margin-top: 14;
+  height: 40px;
+  margin-top: 14px;
   padding: 0 14;
   border: 1px solid var(--lightgrey3);
   border-radius: 4px;
-  font-size: 16;
+  font-size: 16px;
   font-weight: 500;
-  font-family: var(--font-quicksand),
-    Arial,
-    sans-serif;
+  font-family: var(--font-quicksand), Arial, sans-serif;
 
   &:focus {
     border-color: black;
@@ -182,22 +176,20 @@
   justify-content: space-between;
   align-items: center;
   width: 100%;
-  height: 40;
-  margin-top: 14;
-  padding: 0 14;
+  height: 40px;
+  margin-top: 14px;
+  padding: 0 14px;
   border: 1px solid var(--lightgrey3);
   border-radius: 4px;
 }
 
 .passwordInput {
   width: 90%;
-  padding: 2 0;
+  padding: 2px 0;
   border: none;
-  font-size: 16;
+  font-size: 16px;
   font-weight: 500;
-  font-family: var(--font-quicksand),
-    Arial,
-    sans-serif;
+  font-family: var(--font-quicksand), Arial, sans-serif;
 
   &:focus {
     border-color: black;
@@ -210,33 +202,31 @@
 
 .errorText {
   color: red;
-  font-size: 12;
+  font-size: 12px;
 }
 
 .policyText {
-  margin-top: 6;
-  font-size: 11;
+  margin-top: 6px;
+  font-size: 11px;
 }
 
 .registerBtn {
-  width: 200;
-  height: 40;
-  margin-top: 14;
+  width: 200px;
+  height: 40px;
+  margin-top: 14px;
   color: white;
   background-color: var(--green1);
   border: none;
   border-radius: 6px;
-  font-family: var(--font-quicksand),
-    Arial,
-    sans-serif;
-  font-size: 20;
+  font-family: var(--font-quicksand), Arial, sans-serif;
+  font-size: 20px;
   font-weight: 800;
   cursor: pointer;
 }
 
 .loginLink {
-  margin-top: 12;
+  margin-top: 12px;
   color: var(--blue1);
-  font-size: 18;
+  font-size: 18px;
   font-weight: 600;
 }
