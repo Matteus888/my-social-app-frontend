@@ -10,7 +10,7 @@ export default function FollowingSection() {
   useEffect(() => {
     const fetchFollowing = async () => {
       try {
-        const res = await fetch("http://localhost:3000/users/following", {
+        const res = await fetch("https://my-social-app-backend.vercel.app/users/following", {
           method: "GET",
           headers: { "Content-Type": "application/json" },
           credentials: "include",

@@ -21,7 +21,7 @@ export default function ProfileInfoSection({ publicId, firstname, bio, location,
   // Mettre à jour les informations textes
   const handleUpdateInfo = async (field, value) => {
     try {
-      const res = await fetch("http://localhost:3000/users/profile", {
+      const res = await fetch("https://my-social-app-backend.vercel.app/users/profile", {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         credentials: "include",

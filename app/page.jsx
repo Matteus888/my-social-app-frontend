@@ -28,7 +28,7 @@ export default function Home() {
   useEffect(() => {
     const fetchPosts = async () => {
       try {
-        const res = await fetch("http://localhost:3000/posts", {
+        const res = await fetch("https://my-social-app-backend.vercel.app/posts", {
           method: "GET",
           headers: { "Content-Type": "application/json" },
           credentials: "include",

@@ -64,7 +64,7 @@ export default function Login() {
       setErrorMessage("");
 
       try {
-        const res = await fetch("http://localhost:3000/auth/signin", {
+        const res = await fetch("https://my-social-app-backend.vercel.app/auth/signin", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           credentials: "include",

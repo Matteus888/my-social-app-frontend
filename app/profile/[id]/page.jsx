@@ -45,7 +45,7 @@ export default function Profile({ params }) {
   useEffect(() => {
     async function fetchProfileData() {
       try {
-        const profileRes = await fetch(`http://localhost:3000/users/${id}`, {
+        const profileRes = await fetch(`https://my-social-app-backend.vercel.app/users/${id}`, {
           method: "GET",
           headers: { "Content-Type": "application/json" },
           credentials: "include",
@@ -61,7 +61,7 @@ export default function Profile({ params }) {
         setIsFollower(user.following.includes(profileData.user.publicId));
         setIsMyProfile(user.publicId === profileData.user.publicId);
 
-        const postsRes = await fetch(`http://localhost:3000/users/${id}/posts`, {
+        const postsRes = await fetch(`https://my-social-app-backend.vercel.app/users/${id}/posts`, {
           method: "GET",
           headers: { "Content-Type": "application/json" },
           credentials: "include",
@@ -96,7 +96,7 @@ export default function Profile({ params }) {
   // Envoyer une demande d'ami
   const handleFriendRequest = async () => {
     try {
-      const res = await fetch(`http://localhost:3000/users/${id}/friend-request`, {
+      const res = await fetch(`https://my-social-app-backend.vercel.app/users/${id}/friend-request`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         credentials: "include",
@@ -118,7 +118,7 @@ export default function Profile({ params }) {
   const handleDeleteFriend = async (friendId) => {
     setIsConfirmationModalOpen(false);
     try {
-      const res = await fetch(`http://localhost:3000/users/${friendId}/unfriend`, {
+      const res = await fetch(`https://my-social-app-backend.vercel.app/users/${friendId}/unfriend`, {
         method: "DELETE",
         headers: { "Content-Type": "application/json" },
         credentials: "include",
@@ -140,7 +140,7 @@ export default function Profile({ params }) {
   // Suivre ou ne plus suivre un autre utilisateur
   const handleFollow = async () => {
     try {
-      const res = await fetch(`http://localhost:3000/users/${id}/follow`, {
+      const res = await fetch(`https://my-social-app-backend.vercel.app/users/${id}/follow`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         credentials: "include",
@@ -174,7 +174,7 @@ export default function Profile({ params }) {
     formData.append("field", field); // ou "backgroundImage"
 
     try {
-      const response = await fetch("http://localhost:3000/users/profile/image", {
+      const response = await fetch("https://my-social-app-backend.vercel.app/users/profile/image", {
         method: "PUT",
         credentials: "include",
         body: formData,

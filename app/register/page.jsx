@@ -111,7 +111,7 @@ export default function Register() {
     const avatarPath = getRandomPhotoPath(genderValue);
 
     try {
-      const res = await fetch("http://localhost:3000/auth/signup", {
+      const res = await fetch("https://my-social-app-backend.vercel.app/auth/signup", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         credentials: "include",

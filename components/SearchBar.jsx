@@ -26,7 +26,7 @@ export default function SearchBar({ placeholder }) {
     }
 
     try {
-      const res = await fetch(`http://localhost:3000/users/search?query=${query}`, {
+      const res = await fetch(`https://my-social-app-backend.vercel.app/users/search?query=${query}`, {
         method: "GET",
         headers: { "Content-Type": "application/json" },
         credentials: "include",

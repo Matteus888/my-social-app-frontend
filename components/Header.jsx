@@ -37,7 +37,7 @@ export default function Header() {
   useEffect(() => {
     const fetchFriendRequests = async () => {
       try {
-        const res = await fetch("http://localhost:3000/users/friend-requests", {
+        const res = await fetch("https://my-social-app-backend.vercel.app/users/friend-requests", {
           method: "GET",
           headers: { "Content-Type": "application/json" },
           credentials: "include",
@@ -85,7 +85,7 @@ export default function Header() {
     setIsFriendRequestOpen(false);
 
     try {
-      await fetch("http://localhost:3000/auth/signout", {
+      await fetch("https://my-social-app-backend.vercel.app/auth/signout", {
         method: "POST",
         credentials: "include",
       });
@@ -101,7 +101,7 @@ export default function Header() {
   // Pour accepter ou refuser une demande d'ami
   const handleFriendRequest = async (userId, action) => {
     try {
-      const res = await fetch(`http://localhost:3000/users/${userId}/friend-request/${action}`, {
+      const res = await fetch(`https://my-social-app-backend.vercel.app/users/${userId}/friend-request/${action}`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         credentials: "include",

@@ -13,7 +13,7 @@ export default function ContactsSection() {
   useEffect(() => {
     const fetchFriends = async () => {
       try {
-        const res = await fetch("http://localhost:3000/users/friends", {
+        const res = await fetch("https://my-social-app-backend.vercel.app/users/friends", {
           method: "GET",
           headers: { "Content-Type": "application/json" },
           credentials: "include",

@@ -46,7 +46,7 @@ export default function PostedCard({ author, date, content, postId, likes, onPos
   useEffect(() => {
     const fetchComments = async () => {
       try {
-        const res = await fetch(`http://localhost:3000/posts/${postId}/comments`, {
+        const res = await fetch(`https://my-social-app-backend.vercel.app/posts/${postId}/comments`, {
           method: "GET",
           headers: { "Content-Type": "application/json" },
           credentials: "include",
@@ -66,7 +66,7 @@ export default function PostedCard({ author, date, content, postId, likes, onPos
   // Supprimer une publication
   const handleDeletePost = async () => {
     try {
-      const res = await fetch(`http://localhost:3000/posts/${postId}`, {
+      const res = await fetch(`https://my-social-app-backend.vercel.app/posts/${postId}`, {
         method: "DELETE",
         headers: { "Content-Type": "application/json" },
         credentials: "include",
@@ -87,7 +87,7 @@ export default function PostedCard({ author, date, content, postId, likes, onPos
   // Ajouter ou supprimer un like
   const handleLike = async () => {
     try {
-      const res = await fetch(`http://localhost:3000/posts/${postId}/likes`, {
+      const res = await fetch(`https://my-social-app-backend.vercel.app/posts/${postId}/likes`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         credentials: "include",
@@ -106,7 +106,7 @@ export default function PostedCard({ author, date, content, postId, likes, onPos
   // Poster un commentaire à propos d'une publication
   const handlePostComment = async () => {
     try {
-      const res = await fetch(`http://localhost:3000/posts/${postId}/comments`, {
+      const res = await fetch(`https://my-social-app-backend.vercel.app/posts/${postId}/comments`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         credentials: "include",

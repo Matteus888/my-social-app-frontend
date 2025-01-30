@@ -19,7 +19,7 @@ export default function PostCardModal({ onClosePostCardModal, onNewPost, placeho
 
   const handleSubmitPost = async () => {
     try {
-      const res = await fetch("http://localhost:3000/posts", {
+      const res = await fetch("https://my-social-app-backend.vercel.app/posts", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         credentials: "include",
