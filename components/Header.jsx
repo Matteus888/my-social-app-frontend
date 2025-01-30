@@ -36,15 +36,11 @@ export default function Header() {
   // Pour récupérer les demandes d'amis
   useEffect(() => {
     const fetchFriendRequests = async () => {
-      const token = localStorage.getItem("token");
-
       try {
         const res = await fetch("http://localhost:3000/users/friend-requests", {
           method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: token ? `Bearer ${token}` : "",
-          },
+          headers: { "Content-Type": "application/json" },
+          credentials: "include",
         });
 
         if (!res.ok) {
@@ -83,29 +79,32 @@ export default function Header() {
   }, [pathname]);
 
   // Pour se déconnecter
-  const handleLogout = (e) => {
+  const handleLogout = async (e) => {
     e.preventDefault();
-    localStorage.removeItem("token");
-    localStorage.removeItem("user");
     setIsDropdownOpen(false);
     setIsFriendRequestOpen(false);
-    router.push("/login");
-    setTimeout(() => {
-      dispatch(logout());
-    }, 500);
+
+    try {
+      await fetch("http://localhost:3000/auth/signout", {
+        method: "POST",
+        credentials: "include",
+      });
+      router.push("/login");
+      setTimeout(() => {
+        dispatch(logout());
+      }, 500);
+    } catch (err) {
+      console.error("Signout failed:", err);
+    }
   };
 
   // Pour accepter ou refuser une demande d'ami
   const handleFriendRequest = async (userId, action) => {
-    const token = localStorage.getItem("token");
-
     try {
       const res = await fetch(`http://localhost:3000/users/${userId}/friend-request/${action}`, {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: token ? `Bearer ${token}` : "",
-        },
+        headers: { "Content-Type": "application/json" },
+        credentials: "include",
       });
       if (!res.ok) {
         throw new Error("Failed to process friend request.");

@@ -17,7 +17,6 @@ export default function SearchBar({ placeholder }) {
   }, [pathname]);
 
   const handleSearch = async (e) => {
-    const token = localStorage.getItem("token");
     const query = e.target.value;
     setSearchQuery(query);
 
@@ -29,10 +28,8 @@ export default function SearchBar({ placeholder }) {
     try {
       const res = await fetch(`http://localhost:3000/users/search?query=${query}`, {
         method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: token ? `Bearer ${token}` : "",
-        },
+        headers: { "Content-Type": "application/json" },
+        credentials: "include",
       });
       if (!res.ok) {
         console.error("Failed to fetch search results:", res.status);

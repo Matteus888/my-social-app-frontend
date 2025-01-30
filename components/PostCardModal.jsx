@@ -18,12 +18,11 @@ export default function PostCardModal({ onClosePostCardModal, onNewPost, placeho
   const isDisabled = content.trim() === "";
 
   const handleSubmitPost = async () => {
-    const token = localStorage.getItem("token");
-
     try {
       const res = await fetch("http://localhost:3000/posts", {
         method: "POST",
-        headers: { "Content-Type": "application/json", Authorization: token ? `Bearer ${token}` : "" },
+        headers: { "Content-Type": "application/json" },
+        credentials: "include",
         body: JSON.stringify({ content: content, author: user.publicId }),
       });
 

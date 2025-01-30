@@ -45,15 +45,11 @@ export default function PostedCard({ author, date, content, postId, likes, onPos
   // Charger tous les commentaires des posts
   useEffect(() => {
     const fetchComments = async () => {
-      const token = localStorage.getItem("token");
-
       try {
         const res = await fetch(`http://localhost:3000/posts/${postId}/comments`, {
           method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: token ? `Bearer ${token}` : "",
-          },
+          headers: { "Content-Type": "application/json" },
+          credentials: "include",
         });
         if (res.ok) {
           const data = await res.json();
@@ -69,15 +65,11 @@ export default function PostedCard({ author, date, content, postId, likes, onPos
 
   // Supprimer une publication
   const handleDeletePost = async () => {
-    const token = localStorage.getItem("token");
-
     try {
       const res = await fetch(`http://localhost:3000/posts/${postId}`, {
         method: "DELETE",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: token ? `Bearer ${token}` : "",
-        },
+        headers: { "Content-Type": "application/json" },
+        credentials: "include",
       });
       if (res.ok) {
         const data = await res.json();
@@ -94,15 +86,11 @@ export default function PostedCard({ author, date, content, postId, likes, onPos
 
   // Ajouter ou supprimer un like
   const handleLike = async () => {
-    const token = localStorage.getItem("token");
-
     try {
       const res = await fetch(`http://localhost:3000/posts/${postId}/likes`, {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: token ? `Bearer ${token}` : "",
-        },
+        headers: { "Content-Type": "application/json" },
+        credentials: "include",
       });
       if (res.ok) {
         const data = await res.json();
@@ -117,15 +105,11 @@ export default function PostedCard({ author, date, content, postId, likes, onPos
 
   // Poster un commentaire à propos d'une publication
   const handlePostComment = async () => {
-    const token = localStorage.getItem("token");
-
     try {
       const res = await fetch(`http://localhost:3000/posts/${postId}/comments`, {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: token ? `Bearer ${token}` : "",
-        },
+        headers: { "Content-Type": "application/json" },
+        credentials: "include",
         body: JSON.stringify({ content: commentValue }),
       });
       if (res.ok) {

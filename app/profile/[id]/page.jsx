@@ -44,15 +44,11 @@ export default function Profile({ params }) {
   // Chargement des infos utilisateurs et de ses posts
   useEffect(() => {
     async function fetchProfileData() {
-      const token = localStorage.getItem("token");
-
       try {
         const profileRes = await fetch(`http://localhost:3000/users/${id}`, {
           method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: token ? `Bearer ${token}` : "",
-          },
+          headers: { "Content-Type": "application/json" },
+          credentials: "include",
         });
         if (!profileRes.ok) {
           console.error("Failed to fetch user data:", profileRes.status);
@@ -67,10 +63,8 @@ export default function Profile({ params }) {
 
         const postsRes = await fetch(`http://localhost:3000/users/${id}/posts`, {
           method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: token ? `Bearer ${token}` : "",
-          },
+          headers: { "Content-Type": "application/json" },
+          credentials: "include",
         });
         if (!postsRes.ok) {
           console.error("Failed to fetch user posts:", postsRes.status);
@@ -101,15 +95,11 @@ export default function Profile({ params }) {
 
   // Envoyer une demande d'ami
   const handleFriendRequest = async () => {
-    const token = localStorage.getItem("token");
-
     try {
       const res = await fetch(`http://localhost:3000/users/${id}/friend-request`, {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: token ? `Bearer ${token}` : "",
-        },
+        headers: { "Content-Type": "application/json" },
+        credentials: "include",
       });
       if (res.ok) {
         const successData = await res.json();
@@ -127,15 +117,11 @@ export default function Profile({ params }) {
   // Supprimer une amitié
   const handleDeleteFriend = async (friendId) => {
     setIsConfirmationModalOpen(false);
-    const token = localStorage.getItem("token");
-
     try {
       const res = await fetch(`http://localhost:3000/users/${friendId}/unfriend`, {
         method: "DELETE",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: token ? `Bearer ${token}` : "",
-        },
+        headers: { "Content-Type": "application/json" },
+        credentials: "include",
       });
       const data = await res.json();
       if (res.ok) {
@@ -153,15 +139,11 @@ export default function Profile({ params }) {
 
   // Suivre ou ne plus suivre un autre utilisateur
   const handleFollow = async () => {
-    const token = localStorage.getItem("token");
-
     try {
       const res = await fetch(`http://localhost:3000/users/${id}/follow`, {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: token ? `Bearer ${token}` : "",
-        },
+        headers: { "Content-Type": "application/json" },
+        credentials: "include",
       });
       if (res.ok) {
         const successData = await res.json();
@@ -187,7 +169,6 @@ export default function Profile({ params }) {
       return;
     }
 
-    const token = localStorage.getItem("token");
     const formData = new FormData();
     formData.append("image", file);
     formData.append("field", field); // ou "backgroundImage"
@@ -195,9 +176,7 @@ export default function Profile({ params }) {
     try {
       const response = await fetch("http://localhost:3000/users/profile/image", {
         method: "PUT",
-        headers: {
-          Authorization: token ? `Bearer ${token}` : "",
-        },
+        credentials: "include",
         body: formData,
       });
 
@@ -233,6 +212,8 @@ export default function Profile({ params }) {
     />
   ));
 
+  if (!profileData) return <p>Loading...</p>;
+
   return (
     <div className={styles.page}>
       <div className={styles.header}>
@@ -245,6 +226,7 @@ export default function Profile({ params }) {
                 height={400}
                 style={{ objectFit: "cover" }}
                 alt={`${profileData.profile.firstname} background pic`}
+                priority
               />
             ) : (
               <div className={styles.backgroundTxt}>

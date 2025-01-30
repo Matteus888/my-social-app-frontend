@@ -114,15 +114,13 @@ export default function Register() {
       const res = await fetch("http://localhost:3000/auth/signup", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
+        credentials: "include",
         body: JSON.stringify({ emailValue, passwordValue, firstnameValue, lastnameValue, birthdateValue, genderValue, avatarPath }),
       });
 
       if (res.ok) {
         const data = await res.json();
         if (data.result) {
-          localStorage.setItem("token", data.token);
-          localStorage.setItem("user", JSON.stringify(data.user));
-
           dispatch(
             login({
               firstname: data.user.profile.firstname,

@@ -28,16 +28,13 @@ export default function Home() {
   useEffect(() => {
     const fetchPosts = async () => {
       try {
-        const token = localStorage.getItem("token");
-        const response = await fetch("http://localhost:3000/posts", {
+        const res = await fetch("http://localhost:3000/posts", {
           method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: token ? `Bearer ${token}` : "",
-          },
+          headers: { "Content-Type": "application/json" },
+          credentials: "include",
         });
-        if (response.ok) {
-          const data = await response.json();
+        if (res.ok) {
+          const data = await res.json();
           setPostedCardList(data.posts);
         }
       } catch (error) {

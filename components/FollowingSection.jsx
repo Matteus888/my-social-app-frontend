@@ -9,15 +9,11 @@ export default function FollowingSection() {
 
   useEffect(() => {
     const fetchFollowing = async () => {
-      const token = localStorage.getItem("token");
-
       try {
         const res = await fetch("http://localhost:3000/users/following", {
           method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: token ? `Bearer ${token}` : "",
-          },
+          headers: { "Content-Type": "application/json" },
+          credentials: "include",
         });
 
         if (!res.ok) {

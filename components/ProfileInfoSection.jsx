@@ -20,15 +20,11 @@ export default function ProfileInfoSection({ publicId, firstname, bio, location,
 
   // Mettre à jour les informations textes
   const handleUpdateInfo = async (field, value) => {
-    const token = localStorage.getItem("token");
-
     try {
       const res = await fetch("http://localhost:3000/users/profile", {
         method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: token ? `Bearer ${token}` : "",
-        },
+        headers: { "Content-Type": "application/json" },
+        credentials: "include",
         body: JSON.stringify({ [field]: value }),
       });
       if (res.ok) {

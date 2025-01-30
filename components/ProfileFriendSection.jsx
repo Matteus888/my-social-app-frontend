@@ -26,7 +26,6 @@ export default function ProfileFriendSection({ firstname, friendsList, friendsIn
                     src={friend.profile.avatar}
                     width={70}
                     height={70}
-                    layout="intrinsic"
                     style={{ objectFit: "cover" }}
                     alt={`${friend.firstname} profile pic`}
                   />

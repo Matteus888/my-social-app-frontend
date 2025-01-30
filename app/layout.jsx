@@ -8,8 +8,11 @@ const quicksand = Quicksand({
 });
 
 export const metadata = {
-  title: "My Social App",
-  description: "Alternative aux réseaux sociaux classiques",
+  title: {
+    template: "%s | My Social App",
+    default: "Home | My Social App",
+  },
+  description: "Alternative to traditional social networks",
   icons: {
     icon: "/logo.ico",
   },
