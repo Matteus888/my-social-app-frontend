@@ -2,8 +2,6 @@
 
 import styles from "../../styles/register.module.css";
 
-// import defaultProfilePic from "@/data/defaultProfilePic";
-
 import Footer from "@/components/Footer";
 
 import Link from "next/link";
@@ -99,17 +97,6 @@ export default function Register() {
     }
     setErrorMessage("");
 
-    // Choix au hasard d'une photo de profils selon genre choisi
-    // const getRandomPhotoPath = (gender) => {
-    //   const genderPics = defaultProfilePic[gender];
-    //   const randomIndex = Math.floor(Math.random() * genderPics.length);
-    //   const randomPhotoId = genderPics[randomIndex];
-
-    //   return `https://res.cloudinary.com/dzqy8gnmh/image/upload/v1736507142/${randomPhotoId}.png`;
-    // };
-
-    // const avatarPath = getRandomPhotoPath(genderValue);
-
     try {
       const res = await fetch("https://my-social-app-backend.vercel.app/auth/signup", {
         method: "POST",
@@ -126,7 +113,6 @@ export default function Register() {
               firstname: data.user.profile.firstname,
               lastname: data.user.profile.lastname,
               publicId: data.user.publicId,
-              // avatar: data.user.profile.avatar,
               friends: data.user.social.friends,
               friendRequests: data.user.social.friendRequests,
               following: data.user.social.following,
