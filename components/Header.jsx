@@ -33,10 +33,10 @@ export default function Header() {
   const user = useSelector((state) => state.user.value);
   const dispatch = useDispatch();
 
+  if (!user.firstname) return;
+
   // Pour récupérer les demandes d'amis
   useEffect(() => {
-    if (!user) return;
-
     const fetchFriendRequests = async () => {
       try {
         const res = await fetch("https://my-social-app-backend.vercel.app/users/friend-requests", {
