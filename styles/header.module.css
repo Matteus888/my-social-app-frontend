@@ -40,6 +40,10 @@
   &:hover::after {
     opacity: 1;
   }
+
+  &:active {
+    scale: 0.9;
+  }
 }
 
 .title {

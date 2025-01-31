@@ -53,6 +53,15 @@
   width: 85px;
   height: 102px;
   margin-bottom: 10px;
+
+  &:hover {
+    text-decoration: underline;
+    opacity: 0.8;
+  }
+
+  &:active {
+    scale: 0.95;
+  }
 }
 
 .link {

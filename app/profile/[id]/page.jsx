@@ -235,8 +235,8 @@ export default function Profile({ params }) {
             )}
           </div>
           {isMyProfile && (
-            <div className={styles.backgroundImageBtn}>
-              <FontAwesomeIcon icon={faCamera} width={30} height={30} onClick={() => setIsUpdateBcgModalOpen(true)} />
+            <div className={styles.backgroundImageBtn} onClick={() => setIsUpdateBcgModalOpen(true)}>
+              <FontAwesomeIcon icon={faCamera} width={30} height={30} />
             </div>
           )}
         </div>
@@ -269,8 +269,8 @@ export default function Profile({ params }) {
                 )}
               </div>
               {isMyProfile && (
-                <div className={styles.cameraBtn}>
-                  <FontAwesomeIcon icon={faCamera} width={25} height={25} onClick={() => setIsUpdateAvatarModalOpen(true)} />
+                <div className={styles.cameraBtn} onClick={() => setIsUpdateAvatarModalOpen(true)}>
+                  <FontAwesomeIcon icon={faCamera} width={25} height={25} />
                 </div>
               )}
             </div>

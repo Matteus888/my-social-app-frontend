@@ -67,6 +67,10 @@
     cursor: pointer;
     opacity: 0.7;
   }
+
+  &:active {
+    scale: 0.94
+  }
 }
 
 .btnUpdate {

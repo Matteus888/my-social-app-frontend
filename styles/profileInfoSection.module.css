@@ -60,7 +60,10 @@
   &:hover {
     cursor: pointer;
     background-color: var(--lightgrey4);
+  }
 
+  &:active {
+    scale: 0.9;
   }
 }
 

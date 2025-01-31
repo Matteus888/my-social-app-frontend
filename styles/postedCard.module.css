@@ -58,6 +58,10 @@
     background-color: var(--lightgrey4);
     cursor: pointer;
   }
+
+  &:active {
+    scale: 0.9;
+  }
 }
 
 .icon {
@@ -119,6 +123,10 @@
   &:hover {
     background-color: var(--lightgrey4);
     cursor: pointer;
+  }
+
+  &:active {
+    scale: 0.9;
   }
 }
 
@@ -204,6 +212,10 @@
     cursor: pointer;
     opacity: 0.85;
   }
+
+  &:active {
+    scale: 0.9;
+  }
 }
 
 .modalOverlay {
@@ -249,6 +261,10 @@
   &:hover {
     cursor: pointer;
     opacity: 0.7;
+  }
+
+  &:active {
+    scale: 0.9;
   }
 }
 
