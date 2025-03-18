@@ -1,5 +1,13 @@
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
+## Aperçu des pages
+
+Voici un aperçu de la page Home :
+![Home](/public/Home.png)
+
+Voici un aperçu de la page Products :
+![Products](/public/Profile.png)
+
 ## Getting Started
 
 First, run the development server:
