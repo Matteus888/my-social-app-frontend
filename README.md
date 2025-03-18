@@ -1,4 +1,6 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# My Social App - Frontend
+
+Bienvenue dans le repository frontend de **My Social App**, une application sociale moderne offrant des fonctionnalités similaires à Facebook : gestion des amis, follow/unfollow, messagerie et personnalisation de sa page personnelle.
 
 ## Aperçu des pages
 
@@ -8,37 +10,102 @@ Voici un aperçu de la page Home :
 Voici un aperçu de la page Products :
 ![Products](/public/Profile.png)
 
-## Getting Started
+## Prérequis
 
-First, run the development server:
+Avant de commencer, assurez-vous d'avoir les outils suivants installés :
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+- [Node.js](https://nodejs.org/) (version recommandée : 18.x)
+- [yarn](https://yarnpkg.com/)
+
+## Installation
+
+1. Clonez ce repository :
+   ```bash
+   git clone https://github.com/votre-utilisateur/my-social-app-frontend.git
+   ```
+2. Accédez au dossier du projet :
+   ```bash
+   cd my-social-app-frontend
+   ```
+3. Installez les dépendances :
+   ```bash
+   yarn install
+   ```
+
+## Configuration
+
+Créez un fichier `.env` à la racine du projet et ajoutez-y les variables d'environnement nécessaires. Exemple :
+
+```
+NEXT_PUBLIC_API_URL=https://votre-api.com
+NEXT_PUBLIC_SOCKET_URL=https://votre-socket.com
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Scripts disponibles
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+- **Démarrage du serveur de développement** :
+  ```bash
+  yarn dev
+  ```
+- **Build de l'application pour la production** :
+  ```bash
+  yarn build
+  ```
+- **Démarrage du serveur en mode production** :
+  ```bash
+  yarn start
+  ```
+- **Lint du projet** :
+  ```bash
+  yarn lint
+  ```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Structure du projet
 
-## Learn More
+```
+/src
+  /app
+    page.jsx
+    layout.jsx
+    /login
+    /register
+    /profile
+      /[id]
+  /components
+  /contexts
+  /store
+  /style
+```
 
-To learn more about Next.js, take a look at the following resources:
+## Fonctionnalités principales
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- Gestion des utilisateurs : ajout/suppression d'amis, follow/unfollow
+- Système de messagerie instantanée
+- Personnalisation du profil utilisateur
+- Infinite scroll pour une expérience fluide
+- Interface moderne avec des icônes Font Awesome
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Améliorations futures
 
-## Deploy on Vercel
+- Mise en place de tests unitaires et d'intégration
+- Optimisation des performances via le caching
+- Rendre le site responsive
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Contribution
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Les contributions sont les bienvenues ! Pour proposer une amélioration ou corriger un bug :
+
+1. Forkez le projet.
+2. Créez une nouvelle branche :
+   ```bash
+   git checkout -b feature/nouvelle-fonctionnalite
+   ```
+3. Commitez vos changements :
+   ```bash
+   git commit -m "Ajout de la nouvelle fonctionnalité"
+   ```
+4. Poussez vos changements :
+   ```bash
+   git push origin feature/nouvelle-fonctionnalite
+   ```
+5. Ouvrez une pull request.
