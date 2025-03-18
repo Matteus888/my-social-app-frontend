@@ -32,15 +32,6 @@ Avant de commencer, assurez-vous d'avoir les outils suivants installés :
    yarn install
    ```
 
-## Configuration
-
-Créez un fichier `.env` à la racine du projet et ajoutez-y les variables d'environnement nécessaires. Exemple :
-
-```
-NEXT_PUBLIC_API_URL=https://votre-api.com
-NEXT_PUBLIC_SOCKET_URL=https://votre-socket.com
-```
-
 ## Scripts disponibles
 
 - **Démarrage du serveur de développement** :
