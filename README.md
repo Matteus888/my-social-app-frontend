@@ -82,6 +82,10 @@ Avant de commencer, assurez-vous d'avoir les outils suivants installés :
 - Optimisation des performances via le caching
 - Rendre le site responsive
 
+## Lien vers le site
+
+[My Social App](https://my-social-app-frontend.vercel.app/)
+
 ## Contribution
 
 Les contributions sont les bienvenues ! Pour proposer une amélioration ou corriger un bug :
