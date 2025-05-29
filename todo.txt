@@ -1,0 +1,5 @@
+- Responsive
+- Déconnection automatique quand le token est périmé
+- Tooltips
+- Skeleton, loading & error pages
+- Settings page
